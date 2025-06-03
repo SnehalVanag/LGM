@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}User Dashboard{% endblock %}</title>
+    <!-- Add any required CSS or JS links here -->
+</head>
+<body>
+    {% block content %}
+    <h1 class="mb-4 text-center">User Dashboard</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-4 text-center">
+                <h2 class="card-title">User Area</h2>
+                <p>Welcome, User! Access your profile, view your activity, and manage your settings here.</p>
+                <a href="/" class="btn btn-custom">Back to Home</a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,82 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Lead Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-header">Lead Dashboard</div>
+<div class="kpi-cards">
+  <div class="kpi-card"><div class="kpi-value">320</div><div class="kpi-label">New Leads</div></div>
+  <div class="kpi-card"><div class="kpi-value">87</div><div class="kpi-label">Tasks Pending</div></div>
+  <div class="kpi-card"><div class="kpi-value">62%</div><div class="kpi-label">Conversion Rate</div></div>
+  <div class="kpi-card"><div class="kpi-value">15</div><div class="kpi-label">Follow-ups Today</div></div>
+</div>
+<div class="quick-actions">
+  <button class="quick-action-btn"><i class="fa fa-plus"></i> Add Lead</button>
+  <button class="quick-action-btn"><i class="fa fa-tasks"></i> Assign Task</button>
+  <button class="quick-action-btn"><i class="fa fa-chart-pie"></i> Analyze Leads</button>
+</div>
+<div class="activity-feed">
+  <div class="activity-title">Recent Activity</div>
+  <ul class="activity-list">
+    <li class="activity-item"><i class="fa fa-user-plus"></i> 10 new leads added</li>
+    <li class="activity-item"><i class="fa fa-check"></i> 5 tasks completed</li>
+    <li class="activity-item"><i class="fa fa-envelope"></i> 3 follow-up emails sent</li>
+  </ul>
+</div>
+<div class="dashboard-chart" style="background: #1E293B;">
+  <canvas id="leadChart"></canvas>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+const ctxL = document.getElementById('leadChart').getContext('2d');
+new Chart(ctxL, {
+  type: 'bar',
+  data: {
+    labels: ['Website', 'Referral', 'Social', 'Email', 'Other'],
+    datasets: [{
+      label: 'Leads by Source',
+      data: [120, 80, 60, 40, 20],
+      backgroundColor: [
+        'rgba(16,185,129,0.85)', 'rgba(255,215,0,0.85)', 'rgba(59,130,246,0.85)', 'rgba(255, 99, 132, 0.85)', 'rgba(243,244,246,0.15)'
+      ],
+      borderRadius: 8
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1E293B',
+        titleColor: '#FFD700',
+        bodyColor: '#fff',
+        borderColor: '#10B981',
+        borderWidth: 1
+      }
+    },
+    layout: { padding: 16 },
+    backgroundColor: '#1E293B',
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(255,255,255,0.08)' },
+        ticks: { color: '#fff', font: { weight: 'bold' } }
+      },
+      x: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: { color: '#FFD700', font: { weight: 'bold' } }
+      }
+    }
+  },
+  plugins: [{
+    id: 'customCanvasBackgroundColor',
+    beforeDraw: (chart) => {
+      const ctx = chart.canvas.getContext('2d');
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-over';
+      ctx.fillStyle = '#1E293B';
+      ctx.fillRect(0, 0, chart.width, chart.height);
+      ctx.restore();
+    }
+  }]
+});
+</script>
+{% endblock %}

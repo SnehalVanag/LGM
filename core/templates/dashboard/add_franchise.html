@@ -1,0 +1,37 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load widget_tweaks %}
+{% block title %}Add Franchise{% endblock %}
+{% block content %}
+<!-- Add Franchise Modal -->
+<div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-store"></i> Add Franchise
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addFranchiseForm" method="post" autocomplete="off">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label" for="id_name">Franchise Name</label>
+            <input type="text" name="name" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="id_address">Address</label>
+            <input type="text" name="address" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="id_contact_email">Contact Email</label>
+            <input type="email" name="contact_email" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fa fa-plus"></i> Add Franchise
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

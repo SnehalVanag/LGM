@@ -1,0 +1,298 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
+  <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
+    <i class="fa fa-sign-out-alt"></i> Logout
+  </a>
+</div>
+<div class="dashboard-header">Admin Dashboard</div>
+<div class="kpi-cards">
+  <a href="{% url 'products' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
+    <div class="kpi-value">{{ products_count }}</div>
+    <div class="kpi-label">Products</div>
+  </a>
+  <div class="kpi-card"><div class="kpi-value">87</div><div class="kpi-label">Franchises</div></div>
+  <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Sales</div></div>
+  <a href="{% url 'coupons' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
+    <div class="kpi-value">{{ coupons_count }}</div>
+    <div class="kpi-label">Coupons</div>
+  </a>
+  <div class="kpi-card"><div class="kpi-value">4.8/5</div><div class="kpi-label">Leads</div></div>
+  <div class="kpi-card"><div class="kpi-value">4.8/5</div><div class="kpi-label">Referral</div></div>
+</div>
+<div class="quick-actions">
+  <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
+  <i class="fa fa-plus"></i> Add Franchise
+</button>
+  <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addMarketingMemberModal"><i class="fa fa-users"></i> Add Marketing Team Members</button>
+  <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addCouponModal"><i class="fa fa-ticket-alt"></i> Add Coupons</button>
+</div>
+<!-- Add Coupon Modal -->
+<div class="modal fade" id="addCouponModal" tabindex="-1" aria-labelledby="addCouponModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addCouponModalLabel" style="color: #FFD700; font-weight: 700;"><i class="fa fa-ticket-alt"></i> Add Coupon</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addCouponForm">
+          <div class="mb-3">
+            <label class="form-label" for="discount">Discount Percentage</label>
+            <input type="number" class="form-control" id="discount" name="discount" min="1" max="100" required style="border-radius: 2rem; background: var(--gray); color: var(--slate);">
+          </div>
+          <button type="submit" class="btn btn-success w-100" style="background: linear-gradient(90deg, var(--emerald), var(--gold)); color: var(--charcoal); border-radius: 2rem; font-weight: 700; font-size: 1.1rem;">Add Coupon</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add Franchise Modal -->
+<div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-plus"></i> Add Franchise
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addFranchiseForm">
+          <div class="mb-3">
+            <label class="form-label" for="franchiseName">Name</label>
+            <input type="text" class="form-control" id="franchiseName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="franchiseLocation">Location</label>
+            <input type="text" class="form-control" id="franchiseLocation" name="address" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="franchiseEmail">Email</label>
+            <input type="email" class="form-control" id="franchiseEmail" name="contact_email" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Franchise</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add Marketing Team Member Modal -->
+<div class="modal fade" id="addMarketingMemberModal" tabindex="-1" aria-labelledby="addMarketingMemberModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addMarketingMemberModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-users"></i> Add Marketing Team Member
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addMarketingMemberForm">
+          <div class="mb-3">
+            <label class="form-label" for="marketingMemberName">Name</label>
+            <input type="text" class="form-control" id="marketingMemberName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="marketingMemberEmail">Email</label>
+            <input type="email" class="form-control" id="marketingMemberEmail" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="marketingMemberPhone">Phone</label>
+            <input type="text" class="form-control" id="marketingMemberPhone" name="phone">
+          </div>
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Member</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Toast Notification -->
+<div id="couponToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 2rem; right: 2rem; min-width: 260px; background: #23293a; color: #FFD700; z-index: 9999; display: none; border-radius: 1rem; box-shadow: 0 2px 16px 0 rgba(16,185,129,0.12);">
+  <div class="d-flex">
+    <div class="toast-body" id="couponToastMsg" style="font-weight: 600;"></div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" onclick="document.getElementById('couponToast').style.display='none';"></button>
+  </div>
+</div>
+<div class="activity-feed">
+  <div class="activity-title">Recent Updates</div>
+  <ul class="activity-list">
+    <li class="activity-item"><i class="fa fa-user-shield"></i> Admin rights granted to John Doe</li>
+    <li class="activity-item"><i class="fa fa-database"></i> Database backup completed</li>
+    <li class="activity-item"><i class="fa fa-bug"></i> 3 issues resolved</li>
+  </ul>
+</div>
+<div class="dashboard-chart" style="background: #1E293B;">
+  <canvas id="adminChart"></canvas>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function showCouponToast(msg) {
+  const toast = document.getElementById('couponToast');
+  document.getElementById('couponToastMsg').innerText = msg;
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 3500);
+}
+function animateKpiCount(element, start, end, duration = 600) {
+  if (start === end) return;
+  const range = end - start;
+  let startTime = null;
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    const value = Math.floor(start + range * progress);
+    element.textContent = value;
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      element.textContent = end;
+    }
+  }
+  requestAnimationFrame(step);
+}
+// Add Coupon AJAX
+const addCouponForm = document.getElementById('addCouponForm');
+addCouponForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const discount = document.getElementById('discount').value;
+  fetch('/add-coupon/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: `discount_percentage=${encodeURIComponent(discount)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success) {
+      showCouponToast('✅ Coupon added successfully!');
+      // Update coupon KPI card count with animation
+      const kpi = document.querySelector(".kpi-card[href$='coupons'] .kpi-value");
+      if(kpi) {
+        const current = parseInt(kpi.textContent);
+        animateKpiCount(kpi, current, current + 1);
+      }
+      // Close modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('addCouponModal'));
+      if(modal) modal.hide();
+      addCouponForm.reset();
+    } else {
+      showCouponToast('❌ Failed to add coupon.');
+    }
+  })
+  .catch(() => showCouponToast('❌ Error adding coupon.'));
+});
+// Add Franchise AJAX
+const addFranchiseForm = document.getElementById('addFranchiseForm');
+addFranchiseForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('franchiseName').value;
+  const address = document.getElementById('franchiseLocation').value;
+  const contact_email = document.getElementById('franchiseEmail').value;
+  fetch('/add-franchise/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success) {
+      showCouponToast('✅ Franchise added successfully!');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
+      if(modal) modal.hide();
+      addFranchiseForm.reset();
+    } else {
+      showCouponToast('❌ Failed to add franchise.');
+    }
+  })
+  .catch(() => showCouponToast('❌ Error adding franchise.'));
+});
+// Add Marketing Member AJAX
+const addMarketingMemberForm = document.getElementById('addMarketingMemberForm');
+addMarketingMemberForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('marketingMemberName').value;
+  const email = document.getElementById('marketingMemberEmail').value;
+  const phone = document.getElementById('marketingMemberPhone').value;
+  fetch('/add-marketing-member/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success) {
+      showCouponToast('✅ Marketing team member added!');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('addMarketingMemberModal'));
+      if(modal) modal.hide();
+      addMarketingMemberForm.reset();
+    } else {
+      showCouponToast('❌ Failed to add member.');
+    }
+  })
+  .catch(() => showCouponToast('❌ Error adding member.'));
+});
+const ctxA = document.getElementById('adminChart').getContext('2d');
+new Chart(ctxA, {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [{
+      label: 'User Growth',
+      data: [900, 1050, 1200, 1300, 1400, 1450],
+      borderColor: '#10B981',
+      backgroundColor: 'rgba(16,185,129,0.15)',
+      tension: 0.4,
+      pointBackgroundColor: '#FFD700',
+      pointRadius: 5,
+      fill: true
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1E293B',
+        titleColor: '#FFD700',
+        bodyColor: '#fff',
+        borderColor: '#10B981',
+        borderWidth: 1
+      }
+    },
+    layout: { padding: 16 },
+    backgroundColor: '#1E293B',
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(255,255,255,0.08)' },
+        ticks: { color: '#fff', font: { weight: 'bold' } }
+      },
+      x: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: { color: '#FFD700', font: { weight: 'bold' } }
+      }
+    }
+  },
+  plugins: [{
+    id: 'customCanvasBackgroundColor',
+    beforeDraw: (chart) => {
+      const ctx = chart.canvas.getContext('2d');
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-over';
+      ctx.fillStyle = '#1E293B';
+      ctx.fillRect(0, 0, chart.width, chart.height);
+      ctx.restore();
+    }
+  }]
+});
+</script>
+{% endblock %}

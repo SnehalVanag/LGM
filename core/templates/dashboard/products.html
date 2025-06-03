@@ -1,0 +1,25 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Products | Admin Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-header">Products</div>
+<div class="products-table-container" style="background: var(--charcoal); border-radius: 1.2rem; box-shadow: 0 2px 16px 0 rgba(16,185,129,0.07); border: 1.5px solid rgba(255,255,255,0.06); padding: 2rem 1.5rem; margin-bottom: 2.5rem;">
+  <table class="table table-borderless table-dark table-hover align-middle mb-0" style="--bs-table-bg: transparent;">
+    <thead>
+      <tr style="border-bottom: 2px solid var(--emerald);">
+        <th>#</th>
+        <th>Product Name</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td style="color: var(--gold); font-weight: 600;">{{ product.number }}</td>
+        <td style="color: #d1fae5;">{{ product.name }}</td>
+        <td><img src="{{ product.image }}" alt="{{ product.name }}" style="height: 48px; border-radius: 0.7rem; box-shadow: 0 2px 8px 0 rgba(16,185,129,0.10); background: var(--gray); padding: 2px;" /></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
