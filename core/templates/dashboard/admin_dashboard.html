@@ -1,0 +1,10 @@
+<!-- {# core/admin_dashboard.html #}
+{% if not user.is_authenticated %}
+    <p>Please <a href="{% url 'admin_login' %}">log in as admin</a> to access this page.</p>
+{% endif %} -->
+<form method="post">
+  {% csrf_token %}
+  <input type="text" name="username" required>
+  <input type="password" name="password" required>
+  <button type="submit">Login</button>
+</form>

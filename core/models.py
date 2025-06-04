@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+class CustomUser(AbstractUser):
+    # Add any custom fields here if needed
+    pass
 
 class Coupon(models.Model):
     coupon_id = models.CharField(max_length=10, primary_key=True)
@@ -53,14 +56,13 @@ class AppUser(models.Model):
 
     def __str__(self):
         return self.username
-    
 
+# class Admin(models.Model):
+#     name = models.CharField(max_length=100)  # example field
+#     # Add other fields as needed
 
-
-class CustomUser(AbstractUser):
-    # Add any custom fields here if needed
-    pass
 
 class Admin(models.Model):
-    name = models.CharField(max_length=100)  # example field
-    # Add other fields as needed
+    admin_id = models.CharField(primary_key=True, max_length=20)
+    name = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)

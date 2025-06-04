@@ -16,8 +16,11 @@ from django.db.models import Avg
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
+import random
 from django.conf import settings
 from .models import AppUser
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 
 def home(request):
@@ -28,25 +31,93 @@ def manager_dashboard(request):
     return render(request, 'dashboard/home.html')
 
 
+# def admin_login(request):
+#     error = None
+#     request.session.flush()
+#     if request.method == 'POST':
+#         username = request.POST.get('username', '').strip()
+#         password = request.POST.get('password')
+#         try:
+#             print(f"Trying to log in with username: '{username}'")
+#             # admin = Admin.objects.get(username=username)
+#             admin = Admin.objects.get(name=username)
+#             # Plain text password check (not secure)
+#             if password == admin.password:
+#                 request.session['admin_logged_in'] = True
+#                 request.session['admin_id'] = admin.admin_id
+#                 return redirect(reverse('admin_dashboard'))
+#             else:
+#                 error = 'Invalid username or password.'
+#         except Admin.DoesNotExist:
+#             error = 'Invalid username or password.'
+#     return render(request, 'dashboard/admin_login.html', {'error': error})
+
+
+# def admin_login(request):
+#     error = None
+#     if request.method == 'POST':
+#         username = request.POST.get('username')  # or 'name' if your form uses 'name'
+#         password = request.POST.get('password')
+#         try:
+#             admin = Admin.objects.get(name=username)  # changed from username=username
+#             # ...password check logic...
+#             if password == admin.password:
+#                     request.session['admin_logged_in'] = True
+#                     request.session['admin_id'] = admin.admin_id
+#                     return redirect(reverse('admin_dashboard'))
+#             else:
+#                     error = 'Invalid username or password.'
+#         except Admin.DoesNotExist:
+#             # ...handle error...
+#             error = 'Invalid username or password.'
+#     return render(request, 'dashboard/admin_login.html', {'error': error})
+# def admin_login(request):
+#     error = None
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         try:
+#             admin = Admin.objects.get(name=username)
+#             # admin = Admin.objects.get(name=username)
+#             if password == admin.password:
+#                 request.session['admin_logged_in'] = True
+#                 request.session['admin_id'] = admin.admin_id  # <-- use admin_id, not id
+#                 return redirect(reverse('admin_dashboard'))  # Redirect to dashboard
+#             else:
+#                 error = 'Invalid username or password.'
+#         except Admin.DoesNotExist:
+#             error = 'Invalid username or password.'
+#     return render(request, 'dashboard/admin_login.html', {'error': error})
 def admin_login(request):
     error = None
-    request.session.flush()
     if request.method == 'POST':
-        username = request.POST.get('username', '').strip()
+        username = request.POST.get('username')
         password = request.POST.get('password')
         try:
-            print(f"Trying to log in with username: '{username}'")
-            admin = Admin.objects.get(username=username)
-            # Plain text password check (not secure)
+            admin = Admin.objects.get(name=username)
             if password == admin.password:
                 request.session['admin_logged_in'] = True
                 request.session['admin_id'] = admin.admin_id
-                return redirect(reverse('admin_dashboard'))
+                return redirect(reverse('admin_dashboard'))  # This will navigate!
             else:
                 error = 'Invalid username or password.'
         except Admin.DoesNotExist:
             error = 'Invalid username or password.'
     return render(request, 'dashboard/admin_login.html', {'error': error})
+
+
+# def user_login(request):
+#     error = None
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             return redirect('home')
+#         else:
+#             error = 'Invalid username or password.'
+#     return render(request, 'dashboard/user.html', {'error': error, 'user_login': True})
 
 
 def get_all_coupons():
@@ -99,16 +170,33 @@ def coupons(request):
     return render(request, 'dashboard/coupons.html', {"coupons": coupons_list})
 
 
+# def admin_dashboard(request):
+#     if not request.session.get('admin_logged_in'):
+#         return redirect(reverse('admin_login'))
+#     products_list = [
+#         {"number": i+1, "name": f"Product {i+1}", "image": f"https://picsum.photos/seed/prod{i+1}/80/80"}
+#         for i in range(10)
+#     ]
+#     coupons_list = get_all_coupons()
+#     return render(request, 'dashboard/admin.html', {"products_count": len(products_list), "coupons_count": len(coupons_list)})
+
+# def admin_dashboard(request):
+#     # ...
+#     # Example where it might be used (e.g., for redirection if not logged in)
+#     if not request.user.is_authenticated or not request.user.is_staff: # Assuming admin_login is for staff
+#         return redirect(reverse('admin_login')) # <--- This is where the error occurs
+#     # ...
+#     return render(request, 'core/admin_dashboard.html')
+
+# def admin_dashboard(request):
+#     if not request.session.get('admin_logged_in'):
+#         return redirect(reverse('admin_login'))
+#     # ... your dashboard logic ...
+#     return render(request, 'dashboard/admin.html')
 def admin_dashboard(request):
     if not request.session.get('admin_logged_in'):
         return redirect(reverse('admin_login'))
-    products_list = [
-        {"number": i+1, "name": f"Product {i+1}", "image": f"https://picsum.photos/seed/prod{i+1}/80/80"}
-        for i in range(10)
-    ]
-    coupons_list = get_all_coupons()
-    return render(request, 'dashboard/admin.html', {"products_count": len(products_list), "coupons_count": len(coupons_list)})
-
+    return render(request, 'dashboard/admin.html')
 
 def franchise_dashboard(request):
     return render(request, 'dashboard/franchise.html')
@@ -200,18 +288,6 @@ def get_reviews(request):
     }
     return JsonResponse(data)
 
-def user_login(request):
-    error = None
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')
-        else:
-            error = 'Invalid username or password.'
-    return render(request, 'dashboard/admin_login.html', {'error': error, 'user_login': True})
 
 def user_signup(request):
     error = None
@@ -236,12 +312,49 @@ def user_signup(request):
             return redirect('user_login')
     return render(request, 'dashboard/user_signup.html', {'error': error})
 
+# def send_signup_otp(request):
+#     if request.method == 'POST':
+#         email = request.POST.get('email')
+#         otp = str(random.randint(100000, 999999))
+#         request.session['signup_otp'] = otp
+#         # Send OTP to email (simulate for now)
+#         # send_mail('Your OTP', f'Your OTP is {otp}', settings.DEFAULT_FROM_EMAIL, [email])
+#         return JsonResponse({'success': True, 'otp': otp})
+#     return JsonResponse({'success': False})
+
+def user_login(request):
+    error = None
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            user = AppUser.objects.get(username=username)
+            if password == user.password:
+                request.session['user_logged_in'] = True
+                request.session['user_id'] = user.id
+                return redirect(reverse('home'))  # Redirect to homepage after login
+            else:
+                error = 'Invalid username or password.'
+        except AppUser.DoesNotExist:
+            error = 'Invalid username or password.'
+    return render(request, 'dashboard/user.html', {'error': error})
+@csrf_exempt
 def send_signup_otp(request):
     if request.method == 'POST':
         email = request.POST.get('email')
+        if not email:
+            return JsonResponse({'success': False, 'error': 'No email provided'})
         otp = str(random.randint(100000, 999999))
-        request.session['signup_otp'] = otp
-        # Send OTP to email (simulate for now)
-        # send_mail('Your OTP', f'Your OTP is {otp}', settings.DEFAULT_FROM_EMAIL, [email])
-        return JsonResponse({'success': True, 'otp': otp})
-    return JsonResponse({'success': False})
+        # Save OTP to session or DB as needed
+        try:
+            send_mail(
+                'Your Signup OTP',
+                f'Your OTP is: {otp}',
+                'your_email@gmail.com',
+                [email],
+                fail_silently=False,
+            )
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
