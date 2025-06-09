@@ -72,12 +72,16 @@ WSGI_APPLICATION = 'LGM.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'LGM',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        # 'NAME': 'LGM',
+        # 'USER': 'root',
+        # 'PASSWORD': 'root',
         # 'HOST': 'localhost',
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': '3306',
+        # 'PORT': '3306',
+        'NAME': os.environ.get('LGM'),
+        'USER': os.environ.get('root'),
+        'PASSWORD': os.environ.get('root'),
+        'HOST': os.environ.get('localhost'),
+        'PORT': os.environ.get('3306'),
     }
 }
 AUTH_USER_MODEL = 'core.CustomUser'
