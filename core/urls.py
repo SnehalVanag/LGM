@@ -27,5 +27,7 @@ urlpatterns = [
     path('user-signup/', views.user_signup, name='user_signup'),
     # path('send-signup-otp/', views.send_signup_otp, name='send_signup_otp'),
     path('send-signup-otp/', views.send_signup_otp, name='send_signup_otp'),
+    path('marketing-login/', views.marketing_login, name='marketing_login'),
+    path('franchise-login/', views.franchise_login, name='franchise_login'),
 
 ]

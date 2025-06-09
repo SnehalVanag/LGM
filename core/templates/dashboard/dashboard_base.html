@@ -283,11 +283,14 @@
   <nav class="sidebar" id="sidebarNav">
     <div class="sidebar-header">Dashboard Hub</div>
     <div class="sidebar-nav">
+      {% if request.user.is_authenticated and request.user.profile.is_franchise %}
       <a class="sidebar-link {% if request.resolver_match.url_name == 'franchise_dashboard' %}active{% endif %}" href="{% url 'franchise_dashboard' %}"><i class="fa-solid fa-store"></i> Franchise</a>
+      {% endif %}
+      {% if request.user.is_superuser %}
       <a class="sidebar-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}" href="{% url 'admin_dashboard' %}"><i class="fa-solid fa-user-shield"></i> Admin</a>
-      
       <a class="sidebar-link {% if request.resolver_match.url_name == 'lead_dashboard' %}active{% endif %}" href="{% url 'lead_dashboard' %}"><i class="fa-solid fa-users"></i> Lead</a>
       <a class="sidebar-link {% if request.resolver_match.url_name == 'marketing_dashboard' %}active{% endif %}" href="{% url 'marketing_dashboard' %}"><i class="fa-solid fa-bullhorn"></i> Marketing</a>
+      {% endif %}
       <a class="sidebar-link" href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a>
     </div>
   </nav>

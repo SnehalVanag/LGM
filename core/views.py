@@ -358,3 +358,31 @@ def send_signup_otp(request):
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
     return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+def marketing_login(request):
+    error = None
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # You can implement your own authentication logic here
+        # For now, just allow any username/password for demo
+        if username and password:
+            # In a real app, check against MarketingTeamMember or similar
+            return redirect('marketing_dashboard')
+        else:
+            error = 'Invalid username or password.'
+    return render(request, 'dashboard/admin_login.html', {'error': error, 'marketing_login': True})
+
+def franchise_login(request):
+    error = None
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # Implement your franchise authentication logic here
+        # For now, just allow any username/password for demo
+        if username and password:
+            # In a real app, check against Franchise or similar
+            return redirect('franchise_dashboard')
+        else:
+            error = 'Invalid username or password.'
+    return render(request, 'dashboard/admin_login.html', {'error': error, 'franchise_login': True})
