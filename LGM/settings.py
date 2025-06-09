@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,7 +75,8 @@ DATABASES = {
         'NAME': 'LGM',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
+        # 'HOST': 'localhost',
+        'HOST': os.environ.get('DB_HOST'),
         'PORT': '3306',
     }
 }
