@@ -66,3 +66,10 @@ class Admin(models.Model):
     admin_id = models.CharField(primary_key=True, max_length=20)
     name = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='product_images/')
+
+    def __str__(self):
+        return self.name

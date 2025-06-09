@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path,include
 from core import views
+from .views import add_product
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -29,5 +30,8 @@ urlpatterns = [
     path('send-signup-otp/', views.send_signup_otp, name='send_signup_otp'),
     path('marketing-login/', views.marketing_login, name='marketing_login'),
     path('franchise-login/', views.franchise_login, name='franchise_login'),
+    path('add_product/', add_product, name='add_product'),
+    path('update_product/<int:pk>/', views.update_product, name='update_product'),
+    path('delete_product/<int:pk>/', views.delete_product, name='delete_product'),
 
 ]

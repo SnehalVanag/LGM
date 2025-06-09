@@ -1,0 +1,13 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Delete Product | Admin Dashboard{% endblock %}
+{% block content %}
+<div class="dashboard-header">Delete Product</div>
+<div class="card" style="max-width: 480px; margin: 0 auto; background: var(--charcoal); border-radius: 1.2rem; box-shadow: 0 2px 16px 0 rgba(16,185,129,0.07); border: 1.5px solid rgba(255,255,255,0.06); padding: 2rem 1.5rem;">
+  <h4 style="color: var(--gold);">Are you sure you want to delete <b>{{ product.name }}</b>?</h4>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger w-100" style="border-radius: 2rem; font-weight: 700; margin-top: 1.2rem;">Yes, Delete</button>
+    <a href="{% url 'products' %}" class="btn btn-secondary w-100 mt-2" style="border-radius: 2rem; font-weight: 700;">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -12,6 +12,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'product_images'
+
 # ✅ Add this line to point to your project-level urls.py
 ROOT_URLCONF = 'LGM.urls'
 

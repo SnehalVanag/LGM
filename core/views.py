@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from datetime import datetime, timedelta
 import random, string
-from .forms import FranchiseForm
-from .models import Franchise
-from .models import Coupon
+from .forms import FranchiseForm, ProductForm
+from .models import Franchise, Coupon, Product
 from django.utils import timezone
 from .models import Admin
 from django.contrib.auth.hashers import check_password 
@@ -196,10 +195,18 @@ def coupons(request):
 def admin_dashboard(request):
     if not request.session.get('admin_logged_in'):
         return redirect(reverse('admin_login'))
-    return render(request, 'dashboard/admin.html')
+    products_count = Product.objects.count()
+    coupons_count = Coupon.objects.count()
+    franchises_count = Franchise.objects.count()
+    return render(request, 'dashboard/admin.html', {
+        'products_count': products_count,
+        'coupons_count': coupons_count,
+        'franchises_count': franchises_count,
+    })
 
 def franchise_dashboard(request):
-    return render(request, 'dashboard/franchise.html')
+    franchises = Franchise.objects.all()
+    return render(request, 'dashboard/franchise.html', {'franchises': franchises})
 
 
 def lead_dashboard(request):
@@ -220,10 +227,7 @@ def admin_logout(request):
 
 
 def products(request):
-    products_list = [
-        {"number": i+1, "name": f"Product {i+1}", "image": f"https://picsum.photos/seed/prod{i+1}/80/80"}
-        for i in range(10)
-    ]
+    products_list = Product.objects.all()
     return render(request, 'dashboard/products.html', {"products": products_list})
 
 
@@ -386,3 +390,31 @@ def franchise_login(request):
         else:
             error = 'Invalid username or password.'
     return render(request, 'dashboard/admin_login.html', {'error': error, 'franchise_login': True})
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = ProductForm()
+    return render(request, 'dashboard/add_product.html', {'form': form})
+
+def update_product(request, pk):
+    product = Product.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('products')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'dashboard/add_product.html', {'form': form, 'update': True})
+
+def delete_product(request, pk):
+    product = Product.objects.get(pk=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('products')
+    return render(request, 'dashboard/delete_product.html', {'product': product})

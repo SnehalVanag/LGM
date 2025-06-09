@@ -12,7 +12,10 @@
     <div class="kpi-value">{{ products_count }}</div>
     <div class="kpi-label">Products</div>
   </a>
-  <div class="kpi-card"><div class="kpi-value">87</div><div class="kpi-label">Franchises</div></div>
+  <a href="{% url 'franchise_dashboard' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
+    <div class="kpi-value">{{ franchises_count }}</div>
+    <div class="kpi-label">Franchises</div>
+  </a>
   <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Sales</div></div>
   <a href="{% url 'coupons' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
     <div class="kpi-value">{{ coupons_count }}</div>
@@ -115,14 +118,14 @@
     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" onclick="document.getElementById('couponToast').style.display='none';"></button>
   </div>
 </div>
-<div class="activity-feed">
+<!-- <div class="activity-feed">
   <div class="activity-title">Recent Updates</div>
   <ul class="activity-list">
     <li class="activity-item"><i class="fa fa-user-shield"></i> Admin rights granted to John Doe</li>
     <li class="activity-item"><i class="fa fa-database"></i> Database backup completed</li>
     <li class="activity-item"><i class="fa fa-bug"></i> 3 issues resolved</li>
   </ul>
-</div>
+</div> -->
 <div class="dashboard-chart" style="background: #1E293B;">
   <canvas id="adminChart"></canvas>
 </div>
