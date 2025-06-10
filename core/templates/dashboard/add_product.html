@@ -1,0 +1,131 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add or Update Product</title>
+</head>
+<body>
+    <h1>{% if product %}Update{% else %}Add{% endif %} Product</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if product %}Update{% else %}Add{% endif %} Product</button>
+    </form>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if product %}Update{% else %}Add{% endif %} Product</title>
+    <style>
+        body {
+            /* background: #070707; */
+            background: linear-gradient(120deg, #0B1120 0%, #0F172A 100%);
+
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 430px;
+            margin: 48px auto;
+            background:#10B981;
+            border-radius: 14px;
+            box-shadow: 0 6px 32px rgba(44, 62, 80, 0.10);
+            padding: 36px 32px 28px 32px;
+        }
+        h1 {
+            text-align: center;
+            color: #1f1f20;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        label {
+            font-weight: 500;
+            color: #2d3a4b;
+            margin-bottom: 6px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            padding: 11px 13px;
+            border: 1px solid #c7d0e2;
+            border-radius: 7px;
+            font-size: 1rem;
+            background: #f7fafd;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #23408e;
+            outline: none;
+        }
+        button[type="submit"] {
+            background: linear-gradient(90deg, #23408e 0%, #4f8cff 100%);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            padding: 13px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #4f8cff 0%, #23408e 100%);
+            box-shadow: 0 4px 16px rgba(44, 62, 80, 0.13);
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #23408e;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #4f8cff;
+            text-decoration: underline;
+        }
+            .login-btn {
+      background: linear-gradient(90deg, var(--emerald), var(--gold));
+      color: var(--charcoal);
+      border: none;
+      border-radius: 2rem;
+      padding: 0.7rem 2.2rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 12px 0 rgba(16,185,129,0.10);
+      transition: background var(--transition), color var(--transition), transform 0.2s;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{% if product %}Update{% else %}Add{% endif %} Product</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="login-btn" >{% if product %}Update{% else %}Add{% endif %} Product</button>
+        </form>
+        <a href="{% url 'dashboard' %}" class="back-link">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -412,6 +412,10 @@ def update_product(request, pk):
         form = ProductForm(instance=product)
     return render(request, 'dashboard/add_product.html', {'form': form, 'update': True})
 
+
+def dashboard(request):
+    return render(request, 'dashboard/dashboard.html')
+
 def delete_product(request, pk):
     product = Product.objects.get(pk=pk)
     if request.method == 'POST':
