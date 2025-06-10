@@ -34,5 +34,9 @@ urlpatterns = [
     path('update_product/<int:pk>/', views.update_product, name='update_product'),
     path('delete_product/<int:pk>/', views.delete_product, name='delete_product'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('marketing-dashboard/', views.marketing_dashboard, name='marketing_dashboard'),
+    path('coupons/', views.coupon_list, name='coupon_list'),
+    # path('coupons/', views.coupon_list, name='coupon_list'),  # <-- This is the important one!  # <-- This is required!
+
 
 ]

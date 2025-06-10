@@ -1,0 +1,24 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Coupons{% endblock %}
+{% block content %}
+<h1>Coupons</h1>
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Discount</th>
+    <th>Valid From</th>
+    <th>Valid To</th>
+    <th>Active</th>
+  </tr>
+  {% for coupon in coupons %}
+  <tr>
+    <td>{{ coupon.code }}</td>
+    <td>{{ coupon.discount }}</td>
+    <td>{{ coupon.valid_from }}</td>
+    <td>{{ coupon.valid_to }}</td>
+    <td>{{ coupon.active }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<a href="{% url 'marketing_dashboard' %}">Back to Dashboard</a>
+{% endblock %}

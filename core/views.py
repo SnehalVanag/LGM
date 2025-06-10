@@ -21,7 +21,12 @@ from .models import AppUser
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
+def marketing_dashboard(request):
+    return render(request, 'dashboard/marketing.html')
 
+def coupon_list(request):
+    coupons = Coupon.objects.all()
+    return render(request, 'dashboard/coupon_list.html', {'coupons': coupons})
 def home(request):
     return render(request, 'dashboard/home.html')
 

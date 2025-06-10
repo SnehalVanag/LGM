@@ -17,6 +17,7 @@ urlpatterns = [
      path('admin/', admin.site.urls),  # For Django admin panel
     # path('', include('core.urls')),
      path('', include('core.urls')),
+
     # path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
