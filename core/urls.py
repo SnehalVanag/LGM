@@ -5,7 +5,8 @@ from .views import add_product
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('admin/', admin.site.urls, name='admin'),
+    # path('admin/', admin.site.urls, name='admin'),
+    path('admin/', admin.site.urls),
     path('login/admin/', views.admin_login, name='admin_login'),
     # path('admin-login/', include(('core.urls', 'core'), namespace='core_admin')),
     path('admin-login/', views.admin_login, name='admin_login'),
@@ -36,6 +37,10 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('marketing-dashboard/', views.marketing_dashboard, name='marketing_dashboard'),
     path('coupons/', views.coupon_list, name='coupon_list'),
+    path('add-branch/', views.add_branch, name='add_branch'),
+    path('delete-branch/<int:branch_id>/', views.delete_branch, name='delete_branch'),
+
+
     # path('coupons/', views.coupon_list, name='coupon_list'),  # <-- This is the important one!  # <-- This is required!
 
 

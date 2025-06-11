@@ -14,9 +14,9 @@ urlpatterns = [
     path('lead-dashboard/', views.lead_dashboard, name='lead_dashboard'),
     path('marketing-dashboard/', views.marketing_dashboard, name='marketing_dashboard'),
     # path('', include('core.urls')),
-     path('admin/', admin.site.urls),  # For Django admin panel
+    path('admin/', admin.site.urls), 
     # path('', include('core.urls')),
-     path('', include('core.urls')),
+    path('', include('core.urls')),
 
     # path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
 

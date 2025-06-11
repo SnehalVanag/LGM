@@ -1,19 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add or Update Product</title>
-</head>
-<body>
-    <h1>{% if product %}Update{% else %}Add{% endif %} Product</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">{% if product %}Update{% else %}Add{% endif %} Product</button>
-    </form>
-    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,9 +5,7 @@
     <title>{% if product %}Update{% else %}Add{% endif %} Product</title>
     <style>
         body {
-            /* background: #070707; */
             background: linear-gradient(120deg, #0B1120 0%, #0F172A 100%);
-
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -104,17 +86,17 @@
             color: #4f8cff;
             text-decoration: underline;
         }
-            .login-btn {
-      background: linear-gradient(90deg, var(--emerald), var(--gold));
-      color: var(--charcoal);
-      border: none;
-      border-radius: 2rem;
-      padding: 0.7rem 2.2rem;
-      font-weight: 700;
-      font-size: 1.1rem;
-      box-shadow: 0 2px 12px 0 rgba(16,185,129,0.10);
-      transition: background var(--transition), color var(--transition), transform 0.2s;
-    }
+        .login-btn {
+            background: linear-gradient(90deg, var(--emerald), var(--gold));
+            color: var(--charcoal);
+            border: none;
+            border-radius: 2rem;
+            padding: 0.7rem 2.2rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 12px 0 rgba(16,185,129,0.10);
+            transition: background var(--transition), color var(--transition), transform 0.2s;
+        }
     </style>
 </head>
 <body>
@@ -122,8 +104,28 @@
         <h1>{% if product %}Update{% else %}Add{% endif %} Product</h1>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="login-btn" >{% if product %}Update{% else %}Add{% endif %} Product</button>
+            {{ form.non_field_errors }}
+            <label for="id_name">Product Name</label>
+            {{ form.name.errors }}
+            {{ form.name }}
+
+            <label for="id_image">Product Image</label>
+            {{ form.image.errors }}
+            {{ form.image }}
+
+            <label for="id_discount">Product Discount (%)</label>
+{{ form.discount.errors }}
+{{ form.discount }}
+<!-- 
+            <label for="id_discount">Product Discount (%)</label>
+            {{ form.discount.errors }}
+            {{ form.discount }} -->
+
+            <label for="id_description">Description</label>
+            {{ form.description.errors }}
+            {{ form.description }}
+
+            <button type="submit" class="login-btn">{% if product %}Update{% else %}Add{% endif %} Product</button>
         </form>
         <a href="{% url 'dashboard' %}" class="back-link">← Back to Dashboard</a>
     </div>

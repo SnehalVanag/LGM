@@ -20,6 +20,35 @@ from django.conf import settings
 from .models import AppUser
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+
+
+
+
+def delete_branch(request, branch_id):
+    branch = get_object_or_404(Franchise, id=branch_id)
+    if request.method == 'POST':
+        branch.delete()
+        return redirect('franchise_dashboard')
+    return redirect('franchise_dashboard')
+
+
+def add_branch(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        area = request.POST.get('area')
+        contact_email = request.POST.get('contact_email')
+        # Save new branch
+        Franchise.objects.create(
+            name=name,
+            address=address,
+            area=area,
+            contact_email=contact_email
+        )
+        return redirect('franchise_dashboard')  # or your dashboard view name
+    return redirect('franchise_dashboard')
+
 
 def marketing_dashboard(request):
     return render(request, 'dashboard/marketing.html')
@@ -34,6 +63,16 @@ def home(request):
 def manager_dashboard(request):
     return render(request, 'dashboard/home.html')
 
+
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')  # or wherever you want to go after saving
+    else:
+        form = ProductForm()
+    return render(request, 'dashboard/add_product.html', {'form': form})
 
 # def admin_login(request):
 #     error = None
