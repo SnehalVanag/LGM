@@ -26,6 +26,14 @@ from .models import Franchise
 from .models import Staff
 from .forms import StaffForm
 from django.contrib.auth import get_user_model
+# from django.contrib.auth.decorators import login_required
+
+def franchise_products(request):
+    products = Product.objects.all()  # or filter as needed
+    return render(request, 'dashboard/products.html', {
+        'products': products,
+        'disable_actions': True,
+    })
 
 def add_staff(request):
     if request.method == 'POST':
@@ -84,12 +92,15 @@ def marketing_dashboard(request):
     staff_list = Staff.objects.all()
     staff_count = staff_list.count()
     user_count = AppUser.objects.count()
+    franchises = Franchise.objects.all()
+
     # User = get_user_model()
     # user_count = User.objects.filter(is_active=True).count()
     return render(request, 'dashboard/marketing.html', {
         'staff_list': staff_list,
         'staff_count': staff_count,
         'user_count': user_count,
+        'franchises': franchises,
     # return render(request, 'dashboard/marketing.html')
   })
 
@@ -114,46 +125,7 @@ def add_product(request):
         form = ProductForm()
     return render(request, 'dashboard/add_product.html', {'form': form})
 
-# def admin_login(request):
-#     error = None
-#     request.session.flush()
-#     if request.method == 'POST':
-#         username = request.POST.get('username', '').strip()
-#         password = request.POST.get('password')
-#         try:
-#             print(f"Trying to log in with username: '{username}'")
-#             # admin = Admin.objects.get(username=username)
-#             admin = Admin.objects.get(name=username)
-#             # Plain text password check (not secure)
-#             if password == admin.password:
-#                 request.session['admin_logged_in'] = True
-#                 request.session['admin_id'] = admin.admin_id
-#                 return redirect(reverse('admin_dashboard'))
-#             else:
-#                 error = 'Invalid username or password.'
-#         except Admin.DoesNotExist:
-#             error = 'Invalid username or password.'
-#     return render(request, 'dashboard/admin_login.html', {'error': error})
 
-
-# def admin_login(request):
-#     error = None
-#     if request.method == 'POST':
-#         username = request.POST.get('username')  # or 'name' if your form uses 'name'
-#         password = request.POST.get('password')
-#         try:
-#             admin = Admin.objects.get(name=username)  # changed from username=username
-#             # ...password check logic...
-#             if password == admin.password:
-#                     request.session['admin_logged_in'] = True
-#                     request.session['admin_id'] = admin.admin_id
-#                     return redirect(reverse('admin_dashboard'))
-#             else:
-#                     error = 'Invalid username or password.'
-#         except Admin.DoesNotExist:
-#             # ...handle error...
-#             error = 'Invalid username or password.'
-#     return render(request, 'dashboard/admin_login.html', {'error': error})
 # def admin_login(request):
 #     error = None
 #     if request.method == 'POST':
@@ -161,11 +133,10 @@ def add_product(request):
 #         password = request.POST.get('password')
 #         try:
 #             admin = Admin.objects.get(name=username)
-#             # admin = Admin.objects.get(name=username)
 #             if password == admin.password:
 #                 request.session['admin_logged_in'] = True
-#                 request.session['admin_id'] = admin.admin_id  # <-- use admin_id, not id
-#                 return redirect(reverse('admin_dashboard'))  # Redirect to dashboard
+#                 request.session['admin_id'] = admin.admin_id
+#                 return redirect(reverse('admin_dashboard'))  # This will navigate!
 #             else:
 #                 error = 'Invalid username or password.'
 #         except Admin.DoesNotExist:
@@ -181,13 +152,14 @@ def admin_login(request):
             if password == admin.password:
                 request.session['admin_logged_in'] = True
                 request.session['admin_id'] = admin.admin_id
-                return redirect(reverse('admin_dashboard'))  # This will navigate!
+                request.session['is_core_admin'] = True  # <-- Add this line
+                request.session['admin_name'] = admin.name  # <-- And this line
+                return redirect(reverse('admin_dashboard'))
             else:
                 error = 'Invalid username or password.'
         except Admin.DoesNotExist:
             error = 'Invalid username or password.'
     return render(request, 'dashboard/admin_login.html', {'error': error})
-
 
 # def user_login(request):
 #     error = None
@@ -292,12 +264,28 @@ def admin_dashboard(request):
         'franchises': franchises,
     })
 
-
-
+# @login_required
 def franchise_dashboard(request):
     franchises = Franchise.objects.all()
-    return render(request, 'dashboard/franchise.html', {'franchises': franchises})
+    return render(request, 'dashboard/franchise.html', {
+        'franchises': franchises,
+        'admin_user': request.user,
+    })
 
+# @login_required
+# def franchise_dashboard(request):
+#     franchises = Franchise.objects.all()
+#     return render(request, 'dashboard/franchise.html', {
+#         'franchises': franchises,
+#         'admin_user': request.user,
+#     })
+# def franchise_dashboard(request):
+#     franchises = Franchise.objects.all()
+#     admin_user = request.user
+#     return render(request, 'dashboard/franchise.html', {
+#     'franchises': franchises,
+#     'admin_user': admin_user,  # <--- comma here
+# })    
 
 def lead_dashboard(request):
     return render(request, 'dashboard/lead.html')

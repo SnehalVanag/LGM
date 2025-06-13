@@ -12,19 +12,19 @@
     <div class="kpi-label">staff Points</div>
   </div> -->
   <div class="kpi-card">
-
-    <a href="{% url 'products' %}"  style="text-decoration:none; cursor:pointer;">
-    <div class="kpi-value">{{ products_count }}</div>
-    <div class="kpi-label">Products</div>
-  </a>
+    <a href="{% url 'products' %}" style="text-decoration:none; cursor:pointer;">
+      <div class="kpi-value">{{ products_count }}</div>
+      <div class="kpi-label">Products</div>
+    </a>
   </div>
   <div class="kpi-card">
-    <a href="#" style="text-decoration:none; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#franchiseListModal">
-  <div class="kpi-value">{{ franchises_count }}</div>
-  <div class="kpi-label">Franchises</div>
-</a>
+    <a href="#" style="text-decoration:none; cursor:pointer;" data-bs-toggle="modal"
+      data-bs-target="#franchiseListModal">
+      <div class="kpi-value">{{ franchises_count }}</div>
+      <div class="kpi-label">Franchises</div>
+    </a>
   </div>
- 
+
   <!-- Coupon Card -->
   <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
     <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
@@ -125,7 +125,8 @@
   <canvas id="marketingChart"></canvas>
 </div>
 <!-- Franchise List Modal -->
-<div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel" aria-hidden="true">
+<div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
@@ -136,7 +137,8 @@
       </div>
       <div class="modal-body">
         <div class="table-responsive">
-          <table class="table table-dark table-hover align-middle mb-0" style="border-radius: 0.7rem; overflow: hidden;">
+          <table class="table table-dark table-hover align-middle mb-0"
+            style="border-radius: 0.7rem; overflow: hidden;">
             <thead style="background: #10B981;">
               <tr>
                 <th>#</th>
@@ -176,34 +178,34 @@
 {% block extra_js %}
 <script>
   const addFranchiseForm = document.getElementById('addFranchiseForm');
-addFranchiseForm.addEventListener('submit', function(e) {
-  e.preventDefault();
-  const name = document.getElementById('franchiseName').value;
-  const address = document.getElementById('franchiseLocation').value;
-  const contact_email = document.getElementById('franchiseEmail').value;
-  const phone_number = document.querySelector('input[name="phone_number"]').value; // <-- Add this line
+  addFranchiseForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('franchiseName').value;
+    const address = document.getElementById('franchiseLocation').value;
+    const contact_email = document.getElementById('franchiseEmail').value;
+    const phone_number = document.querySelector('input[name="phone_number"]').value; // <-- Add this line
 
-  fetch('/add-franchise/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'X-CSRFToken': '{{ csrf_token }}'
-    },
-    body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}` // <-- Add phone_number here
-  })
-  .then(res => res.json())
-  .then(data => {
-    if(data.success) {
-      showCouponToast('✅ Franchise added successfully!');
-      const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
-      if(modal) modal.hide();
-      addFranchiseForm.reset();
-    } else {
-      showCouponToast('❌ Failed to add franchise.');
-    }
-  })
-  .catch(() => showCouponToast('❌ Error adding franchise.'));
-});
+    fetch('/add-franchise/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}` // <-- Add phone_number here
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showCouponToast('✅ Franchise added successfully!');
+          const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
+          if (modal) modal.hide();
+          addFranchiseForm.reset();
+        } else {
+          showCouponToast('❌ Failed to add franchise.');
+        }
+      })
+      .catch(() => showCouponToast('❌ Error adding franchise.'));
+  });
 
 
   function toggleStaffModal() {

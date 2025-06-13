@@ -40,6 +40,9 @@ urlpatterns = [
     path('staff/add/', views.add_staff, name='add_staff'),
     path('staff/<int:pk>/edit/', views.edit_staff, name='edit_staff'),
     path('staff/<int:pk>/delete/', views.delete_staff, name='delete_staff'),
+    path('franchise-dashboard/', views.franchise_dashboard, name='franchise_dashboard'),
+    # path('admin-login/', views.admin_login, name='admin_login'),
+    
 
 
     # path('coupons/', views.coupon_list, name='coupon_list'),  # <-- This is the important one!  # <-- This is required!

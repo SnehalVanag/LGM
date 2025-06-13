@@ -25,10 +25,23 @@
           <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 48px; border-radius: 0.7rem; box-shadow: 0 2px 8px 0 rgba(16,185,129,0.10); background: var(--gray); padding: 2px;" />
         </td>
         <td style="color: #facc15;">{{ product.discount }}%</td>
-        <td>
+        <!-- <td>
           <a href="{% url 'update_product' product.id %}" class="btn btn-warning btn-sm" style="border-radius: 1rem; font-weight: 600; margin-right: 0.5rem;">Update</a>
           <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm" style="border-radius: 1rem; font-weight: 600;" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
-        </td>
+        </td> -->
+        <td>
+  <a href="{% url 'update_product' product.id %}" class="btn btn-warning btn-sm"
+     style="border-radius: 1rem; font-weight: 600; margin-right: 0.5rem;"
+     {% if disable_actions %}disabled tabindex="-1" aria-disabled="true"{% endif %}>
+    Update
+  </a>
+  <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm"
+     style="border-radius: 1rem; font-weight: 600;"
+     onclick="return confirm('Are you sure you want to delete this product?');"
+     {% if disable_actions %}disabled tabindex="-1" aria-disabled="true"{% endif %}>
+    Delete
+  </a>
+</td>
       </tr>
       {% endfor %}
     </tbody>

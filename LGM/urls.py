@@ -17,6 +17,7 @@ urlpatterns = [
     path('admin/', admin.site.urls), 
     # path('', include('core.urls')),
     path('', include('core.urls')),
+    # path('admin-login/', views.admin_login, name='admin_login'),
 
     # path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
 

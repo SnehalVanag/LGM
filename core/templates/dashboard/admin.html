@@ -16,7 +16,11 @@
   <div class="kpi-value">{{ franchises_count }}</div>
   <div class="kpi-label">Franchises</div>
 </a>
-  <!-- <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Sales</div></div> -->
+<a href="{% url 'franchise_dashboard' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
+  <div class="kpi-value">{{ franchises_count }}</div>
+  <div class="kpi-label">Franchises dashwhe</div>
+</a>
+ <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Sales</div></div> 
   <a href="{% url 'coupons' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
     <div class="kpi-value">{{ coupons_count }}</div>
     <div class="kpi-label">Coupons</div>
@@ -160,6 +164,42 @@
           </table>
         </div>
       </div>
+      <!-- Add this Edit Franchise Modal after Add Franchise Modal -->
+<!-- filepath: c:\Users\sneha\OneDrive\Desktop\LGM_Proj (3) (2)\LGM_Proj (2)\LGM_Proj\LGM_Proj\LGM_p\core\templates\dashboard\admin.html -->
+<div class="modal fade" id="editFranchiseModal" tabindex="-1" aria-labelledby="editFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="editFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-edit"></i> Edit Franchise
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editFranchiseForm">
+          <input type="hidden" id="editFranchiseId" name="id">
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseName">Name</label>
+            <input type="text" class="form-control" id="editFranchiseName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseLocation">Location</label>
+            <input type="text" class="form-control" id="editFranchiseLocation" name="address" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseEmail">Email</label>
+            <input type="email" class="form-control" id="editFranchiseEmail" name="contact_email" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchisePhone">Phone Number</label>
+            <input type="text" class="form-control" id="editFranchisePhone" name="phone_number" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Update Franchise</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
   </div>
 </div>
@@ -197,11 +237,61 @@
 {% endblock %}
 {% block extra_js %}
 <script>
+function editFranchise(id) {
+  // Find the franchise data in the table row
+  const row = document.querySelector(`button[onclick="editFranchise(${id})"]`).closest('tr');
+  const name = row.children[1].textContent.trim();
+  const address = row.children[2].textContent.trim();
+  const contact_email = row.children[3].textContent.trim();
+  const phone_number = row.children[4].textContent.trim();
 
-  function editFranchise(id) {
-  // Open a modal and load franchise data for editing (implement as needed)
-  alert('Edit franchise with ID: ' + id);
+  // Fill the modal form
+  document.getElementById('editFranchiseId').value = id;
+  document.getElementById('editFranchiseName').value = name;
+  document.getElementById('editFranchiseLocation').value = address;
+  document.getElementById('editFranchiseEmail').value = contact_email;
+  document.getElementById('editFranchisePhone').value = phone_number;
+
+  // Show the modal
+  const modal = new bootstrap.Modal(document.getElementById('editFranchiseModal'));
+  modal.show();
 }
+
+// Handle Edit Franchise form submit
+const editFranchiseForm = document.getElementById('editFranchiseForm');
+editFranchiseForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const id = document.getElementById('editFranchiseId').value;
+  const name = document.getElementById('editFranchiseName').value;
+  const address = document.getElementById('editFranchiseLocation').value;
+  const contact_email = document.getElementById('editFranchiseEmail').value;
+  const phone_number = document.getElementById('editFranchisePhone').value;
+
+  fetch(`/update-franchise/${id}/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success) {
+      showCouponToast('✅ Franchise updated successfully!');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('editFranchiseModal'));
+      if(modal) modal.hide();
+      setTimeout(() => location.reload(), 1200);
+    } else {
+      showCouponToast('❌ Failed to update franchise.');
+    }
+  })
+  .catch(() => showCouponToast('❌ Error updating franchise.'));
+});
+//   function editFranchise(id) {
+//   // Open a modal and load franchise data for editing (implement as needed)
+//   alert('Edit franchise with ID: ' + id);
+// }
 
 function deleteFranchise(id) {
   if (confirm('Are you sure you want to delete this franchise?')) {
