@@ -67,6 +67,10 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'snehalvanage57@gmail.com'
 EMAIL_HOST_PASSWORD = 'Snehal@123'
 # LOGIN_URL = '/admin-login/'
+
+
+AUTH_USER_MODEL = 'core.CustomUser'
+
 WSGI_APPLICATION = 'LGM.wsgi.application'
 DATABASES = {
     'default': {

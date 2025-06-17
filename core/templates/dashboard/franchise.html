@@ -1,34 +1,125 @@
 {% extends 'dashboard/dashboard_base.html' %}
-{% block title %}Franchise Dashboard{% endblock %}
+{% block title %}Franchise Dashboard | Products | Admin Dashboard{% endblock %}
 {% block content %}
+<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
+  <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
+    <i class="fa fa-sign-out-alt"></i> Logout
+  </a>
+</div>
 <div class="dashboard-header">Franchise Dashboard</div>
+
 <div class="kpi-cards">
-  <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Branches</div></div>
+  <!-- <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Branches</div></div> -->
+   <!-- Franchise KPI Card -->
+<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#franchiseListModal">
+  <div class="kpi-value">{{ franchises|length }}</div>
+  <div class="kpi-label">Franchises</div>
+</div>
+
+<!-- Franchise List Modal -->
+<div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="franchiseListModalLabel" style="color:#FFD700;">Franchise List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background:none;color:#FFD700;"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Area</th>
+                <th>Email</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for franchise in franchises %}
+              <tr>
+                <td style="color: var(--gold); font-weight: 600;">{{ forloop.counter }}</td>
+                <td style="color: #d1fae5;">{{ franchise.name }}</td>
+                <td>{{ franchise.address }}</td>
+                <td>{{ franchise.area }}</td>
+                <td>{{ franchise.contact_email }}</td>
+                <td>{{ franchise.created_at|date:'Y-m-d H:i' }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">No franchises found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
   <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
   <div class="kpi-label">Coupons</div>
   <div style="font-size:12px;color:#FFD700;">View Coupons</div>
   
 </div>
-  <div class="kpi-card">
+<!-- Product KPI Card -->
+<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#productListModal">
+  <div class="kpi-value">{{ products|length }}</div>
+  <div class="kpi-label">Products</div>
+</div>
+
+<!-- Product List Modal -->
+<div class="modal fade" id="productListModal" tabindex="-1" aria-labelledby="productListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="productListModalLabel" style="color:#FFD700;">Product List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background:none;color:#FFD700;"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in products %}
+              <tr>
+                <td style="color: var(--gold); font-weight: 600;">{{ forloop.counter }}</td>
+                <td style="color: #d1fae5;">{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.created_at|date:'Y-m-d H:i' }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center text-muted">No products found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- <div class="kpi-card">
     <a href="{% url 'products' %}" style="text-decoration:none; cursor:pointer;">
       <div class="kpi-value">{{ products_count }}</div>
       <div class="kpi-label">Products</div>
     </a>
-  </div>
+  </div> -->
 </div>
-<!-- Example: Show admin info in the dashboard header -->
-<div style="display: flex; align-items: center; justify-content: flex-end; gap: 1rem; margin-bottom: 1.2rem;">
-  {% if request.session.is_core_admin %}
-  <span style="color: #FFD700; font-weight: 600;">
-    <i class="fa fa-user-circle"></i>
-    {{ request.session.admin_name }}
-  </span>
-{% endif %}
-  <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem;">
-    <i class="fa fa-sign-out-alt"></i> Logout
-  </a>
-</div>
+
 <div class="quick-actions">
   <!-- <button class="quick-action-btn" onclick="openBranchModal()"><i class="fa fa-plus"></i> Add Branch</button> -->
   <button class="quick-action-btn"><i class="fa fa-chart-line"></i> View Reports</button>
@@ -74,7 +165,7 @@
   </ul>
 </div>
 <!-- Franchise List Section -->
-<div class="franchise-list-section" style="margin-top:2rem;">
+<!-- <div class="franchise-list-section" style="margin-top:2rem;">
   <h3 style="color:#FFD700;">Franchise List</h3>
   <table class="table table-dark table-striped" style="border-radius:1rem;overflow:hidden;">
     <thead>
@@ -109,7 +200,7 @@
 {% endfor %}
     </tbody>
   </table>
-</div>
+</div> -->
 
 <!-- Franchise List Section -->
 
