@@ -111,7 +111,9 @@
       <form method="post" class="signup-form">
         {% csrf_token %}
         <input type="text" name="username" class="signup-input" placeholder="Username" required autofocus />
-        <input type="email" name="email" class="signup-input" placeholder="Email" required />
+<!-- <input type="tel" name="phone" class="signup-input" placeholder="+91XXXXXXXXXX" required /> -->
+ <input type="email" name="email" class="signup-input" placeholder="Email" required />
+
         <input type="password" name="password1" class="signup-input" placeholder="Password" required />
         <input type="password" name="password2" class="signup-input" placeholder="Confirm Password" required />
         <input type="text" name="otp" class="signup-input" placeholder="Enter OTP" required style="display:none;" id="otpInput" />
@@ -126,30 +128,37 @@
   </div>
   <script>
     // OTP logic (frontend + backend)
-    document.getElementById('sendOtpBtn').onclick = function(e) {
-      e.preventDefault();
-      const email = document.querySelector('input[name="email"]').value;
-      if (!email) { alert('Please enter your email first.'); return; }
-      fetch('/send-signup-otp/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        },
-        body: `email=${encodeURIComponent(email)}`
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.success) {
-          document.getElementById('otpInput').style.display = 'block';
-          document.getElementById('signupBtn').style.display = 'inline-block';
-          document.getElementById('sendOtpBtn').style.display = 'none';
-          alert('OTP sent to your email!');
-        } else {
-          alert('Failed to send OTP.');
-        }
-      });
-    };
+    document.getElementById('sendOtpBtn').onclick = function (e) {
+  e.preventDefault();
+  const email = document.querySelector('input[name="email"]').value;
+  if (!email) {
+    alert('Please enter your email first.');
+    return;
+  }
+
+  fetch('/send-email-otp/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+    },
+    body: `email=${encodeURIComponent(email)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('otpInput').style.display = 'block';
+      document.getElementById('signupBtn').style.display = 'inline-block';
+      document.getElementById('sendOtpBtn').style.display = 'none';
+      alert('OTP sent to your email!');
+    } else {
+      alert('Failed to send OTP: ' + (data.error || 'Unknown error.'));
+    }
+  })
+  .catch(err => {
+    alert('Error sending OTP: ' + err.message);
+  });
+};
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

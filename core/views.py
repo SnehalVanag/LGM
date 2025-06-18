@@ -29,7 +29,66 @@ from django.contrib.auth import get_user_model
 # from django.contrib.auth.decorators import login_required
 from .models import Franchise
 from .forms import FranchiseForm  # You need to create this form
+from django.shortcuts import render
+# ffrom django.shortcuts import render
+from twilio.rest import Client
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import random
+from django.core.mail import send_mail
+from .forms import EmailForm, OTPForm
+from .models import OTP
 
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+# In-memory store for demo purpose (replace with cache or DB in real use)
+otp_store = {}
+
+def generate_otp():
+    return str(random.randint(100000, 999999))
+
+@csrf_exempt
+def send_email_otp(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        otp = generate_otp()
+        otp_store[email] = otp
+
+        # Send email
+        try:
+            send_mail(
+                subject='Your OTP for Signup',
+                message=f'Your OTP is {otp}',
+                from_email='your-email@example.com',
+                recipient_list=[email],
+                fail_silently=False,
+            )
+            return JsonResponse({'success': True})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+def signup_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        otp = request.POST['otp']
+
+        if password1 != password2:
+            return render(request, 'signup.html', {'error': 'Passwords do not match.'})
+        
+        if email not in otp_store or otp_store[email] != otp:
+            return render(request, 'signup.html', {'error': 'Invalid or expired OTP.'})
+
+        # Create user
+        User.objects.create_user(username=username, email=email, password=password1)
+        del otp_store[email]  # Remove used OTP
+        return redirect('user_login')
+
+    return render(request, 'signup.html')
 def edit_franchise(request, pk):
     franchise = get_object_or_404(Franchise, pk=pk)
     if request.method == 'POST':

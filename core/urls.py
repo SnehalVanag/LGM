@@ -46,6 +46,9 @@ urlpatterns = [
     path('franchise/<int:pk>/edit/', views.edit_franchise, name='edit_franchise'),
     path('franchise/<int:pk>/delete/', views.delete_franchise, name='delete_franchise'),
     path('add-staff/', views.add_staff, name='add_staff'),
+    path('signup/', views.signup_view, name='signup'),
+    path('send-email-otp/', views.send_email_otp, name='send_email_otp'),
+
 
 
     

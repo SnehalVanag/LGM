@@ -3,6 +3,13 @@ from .models import Franchise, Product
 from .models import Staff
 
 
+
+class EmailForm(forms.Form):
+    email = forms.EmailField()
+
+class OTPForm(forms.Form):
+    otp = forms.CharField(max_length=6)
+
 class FranchiseForm(forms.ModelForm):
     class Meta:
         model = Franchise
