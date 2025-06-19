@@ -3,6 +3,16 @@ import os
 import pymysql
 pymysql.install_as_MySQLdb()
 
+from decouple import config
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+DEBUG = config('DEBUG', default=False, cast=bool)
+SECRET_KEY = config('SECRET_KEY')
+
+ALLOWED_HOSTS = ['your-app-name.onrender.com']
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 import os
 import dj_database_url
 from pathlib import Path # Path might already be there
@@ -43,6 +53,9 @@ INSTALLED_APPS = [
     'core',  # Your custom app
 ]
 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 TEMPLATES = [
@@ -86,14 +100,23 @@ WSGI_APPLICATION = 'LGM.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv("LGM"),
-        'USER': os.getenv("root"),
-        'PASSWORD': os.getenv("root"),
-        'HOST': os.getenv("localhost"),
-        'PORT': os.getenv("3306")
+        'NAME': "LGM",
+        'USER': "root",
+        'PASSWORD': "root",
+        'HOST': "localhost",
+        'PORT': "3306"
 }
 }
 AUTH_USER_MODEL = 'core.CustomUser'
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Now BASE_DIR is defined
+
+
+# Optional for media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ALLOWED_HOSTS = ['*']
 
