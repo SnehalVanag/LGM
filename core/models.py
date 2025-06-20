@@ -105,7 +105,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-    # class AppUser(AbstractUser):
-    #     created_at = models.DateTimeField(auto_now_add=True)
+    #class AppUser(AbstractUser):
+         #created_at = models.DateTimeField(auto_now_add=True)
     # # is_active is already included in AbstractUser
     
