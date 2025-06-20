@@ -93,16 +93,18 @@ def marketing_dashboard(request):
     staff_count = staff_list.count()
     user_count = AppUser.objects.count()
     franchises = Franchise.objects.all()
-
-    # User = get_user_model()
-    # user_count = User.objects.filter(is_active=True).count()
+    from .models import Lead
+    leads_count = Lead.objects.count()
+    from .forms_lead import LeadForm
+    lead_form = LeadForm()
     return render(request, 'dashboard/marketing.html', {
         'staff_list': staff_list,
         'staff_count': staff_count,
         'user_count': user_count,
         'franchises': franchises,
-    # return render(request, 'dashboard/marketing.html')
-  })
+        'leads_count': leads_count,
+        'form': lead_form,
+    })
 
 def coupon_list(request):
     coupons = Coupon.objects.all()
@@ -288,8 +290,9 @@ def franchise_dashboard(request):
 # })    
 
 def lead_dashboard(request):
-    return render(request, 'dashboard/lead.html')
-
+    from .models import Lead
+    leads = Lead.objects.all().order_by('-created_at')
+    return render(request, 'dashboard/lead.html', {'leads': leads})
 
 
 def user_dashboard(request):
@@ -557,3 +560,18 @@ def delete_product(request, pk):
         product.delete()
         return redirect('products')
     return render(request, 'dashboard/delete_product.html', {'product': product})
+
+from .forms_lead import LeadForm
+from .models import Lead
+
+def add_lead(request):
+    if request.method == 'POST':
+        from .forms_lead import LeadForm
+        form = LeadForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('marketing_dashboard')  # Redirect to marketing dashboard after adding lead
+    else:
+        from .forms_lead import LeadForm
+        form = LeadForm()
+    return render(request, 'dashboard/add_lead.html', {'form': form})
