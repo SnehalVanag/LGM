@@ -16,17 +16,59 @@
   <div class="kpi-value">{{ franchises_count }}</div>
   <div class="kpi-label">Franchises</div>
 </a>
-<a href="{% url 'franchise_dashboard' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
-  <div class="kpi-value">{{ franchises_count }}</div>
-  <div class="kpi-label">Franchises dashwhe</div>
-</a>
- <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Sales</div></div> 
+
+
   <a href="{% url 'coupons' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
     <div class="kpi-value">{{ coupons_count }}</div>
     <div class="kpi-label">Coupons</div>
   </a>
   <div class="kpi-card"><div class="kpi-value">4.8/5</div><div class="kpi-label">Leads</div></div>
   <!-- <div class="kpi-card"><div class="kpi-value">4.8/5</div><div class="kpi-label">Referral</div></div> -->
+<a href="#" class="kpi-card" style="text-decoration:none; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#marketingListModal">
+  <div class="kpi-value">{{ marketing_members_count }}</div>
+  <div class="kpi-label">Marketing Team</div>
+</a>
+<!-- Marketing Members List Modal -->
+<div class="modal fade" id="marketingListModal" tabindex="-1" aria-labelledby="marketingListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="marketingListModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-users"></i> Marketing Team Members
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle mb-0" style="border-radius: 0.7rem; overflow: hidden;">
+            <thead style="background: #10B981;">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for member in marketing_members %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.email }}</td>
+                <td>{{ member.phone }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-center text-muted">No marketing team members found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 <div class="quick-actions">
   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
@@ -350,19 +392,19 @@ addCouponForm.addEventListener('submit', function(e) {
     body: `discount_percentage=${encodeURIComponent(discount)}`
   })
   .then(res => res.json())
-  .then(data => {
+.then(data => {
     if(data.success) {
       showCouponToast('✅ Coupon added successfully!');
-      // Update coupon KPI card count with animation
-      const kpi = document.querySelector(".kpi-card[href$='coupons'] .kpi-value");
-      if(kpi) {
-        const current = parseInt(kpi.textContent);
-        animateKpiCount(kpi, current, current + 1);
+      // Update the coupon count immediately
+      const couponKpi = document.querySelector('a[href$="coupons"] .kpi-value');
+      if (couponKpi) {
+        let current = parseInt(couponKpi.textContent) || 0;
+        couponKpi.textContent = current + 1;
       }
-      // Close modal
       const modal = bootstrap.Modal.getInstance(document.getElementById('addCouponModal'));
       if(modal) modal.hide();
       addCouponForm.reset();
+      setTimeout(() => location.reload(), 1200); // Optional: reload for full sync
     } else {
       showCouponToast('❌ Failed to add coupon.');
     }

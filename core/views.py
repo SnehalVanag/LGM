@@ -27,6 +27,29 @@ from .models import Staff
 from .forms import StaffForm
 from django.contrib.auth import get_user_model
 # from django.contrib.auth.decorators import login_required
+from .models import Franchise
+from .forms import FranchiseForm  # You need to create this form
+
+
+def edit_franchise(request, pk):
+    franchise = get_object_or_404(Franchise, pk=pk)
+    if request.method == 'POST':
+        form = FranchiseForm(request.POST, instance=franchise)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Franchise updated successfully.')
+            return redirect('marketing_dashboard')  # Change to your dashboard url name
+    else:
+        form = FranchiseForm(instance=franchise)
+    return render(request, 'dashboard/edit_franchise.html', {'form': form, 'franchise': franchise})
+
+def delete_franchise(request, pk):
+    franchise = get_object_or_404(Franchise, pk=pk)
+    if request.method == 'POST':
+        franchise.delete()
+        messages.success(request, 'Franchise deleted successfully.')
+        return redirect('marketing_dashboard')  # Change to your dashboard url name
+    return render(request, 'dashboard/confirm_delete_franchise.html', {'franchise': franchise})
 
 def franchise_products(request):
     products = Product.objects.all()  # or filter as needed
@@ -34,17 +57,85 @@ def franchise_products(request):
         'products': products,
         'disable_actions': True,
     })
-
+@csrf_exempt
 def add_staff(request):
     if request.method == 'POST':
-        form = StaffForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('marketing_dashboard')  # Change to your dashboard url name
-    else:
-        form = StaffForm()
-    return render(request, 'dashboard/add_staff.html', {'form': form})
+        try:
+            data = json.loads(request.body)
+            name = data.get('name')
+            address = data.get('address') # Assuming this is office_address from your models
+            contact_email = data.get('contact_email')
+            phone_number = data.get('phone_number')
+            # You'll likely need to link to existing User and Franchise
+            # For example, if franchise_id is part of your data, or derived from authenticated user
+            # franchise_id = data.get('franchise_id')
+            # franchise = Franchise.objects.get(id=franchise_id)
+            # user_for_staff = User.objects.create_user(username=contact_email, password='some_default_password') # Or link to existing user
 
+            # Example: Assuming you get franchise_id and a user for this staff from the request or session
+            franchise_id = data.get('franchise_id') # Example: You might send this from frontend
+            user_id = data.get('user_id') # Example: You might send this from frontend (e.g., if staff logs in)
+
+            # --- IMPORTANT: Replace with actual logic to get franchise and user ---
+            # This part depends heavily on how you link staff to users and franchises
+            # If a new user is created for staff:
+            # new_staff_user = User.objects.create_user(username=contact_email, email=contact_email, password='some_temp_password')
+            # franchise = Franchise.objects.get(pk=franchise_id) # Replace with actual way to get franchise
+
+            # For now, let's assume some dummy linkage if you're just testing the view:
+            # (REMOVE OR REPLACE IN PRODUCTION)
+            # Find the franchise (e.g., from authenticated admin's franchise or from request data)
+            # You mentioned franchise admin: request.user.franchise if you have OneToOneField
+            # For demo:
+            try:
+                franchise_instance = Franchise.objects.first() # DANGEROUS: Get first franchise (for testing only)
+                # Or get it from the requesting user if the admin is linked to a franchise
+                # franchise_instance = request.user.franchise # If your User model has a OneToOne relationship to Franchise
+            except Franchise.DoesNotExist:
+                return JsonResponse({'error': 'No franchise found to associate staff with'}, status=500)
+
+            # Find or create a User for this Staff entry (important for login later)
+            # A staff member typically has a user account linked
+            # You might create a default password or require one from the frontend
+            try:
+                # Attempt to find by email, otherwise create
+                staff_user, created = User.objects.get_or_create(username=contact_email, defaults={'email': contact_email, 'password': 'default_password'})
+                # For created user, set password appropriately or hash it
+                if created:
+                    staff_user.set_password('default_password') # Hash and save password
+                    staff_user.save()
+            except Exception as e:
+                return JsonResponse({'error': f'Could not manage user for staff: {str(e)}'}, status=500)
+
+
+            staff = Staff.objects.create(
+                user=staff_user, # Link to the User instance
+                franchise=franchise_instance, # Link to the Franchise instance
+                full_name=name, # Use name from frontend
+                email=contact_email,
+                phone_number=phone_number,
+                role=data.get('role', 'Staff') # Assuming 'role' is also passed or defaulted
+            )
+            return JsonResponse({'message': 'Staff added successfully', 'staff_id': staff.staff_id}, status=201)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON in request body'}, status=400)
+        except KeyError as e:
+            return JsonResponse({'error': f'Missing data field: {e}'}, status=400)
+        except Exception as e:
+            # This catches any other unexpected errors in your view logic
+            print(f"An unexpected error occurred: {e}") # This will print to your terminal
+            return JsonResponse({'error': 'An internal server error occurred'}, status=500)
+    return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        role = request.POST.get('role')
+        if name and email and role:
+            Staff.objects.create(name=name, email=email, role=role)
+            staff_count = Staff.objects.count()
+            return JsonResponse({'success': True, 'staff_count': staff_count})
+    return JsonResponse({'success': False})
 def edit_staff(request, pk):
     staff = get_object_or_404(Staff, pk=pk)
     if request.method == 'POST':
@@ -87,22 +178,39 @@ def add_branch(request):
         return redirect('franchise_dashboard')  # or your dashboard view name
     return redirect('franchise_dashboard')
 
-
 def marketing_dashboard(request):
-    staff_list = Staff.objects.all()
-    staff_count = staff_list.count()
+    products_count = Product.objects.count()
+    franchises_count = Franchise.objects.count()
+    staff_count = Staff.objects.count()
     user_count = AppUser.objects.count()
     franchises = Franchise.objects.all()
+    # franchises_count = franchises.count()
 
-    # User = get_user_model()
-    # user_count = User.objects.filter(is_active=True).count()
-    return render(request, 'dashboard/marketing.html', {
-        'staff_list': staff_list,
+    context = {
+        'products_count': products_count,
+        'franchises_count': franchises_count,
         'staff_count': staff_count,
         'user_count': user_count,
         'franchises': franchises,
-    # return render(request, 'dashboard/marketing.html')
-  })
+        # Add other context variables as needed
+    }
+    return render(request, 'dashboard/marketing.html', context)
+
+# def marketing_dashboard(request):
+#     staff_list = Staff.objects.all()
+#     staff_count = staff_list.count()
+#     user_count = AppUser.objects.count()
+#     franchises = Franchise.objects.all()
+
+#     # User = get_user_model()
+#     # user_count = User.objects.filter(is_active=True).count()
+#     return render(request, 'dashboard/marketing.html', {
+#         'staff_list': staff_list,
+#         'staff_count': staff_count,
+#         'user_count': user_count,
+#         'franchises': franchises,
+#     # return render(request, 'dashboard/marketing.html')
+#   })
 
 def coupon_list(request):
     coupons = Coupon.objects.all()
@@ -225,29 +333,6 @@ def coupons(request):
     return render(request, 'dashboard/coupons.html', {"coupons": coupons_list})
 
 
-# def admin_dashboard(request):
-#     if not request.session.get('admin_logged_in'):
-#         return redirect(reverse('admin_login'))
-#     products_list = [
-#         {"number": i+1, "name": f"Product {i+1}", "image": f"https://picsum.photos/seed/prod{i+1}/80/80"}
-#         for i in range(10)
-#     ]
-#     coupons_list = get_all_coupons()
-#     return render(request, 'dashboard/admin.html', {"products_count": len(products_list), "coupons_count": len(coupons_list)})
-
-# def admin_dashboard(request):
-#     # ...
-#     # Example where it might be used (e.g., for redirection if not logged in)
-#     if not request.user.is_authenticated or not request.user.is_staff: # Assuming admin_login is for staff
-#         return redirect(reverse('admin_login')) # <--- This is where the error occurs
-#     # ...
-#     return render(request, 'core/admin_dashboard.html')
-
-# def admin_dashboard(request):
-#     if not request.session.get('admin_logged_in'):
-#         return redirect(reverse('admin_login'))
-#     # ... your dashboard logic ...
-#     return render(request, 'dashboard/admin.html')
 def admin_dashboard(request):
     franchises = Franchise.objects.all()
 
@@ -256,14 +341,22 @@ def admin_dashboard(request):
     products_count = Product.objects.count()
     coupons_count = Coupon.objects.count()
     franchises_count = Franchise.objects.count()
+    marketing_members = MarketingTeamMember.objects.all()
+    marketing_members_count = marketing_members.count()
+    
     
     return render(request, 'dashboard/admin.html', {
         'products_count': products_count,
         'coupons_count': coupons_count,
         'franchises_count': franchises_count,
         'franchises': franchises,
+        'marketing_members': marketing_members,
+        'marketing_members_count': marketing_members_count,
     })
 
+def products_view(request):
+    products = Product.objects.all()
+    return render(request, 'dashboard/products.html', {'products': products})
 # @login_required
 def franchise_dashboard(request):
     franchises = Franchise.objects.all()
@@ -557,3 +650,18 @@ def delete_product(request, pk):
         product.delete()
         return redirect('products')
     return render(request, 'dashboard/delete_product.html', {'product': product})
+
+def user_signup(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        is_active = request.POST.get('is_active', 'True') == 'True'
+        user = AppUser.objects.create_user(
+            username=username,
+            password=password,
+            is_active=is_active,
+        )
+        user.created_at = timezone.now()  # This is set automatically if using auto_now_add
+        user.save()
+        return redirect('login')  # Change to your login url name
+    return render(request, 'dashboard/user_signup.html')
