@@ -401,6 +401,8 @@ def admin_dashboard(request):
     franchises_count = Franchise.objects.count()
     marketing_members = MarketingTeamMember.objects.all()
     marketing_members_count = marketing_members.count()
+    user_count = AppUser.objects.count()
+
     
     
     return render(request, 'dashboard/admin.html', {
@@ -410,6 +412,7 @@ def admin_dashboard(request):
         'franchises': franchises,
         'marketing_members': marketing_members,
         'marketing_members_count': marketing_members_count,
+        'user_count': user_count,
     })
 
 def products_view(request):
