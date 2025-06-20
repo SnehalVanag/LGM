@@ -105,3 +105,11 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
+class Staff(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    joined_at = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

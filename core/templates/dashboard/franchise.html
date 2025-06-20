@@ -30,10 +30,7 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
-                <th>Address</th>
                 <th>Area</th>
-                <th>Email</th>
                 <th>Created At</th>
               </tr>
             </thead>
@@ -41,15 +38,12 @@
               {% for franchise in franchises %}
               <tr>
                 <td style="color: var(--gold); font-weight: 600;">{{ forloop.counter }}</td>
-                <td style="color: #d1fae5;">{{ franchise.name }}</td>
-                <td>{{ franchise.address }}</td>
                 <td>{{ franchise.area }}</td>
-                <td>{{ franchise.contact_email }}</td>
                 <td>{{ franchise.created_at|date:'Y-m-d H:i' }}</td>
               </tr>
               {% empty %}
               <tr>
-                <td colspan="6" class="text-center text-muted">No franchises found.</td>
+                <td colspan="3" class="text-center text-muted">No franchises found.</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -59,16 +53,64 @@
     </div>
   </div>
 </div>
-  <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
+  <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}';">
   <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
   <div class="kpi-label">Coupons</div>
-  <div style="font-size:12px;color:#FFD700;">View Coupons</div>
-  
+  <div style="font-size:12px;color:#FFD700;">View Coupons</div> 
+
+
+
+
 </div>
-<!-- Product KPI Card -->
-<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#productListModal">
-  <div class="kpi-value">{{ products|length }}</div>
-  <div class="kpi-label">Products</div>
+<!-- Staff KPI Card -->
+<div class="kpi-card" style="cursor:pointer;">
+  <div class="kpi-value">{{ staff_list|length }}</div>
+  <div class="kpi-label">Staff Members</div>
+  <div style="font-size:12px;color:#FFD700;"></div> 
+</div>
+
+
+
+<!-- Staff List Modal -->
+<div class="modal fade" id="staffListModal" tabindex="-1" aria-labelledby="staffListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="staffListModalLabel" style="color:#FFD700;">Staff List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background:none;color:#FFD700;"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Joined At</th>
+              </tr>
+            </thead>
+            <tbody>
+               {% for staff in staff_list %}
+              <tr>
+                <td>{{ staff.id }}</td>
+                <td>{{ staff.name }}</td>
+                <td>{{ staff.email }}</td>
+                <td>{{ staff.phone }}</td>
+                <td>{{ staff.joined_at|date:'Y-m-d' }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center text-muted">No staff found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Product List Modal -->
@@ -120,10 +162,37 @@
   </div> -->
 </div>
 
+
+
 <div class="quick-actions">
   <!-- <button class="quick-action-btn" onclick="openBranchModal()"><i class="fa fa-plus"></i> Add Branch</button> -->
   <button class="quick-action-btn"><i class="fa fa-chart-line"></i> View Reports</button>
+    <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
+  <i class="fa fa-plus"></i> Add Staff
+</button>
+<!-- Add Franchise Modal -->
+<div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-plus"></i> Add Staff
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{% url 'franchise_dashboard' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Staff</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+</div>
+
+
 
 <div id="branchModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center;">
   <div style="background:#222;padding:2rem;border-radius:1rem;min-width:320px;position:relative;">
@@ -133,20 +202,8 @@
       {% csrf_token %}
       <input type="hidden" name="branch_id" id="branchId">
       <div>
-        <label>Name:</label>
-        <input type="text" name="name" id="branchName" required class="form-control">
-      </div>
-      <div>
-        <label>Address:</label>
-        <input type="text" name="address" id="branchAddress" required class="form-control">
-      </div>
-      <div>
         <label>Area:</label>
         <input type="text" name="area" id="branchArea" required class="form-control">
-      </div>
-      <div>
-        <label>Email:</label>
-        <input type="email" name="contact_email" id="branchEmail" required class="form-control">
       </div>
       <button type="submit" class="quick-action-btn" style="margin-top:1rem;">Save</button>
     </form>
@@ -164,8 +221,8 @@
 
   </ul>
 </div>
-<!-- Franchise List Section -->
-<!-- <div class="franchise-list-section" style="margin-top:2rem;">
+<!--Franchise List Section -->
+ <!-- <div class="franchise-list-section" style="margin-top:2rem;">
   <h3 style="color:#FFD700;">Franchise List</h3>
   <table class="table table-dark table-striped" style="border-radius:1rem;overflow:hidden;">
     <thead>
@@ -200,13 +257,16 @@
 {% endfor %}
     </tbody>
   </table>
-</div> -->
+</div> 
+ -->
+
 
 <!-- Franchise List Section -->
 
 <div class="dashboard-chart" style="background: #1E293B;">
   <canvas id="franchiseChart"></canvas>
 </div>
+
 {% endblock %}
 {% block extra_js %}
 <script>
@@ -227,6 +287,11 @@ function editBranch(id, name, address, area, email) {
   document.getElementById('branchAddress').value = address;
   document.getElementById('branchArea').value = area;
   document.getElementById('branchEmail').value = email;
+}
+
+function toggleAddStaffModal() {
+  var overlay = document.getElementById('add-staff-modal-overlay');
+  overlay.style.display = (overlay.style.display === 'none' || overlay.style.display === '') ? 'flex' : 'none';
 }
 
 const ctxF = document.getElementById('franchiseChart').getContext('2d');

@@ -29,7 +29,14 @@ from django.contrib.auth import get_user_model
 # from django.contrib.auth.decorators import login_required
 from .models import Franchise
 from .forms import FranchiseForm  # You need to create this form
+from django.shortcuts import render, redirect
+from .models import Staff
+from .forms import StaffForm
 
+def add_lead(request):
+    # Your logic here
+    return render(request, 'core/add_lead.html')
+    
 def edit_franchise(request, pk):
     franchise = get_object_or_404(Franchise, pk=pk)
     if request.method == 'POST':
@@ -649,3 +656,18 @@ def delete_product(request, pk):
         product.delete()
         return redirect('products')
     return render(request, 'dashboard/delete_product.html', {'product': product})
+
+def franchise_dashboard(request):
+    staff_list = Staff.objects.all()
+    if request.method == 'POST':
+        form = StaffForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('franchise_dashboard')  # Replace with your dashboard URL name
+    else:
+        form = StaffForm()
+    return render(request, 'dashboard/franchise.html', {
+        'staff_list': staff_list,
+        'form': form,
+        # ...other context variables...
+    })

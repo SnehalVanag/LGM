@@ -25,3 +25,8 @@ class StaffForm(forms.ModelForm):
     class Meta:
         model = Staff
         fields = ['name', 'email', 'phone']
+
+class StaffForm(forms.ModelForm):
+    class Meta:
+        model = Staff
+        fields = ['name', 'email', 'phone']
