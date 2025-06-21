@@ -541,7 +541,7 @@ def user_login(request):
         password = request.POST.get('password')
         try:
             user = AppUser.objects.get(username=username)
-            if password == user.password:
+            if check_password(password, user.password):
                 request.session['user_logged_in'] = True
                 request.session['user_id'] = user.id
                 return redirect(reverse('home'))  # Redirect to homepage after login
