@@ -46,9 +46,9 @@ urlpatterns = [
     path('franchise/<int:pk>/edit/', views.edit_franchise, name='edit_franchise'),
     path('franchise/<int:pk>/delete/', views.delete_franchise, name='delete_franchise'),
     path('add-staff/', views.add_staff, name='add_staff'),
-    path('signup/', views.signup_view, name='signup'),
-    path('send-email-otp/', views.send_email_otp, name='send_email_otp'),
+    path('add_lead', views.add_lead, name='add_lead')
 
+    
 
 
     
@@ -56,5 +56,8 @@ urlpatterns = [
 
     # path('coupons/', views.coupon_list, name='coupon_list'),  # <-- This is the important one!  # <-- This is required!
 
+
+   # path('dashboard/', views.franchise_dashboard, name='franchise_dashboard'),
+    # ...other urls...
 
 ]
