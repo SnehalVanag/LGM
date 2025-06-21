@@ -271,19 +271,6 @@ def admin_login(request):
             error = 'Invalid username or password.'
     return render(request, 'dashboard/admin_login.html', {'error': error})
 
-# def user_login(request):
-#     error = None
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('home')
-#         else:
-#             error = 'Invalid username or password.'
-#     return render(request, 'dashboard/user.html', {'error': error, 'user_login': True})
-
 
 def get_all_coupons():
     coupons = Coupon.objects.all()
@@ -574,3 +561,28 @@ def user_signup(request):
             )
             return redirect('user_login')  # Fixed: use correct login url name
     return render(request, 'dashboard/user_signup.html', {'error': error})
+
+def franchise_dashboard(request):
+    franchises = Franchise.objects.all()
+    return render(request, 'dashboard/franchise.html', {
+        'franchises': franchises,
+        'admin_user': request.user,
+    })
+
+
+
+
+def franchise_dashboard(request):
+    staff_list = Staff.objects.all()
+    if request.method == 'POST':
+        form = StaffForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('franchise_dashboard')  # Replace with your dashboard URL name
+    else:
+        form = StaffForm()
+    return render(request, 'dashboard/franchise.html', {
+        'staff_list': staff_list,
+        'form': form,
+        # ...other context variables...
+    })
