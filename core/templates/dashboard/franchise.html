@@ -11,7 +11,7 @@
 <div class="kpi-cards">
    <!-- Franchise KPI Card -->
 <div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#franchiseListModal">
-  <div class="kpi-value">{{ franchises|length }}</div>
+  <div class="kpi-value" style="color:#FFD700;">{{ franchises_count }}</div>
   <div class="kpi-label">Franchises</div>
 </div>
 
@@ -62,7 +62,7 @@
 
 </div>
 <!-- Staff KPI Card -->
-<div class="kpi-card" style="cursor:pointer;">
+<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#staffListModal">
   <div class="kpi-value">{{ staff_list|length }}</div>
   <div class="kpi-label">Staff Members</div>
   <div style="font-size:12px;color:#FFD700;"></div> 
@@ -111,10 +111,10 @@
     </div>
   </div>
 </div>
-<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#staffListModal">
+<!-- <div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#staffListModal">
   <div class="kpi-value">{{ products|length }}</div>
   <div class="kpi-label">Staff Members</div>
-</div>
+</div> -->
 <div class="modal fade" id="staffListModal" tabindex="-1" aria-labelledby="staffListModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">

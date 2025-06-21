@@ -341,7 +341,6 @@ def coupons(request):
 
 def admin_dashboard(request):
     franchises = Franchise.objects.all()
-
     if not request.session.get('admin_logged_in'):
         return redirect(reverse('admin_login'))
     products_count = Product.objects.count()
@@ -350,9 +349,6 @@ def admin_dashboard(request):
     marketing_members = MarketingTeamMember.objects.all()
     marketing_members_count = marketing_members.count()
     user_count = AppUser.objects.count()
-
-    
-    
     return render(request, 'dashboard/admin.html', {
         'products_count': products_count,
         'coupons_count': coupons_count,
@@ -367,86 +363,21 @@ def products_view(request):
     products = Product.objects.all()
     return render(request, 'dashboard/products.html', {'products': products})
 # @login_required
-def franchise_dashboard(request):
-    franchises = Franchise.objects.all()
-    return render(request, 'dashboard/franchise.html', {
-        'franchises': franchises,
-        'admin_user': request.user,
-    })
-
-# @login_required
-# def franchise_dashboard(request):
-#     franchises = Franchise.objects.all()
-#     return render(request, 'dashboard/franchise.html', {
-#         'franchises': franchises,
-#         'admin_user': request.user,
-#     })
-# def franchise_dashboard(request):
-#     franchises = Franchise.objects.all()
-#     admin_user = request.user
-#     return render(request, 'dashboard/franchise.html', {
-#     'franchises': franchises,
-#     'admin_user': admin_user,  # <--- comma here
-# })    
 
 def lead_dashboard(request):
     return render(request, 'dashboard/lead.html')
 
-
-
 def user_dashboard(request):
     return render(request, 'dashboard/user.html')
-
 
 def admin_logout(request):
     request.session.flush()
     return redirect(reverse('admin_login'))
 
-
 def products(request):
     products_list = Product.objects.all()
     return render(request, 'dashboard/products.html', {"products": products_list})
 
-
-
-# def add_franchise(request):
-#     if request.method == 'POST':
-#         form = FranchiseForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('admin_dashboard')  # or wherever you want to go after adding
-#     else:
-#         form = FranchiseForm()
-#     return render(request, 'dashboard/add_franchise.html', {'form': form})
-
-# def add_franchise(request):
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         address = request.POST.get('address')
-#         contact_email = request.POST.get('contact_email')
-#         phone_number = request.POST.get('phone_number')  # <-- Get phone_number
-
-#         Franchise.objects.create(
-#             name=name,
-#             address=address,
-#             contact_email=contact_email,
-#             phone_number=phone_number  # <-- Save phone_number
-#         )
-#         return JsonResponse({'success': True})
-#     return JsonResponse({'success': False})
-
-
-# @csrf_exempt
-# def add_franchise(request):
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         address = request.POST.get('address')
-#         contact_email = request.POST.get('contact_email')
-#         if name and address and contact_email:
-#             Franchise.objects.create(name=name, address=address, contact_email=contact_email)
-#             return JsonResponse({'success': True})
-#         return JsonResponse({'success': False, 'error': 'Missing fields'})
-#     return JsonResponse({'success': False, 'error': 'Invalid request'})
 def add_franchise(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -463,7 +394,6 @@ def add_franchise(request):
         )
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
-
 
 @csrf_exempt
 def add_marketing_member(request):
@@ -496,7 +426,6 @@ def delete_franchise(request, id):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
-
 def get_reviews(request):
     reviews = Review.objects.order_by('-created_at')[:10]
     count = Review.objects.count()
@@ -510,7 +439,6 @@ def get_reviews(request):
         ]
     }
     return JsonResponse(data)
-
 
 def user_signup(request):
     error = None
@@ -535,16 +463,6 @@ def user_signup(request):
             return redirect('user_login')
     return render(request, 'dashboard/user_signup.html', {'error': error})
 
-# def send_signup_otp(request):
-#     if request.method == 'POST':
-#         email = request.POST.get('email')
-#         otp = str(random.randint(100000, 999999))
-#         request.session['signup_otp'] = otp
-#         # Send OTP to email (simulate for now)
-#         # send_mail('Your OTP', f'Your OTP is {otp}', settings.DEFAULT_FROM_EMAIL, [email])
-#         return JsonResponse({'success': True, 'otp': otp})
-#     return JsonResponse({'success': False})
-
 def user_login(request):
     error = None
     if request.method == 'POST':
@@ -561,6 +479,7 @@ def user_login(request):
         except AppUser.DoesNotExist:
             error = 'Invalid username or password.'
     return render(request, 'dashboard/user.html', {'error': error})
+
 @csrf_exempt
 def send_signup_otp(request):
     if request.method == 'POST':
@@ -610,24 +529,6 @@ def franchise_login(request):
             error = 'Invalid username or password.'
     return render(request, 'dashboard/admin_login.html', {'error': error, 'franchise_login': True})
 
-# def add_product(request):
-#     if request.method == 'POST':
-#         form = ProductForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('products')
-#     else:
-#         form = ProductForm()
-#     return render(request, 'dashboard/add_product.html', {'form': form})
-# def add_product(request):
-#     if request.method == 'POST':
-#         form = ProductForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('dashboard')
-#     else:
-#         form = ProductForm()
-#     return render(request, 'dashboard/add_product.html', {'form': form})
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -649,7 +550,6 @@ def update_product(request, pk):
         form = ProductForm(instance=product)
     return render(request, 'dashboard/add_product.html', {'form': form, 'update': True})
 
-
 def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
 
@@ -662,6 +562,8 @@ def delete_product(request, pk):
 
 def franchise_dashboard(request):
     staff_list = Staff.objects.all()
+    franchises_count = Franchise.objects.count()
+    
     if request.method == 'POST':
         form = StaffForm(request.POST)
         if form.is_valid():
@@ -672,5 +574,15 @@ def franchise_dashboard(request):
     return render(request, 'dashboard/franchise.html', {
         'staff_list': staff_list,
         'form': form,
+        'franchises_count': franchises_count,
         # ...other context variables...
     })
+def franchise_dashboard(request):
+    franchises = Franchise.objects.all()
+    franchises_count = Franchise.objects.count()
+    return render(request, 'dashboard/franchise.html', {
+        'franchises': franchises,
+        'admin_user': request.user,
+        'franchises_count': franchises_count,
+    })
+ 
