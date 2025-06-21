@@ -6,7 +6,7 @@ from .forms import FranchiseForm, ProductForm
 from .models import Franchise, Coupon, Product
 from django.utils import timezone
 from .models import Admin
-from django.contrib.auth.hashers import check_password 
+from django.contrib.auth.hashers import check_password, make_password
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
@@ -33,10 +33,6 @@ from django.shortcuts import render, redirect
 from .models import Staff
 from .forms import StaffForm
 
-def add_lead(request):
-    # Your logic here
-    return render(request, 'core/add_lead.html')
-    
 def edit_franchise(request, pk):
     franchise = get_object_or_404(Franchise, pk=pk)
     if request.method == 'POST':
@@ -443,24 +439,22 @@ def get_reviews(request):
 def user_signup(request):
     error = None
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST['username']
         email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-        otp = request.POST.get('otp')
-        session_otp = request.session.get('signup_otp')
-        if password1 != password2:
-            error = 'Passwords do not match.'
-        elif otp != session_otp:
-            error = 'Invalid OTP.'
-        elif AppUser.objects.filter(username=username).exists():
+        password = request.POST['password']
+        is_active = request.POST.get('is_active', 'True') == 'True'
+        if AppUser.objects.filter(username=username).exists():
             error = 'Username already exists.'
         elif AppUser.objects.filter(email=email).exists():
             error = 'Email already exists.'
         else:
-            AppUser.objects.create(username=username, email=email, password=password1)
-            del request.session['signup_otp']
-            return redirect('user_login')
+            AppUser.objects.create(
+                username=username,
+                email=email,
+                password=make_password(password),
+                is_active=is_active,
+            )
+            return redirect('user_login')  # Fixed: use correct login url name
     return render(request, 'dashboard/user_signup.html', {'error': error})
 
 def user_login(request):
@@ -470,7 +464,7 @@ def user_login(request):
         password = request.POST.get('password')
         try:
             user = AppUser.objects.get(username=username)
-            if password == user.password:
+            if check_password(password, user.password):
                 request.session['user_logged_in'] = True
                 request.session['user_id'] = user.id
                 return redirect(reverse('home'))  # Redirect to homepage after login
@@ -560,29 +554,23 @@ def delete_product(request, pk):
         return redirect('products')
     return render(request, 'dashboard/delete_product.html', {'product': product})
 
-def franchise_dashboard(request):
-    staff_list = Staff.objects.all()
-    franchises_count = Franchise.objects.count()
-    
+def user_signup(request):
+    error = None
     if request.method == 'POST':
-        form = StaffForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('franchise_dashboard')  # Replace with your dashboard URL name
-    else:
-        form = StaffForm()
-    return render(request, 'dashboard/franchise.html', {
-        'staff_list': staff_list,
-        'form': form,
-        'franchises_count': franchises_count,
-        # ...other context variables...
-    })
-def franchise_dashboard(request):
-    franchises = Franchise.objects.all()
-    franchises_count = Franchise.objects.count()
-    return render(request, 'dashboard/franchise.html', {
-        'franchises': franchises,
-        'admin_user': request.user,
-        'franchises_count': franchises_count,
-    })
- 
+        username = request.POST['username']
+        email = request.POST.get('email')
+        password = request.POST['password']
+        is_active = request.POST.get('is_active', 'True') == 'True'
+        if AppUser.objects.filter(username=username).exists():
+            error = 'Username already exists.'
+        elif AppUser.objects.filter(email=email).exists():
+            error = 'Email already exists.'
+        else:
+            AppUser.objects.create(
+                username=username,
+                email=email,
+                password=make_password(password),
+                is_active=is_active,
+            )
+            return redirect('user_login')  # Fixed: use correct login url name
+    return render(request, 'dashboard/user_signup.html', {'error': error})
