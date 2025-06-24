@@ -33,10 +33,10 @@
     <div class="kpi-value" style="color:#FFD700;">{{ staff_count }}</div>
     <div class="kpi-label">Staff Members</div>
   </div> -->
-  <div class="kpi-card" onclick="toggleStaffModal()">
+  <!-- <div class="kpi-card" onclick="toggleStaffModal()">
     <div class="kpi-value" id="staff-count-value" style="color:#FFD700;">{{ staff_count }}</div>
     <div class="kpi-label">Leads</div>
-  </div>
+  </div> -->
   <!-- Franchise List Modal -->
 
   <div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel"
@@ -128,10 +128,36 @@
 
 </div>
 <div class="quick-actions">
-  <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addStaffModal">
+    <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addLeadModal">
+  <i class="fa fa-plus"></i> Add Leads
+</button>
+ <!-- Add Lead Modal -->
+<div class="modal fade" id="addLeadModal" tabindex="-1" aria-labelledby="addLeadModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addLeadModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-plus"></i> Add Leads
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="{% url 'add_lead' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+          {{ form.as_p }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!-- <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addStaffModal">
     <i class="fa fa-user-plus"></i> Add Lead
   </button>
-  <!-- Add Franchise Modal -->
   <div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
@@ -165,7 +191,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
     <i class="fa fa-plus"></i> Add Franchise
   </button>
