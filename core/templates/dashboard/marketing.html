@@ -10,10 +10,7 @@
 <div class="dashboard-header">Marketing Dashboard</div>
 <div class="kpi-cards">
   <!-- Lead KPI Card -->
-  <div class="kpi-card">
-    <div class="kpi-value">{{ user_count }}</div>
-    <div class="kpi-label">Leads Generated</div>
-  </div>
+
    <div class="kpi-card">
     <div class="kpi-value">{{ leads_count }}</div>
     <div class="kpi-label">Leads Generated</div>
@@ -22,25 +19,17 @@
     <div class="kpi-value">{{ products_count }}</div>
     <div class="kpi-label">Products</div>
   </a>
-  <a href="#" class="kpi-card" style="text-decoration:none; cursor:pointer;" data-bs-toggle="modal"
-    data-bs-target="#franchiseListModal">
-    <div class="kpi-value">{{ franchises_count }}</div>
+  <a href="#" class="kpi-card" style="text-decoration:none; cursor:pointer;" data-bs-toggle="modal"data-bs-target="#franchiseListModal">
+     <div class="kpi-value">{{ franchises_count }}</div>
     <div class="kpi-label">Franchises</div>
   </a>
+
   <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
     <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
     <div class="kpi-label">Coupons</div>
     <div style="font-size:12px;color:#FFD700;">View Coupons</div>
   </div>
-  <!-- Staff Members KPI card -->
-  <!-- <div class="kpi-card" onclick="toggleStaffModal()">
-    <div class="kpi-value" style="color:#FFD700;">{{ staff_count }}</div>
-    <div class="kpi-label">Staff Members</div>
-  </div> -->
-  <!-- <div class="kpi-card" onclick="toggleStaffModal()">
-    <div class="kpi-value" id="staff-count-value" style="color:#FFD700;">{{ staff_count }}</div>
-    <div class="kpi-label">Leads</div>
-  </div> -->
+
   <!-- Franchise List Modal -->
 
   <div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel"
@@ -128,8 +117,6 @@
   </div>
 </div>
 
-
-
 </div>
 <div class="quick-actions">
     <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addLeadModal">
@@ -159,43 +146,7 @@
   </div>
 </div>
 
-  <!-- <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addStaffModal">
-    <i class="fa fa-user-plus"></i> Add Lead
-  </button>
-  <div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
-        <div class="modal-header" style="border-bottom: 1px solid #10B981;">
-          <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
-            <i class="fa fa-plus"></i> Add Lead
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="addFranchiseForm">
-            <div class="mb-3">
-              <label class="form-label" for="franchiseName">Name</label>
-              <input type="text" class="form-control" id="franchiseName" name="name" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="franchiseLocation">Location</label>
-              <input type="text" class="form-control" id="franchiseLocation" name="address" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="franchiseEmail">Adress</label>
-              <input type="email" class="form-control" id="franchiseEmail" name="contact_email" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="id_phone_number">Phone Number</label>
-              <input type="text" name="phone_number" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add
-              Franchise</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> -->
+  
   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
     <i class="fa fa-plus"></i> Add Franchise
   </button>
@@ -213,7 +164,7 @@
         <div class="modal-body">
           <form id="addFranchiseForm">
             <div class="mb-3">
-              <label class="form-label" for="franchiseName">Name111</label>
+              <label class="form-label" for="franchiseName">Name</label>
               <input type="text" class="form-control" id="franchiseName" name="name" required>
             </div>
             <div class="mb-3">
@@ -275,25 +226,7 @@
   <canvas id="marketingChart"></canvas>
 </div>
 
-<tbody>
-  {% for franchise in franchises %}
-  <tr>
-    <td>{{ forloop.counter }}</td>
-    <td>{{ franchise.name }}</td>
-    <td>{{ franchise.address }}</td>
-    <td>{{ franchise.contact_email }}</td>
-    <td>{{ franchise.phone_number }}</td>
-    <td>
-      <button class="btn btn-warning btn-sm" onclick="editFranchise({{ franchise.id }})">Edit</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteFranchise({{ franchise.id }})">Delete</button>
-    </td>
-  </tr>
-  {% empty %}
-  <tr>
-    <td colspan="6" class="text-center text-muted">No franchises found.</td>
-  </tr>
-  {% endfor %}
-</tbody>
+
 {% endblock %}
 {% block extra_js %}
 <script>

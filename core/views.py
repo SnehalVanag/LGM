@@ -31,6 +31,7 @@ from .forms import FranchiseForm  # You need to create this form
 from django.shortcuts import render, redirect
 from .models import Staff
 from .forms import StaffForm
+from .models import Staff, Franchise, Lead  # Add Lead to your imports
 
 def edit_franchise(request, pk):
     franchise = get_object_or_404(Franchise, pk=pk)
@@ -179,23 +180,26 @@ def add_branch(request):
         return redirect('franchise_dashboard')  # or your dashboard view name
     return redirect('franchise_dashboard')
 
-def marketing_dashboard(request):
-    products_count = Product.objects.count()
-    franchises_count = Franchise.objects.count()
-    staff_count = Staff.objects.count()
-    user_count = AppUser.objects.count()
-    franchises = Franchise.objects.all()
-    # franchises_count = franchises.count()
+# def marketing_dashboard(request):
+#     products_count = Product.objects.count()
+#     franchises_count = Franchise.objects.count()
+#     staff_count = Staff.objects.count()
+#     user_count = AppUser.objects.count()
+#     franchises = Franchise.objects.all()
+#     # franchises_count = franchises.count()
 
-    context = {
-        'products_count': products_count,
-        'franchises_count': franchises_count,
-        'staff_count': staff_count,
-        'user_count': user_count,
-        'franchises': franchises,
-        # Add other context variables as needed
-    }
-    return render(request, 'dashboard/marketing.html', context)
+#     context = {
+#         'products_count': products_count,
+#         'franchises_count': franchises_count,
+#         'staff_count': staff_count,
+#         'user_count': user_count,
+#         'franchises': franchises,
+#         # Add other context variables as needed
+#     }
+#     return render(request, 'dashboard/marketing.html', context)
+
+
+
 
 def coupon_list(request):
     coupons = Coupon.objects.all()
@@ -324,22 +328,6 @@ def products(request):
     products_list = Product.objects.all()
     return render(request, 'dashboard/products.html', {"products": products_list})
 
-def add_franchise(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        address = request.POST.get('address')
-        contact_email = request.POST.get('contact_email')
-        phone_number = request.POST.get('phone_number')
-        print('Phone:', phone_number)  # Debug: See if value is received
-
-        Franchise.objects.create(
-            name=name,
-            address=address,
-            contact_email=contact_email,
-            phone_number=phone_number
-        )
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False})
 
 @csrf_exempt
 def add_marketing_member(request):
@@ -524,32 +512,71 @@ def user_signup(request):
             )
             return redirect('user_login')  # Fixed: use correct login url name
     return render(request, 'dashboard/user_signup.html', {'error': error})
+    
 
-def franchise_dashboard(request):
+def marketing_dashboard(request):
+    staff_list = Staff.objects.all()
+    staff_count = staff_list.count()
+    user_count = AppUser.objects.count()
     franchises = Franchise.objects.all()
+    products_count = Product.objects.count()
     franchises_count = Franchise.objects.count()
-    return render(request, 'dashboard/franchise.html', {
+    from .models import Lead
+    leads_count = Lead.objects.count()
+    from .forms_lead import LeadForm
+    lead_form = LeadForm()
+    return render(request, 'dashboard/marketing.html', {
+        'staff_list': staff_list,
+        'staff_count': staff_count,
+        'user_count': user_count,
         'franchises': franchises,
-        'admin_user': request.user,
+        'leads_count': leads_count,
+        'form': lead_form,
+        'products_count': products_count,
         'franchises_count': franchises_count,
     })
-
 def franchise_dashboard(request):
     staff_list = Staff.objects.all()
+    franchises = Franchise.objects.all()  # Get all franchises
+    franchises_count = Franchise.objects.count()
+    # Import the Lead model first
+    from .models import Lead
+    # Then use it
+    leads_count = Lead.objects.count()
     
     if request.method == 'POST':
         form = StaffForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('franchise_dashboard')  # Replace with your dashboard URL name
+            return redirect('franchise_dashboard')
     else:
         form = StaffForm()
     return render(request, 'dashboard/franchise.html', {
         'staff_list': staff_list,
         'form': form,
-        
-        # ...other context variables...
+        'franchises': franchises,  # Pass franchises to template
+        'franchises_count': franchises_count,
+        'leads_count': leads_count,
     })
+# def franchise_dashboard(request):
+#     staff_list = Staff.objects.all()
+#     franchises_count = Franchise.objects.count()
+#     # Add this line to get the real lead count
+#     leads_count = Lead.objects.count()
+    
+#     if request.method == 'POST':
+#         form = StaffForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('franchise_dashboard')
+#     else:
+#         form = StaffForm()
+#     return render(request, 'dashboard/franchise.html', {
+#         'staff_list': staff_list,
+#         'form': form,
+#         'franchises_count': franchises_count,
+#         'leads_count': leads_count,  # Add this line to pass lead count to template
+#     })
 
 def add_lead(request):
     if request.method == 'POST':
@@ -562,3 +589,34 @@ def add_lead(request):
         from .forms_lead import LeadForm
         form = LeadForm()
     return render(request, 'dashboard/add_lead.html', {'form': form})
+
+
+
+# def add_franchise(request):
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         address = request.POST.get('address')
+#         contact_email = request.POST.get('contact_email')
+#         phone_number = request.POST.get('phone_number')
+#         print('Phone:', phone_number)  # Debug: See if value is received
+
+#         Franchise.objects.create(
+#             name=name,
+#             address=address,
+#             contact_email=contact_email,
+#             phone_number=phone_number
+#         )
+#         return JsonResponse({'success': True})
+#     return JsonResponse({'success': False})
+from .models import Franchise  # or your actual model
+from .forms import FranchiseForm  # if you're using a Django form
+
+def add_franchise(request):
+    if request.method == "POST":
+        form = FranchiseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('marketing_dashboard')  # Redirect after save
+    else:
+        form = FranchiseForm()
+    return render(request, 'your_template.html', {'form': form})

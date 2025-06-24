@@ -15,8 +15,7 @@
       </div>
       <div class="modal-body">
         <form id="addFranchiseForm" method="post" autocomplete="off">
-          {% csrf_token %}
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label class="form-label" for="id_name">Franchise Name</label>
             <input type="text" name="name" class="form-control" required>
           </div>
@@ -31,7 +30,10 @@
           <div class="mb-3">
             <label class="form-label" for="id_phone_number">Phone Number</label>
             <input type="text" name="phone_number" class="form-control" required>
-          </div>
+          </div> -->
+          
+           {% csrf_token %}
+           {{ form.as_p }}
           <button type="submit" class="btn btn-success w-100">
             <i class="fa fa-plus"></i> Add Franchise
           </button>
