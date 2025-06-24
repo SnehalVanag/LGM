@@ -22,18 +22,7 @@ MEDIA_ROOT = BASE_DIR / 'product_images'
 ROOT_URLCONF = 'LGM.urls'
 
 
-TWILIO_ACCOUNT_SID = 'AC0d7ea5fa002e0d7dd23c87e642c623dd'
-TWILIO_AUTH_TOKEN = 'f5d6a59f8b6b9e32086ed4396ca5294f'
-TWILIO_PHONE_NUMBER = '+918625899643'  # Twilio virtual number
 
-
-# Email settings (for Gmail)
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'snehalvanage57@gmail.com'           # Your Gmail
-# EMAIL_HOST_PASSWORD = 'Snehal@123'           # App password (not Gmail password)
-# EMAIL_USE_TLS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -113,11 +102,6 @@ DATABASES = {
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
-        # 'NAME': os.environ.get('LGM'),
-        # 'USER': os.environ.get('root'),
-        # 'PASSWORD': os.environ.get('root'),
-        # 'HOST': os.environ.get('localhost'),
-        # 'PORT': os.environ.get('3306'),
     }
 }
 AUTH_USER_MODEL = 'core.CustomUser'
