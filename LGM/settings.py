@@ -1,8 +1,5 @@
 from pathlib import Path
 import os
-import pymysql
-pymysql.install_as_MySQLdb()
-
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,19 +18,6 @@ MEDIA_ROOT = BASE_DIR / 'product_images'
 # ✅ Add this line to point to your project-level urls.py
 ROOT_URLCONF = 'LGM.urls'
 
-
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'snehalvanage57@gmail.com'
-EMAIL_HOST_PASSWORD = 'abcd efgh ijkl mnop'
-EMAIL_USE_TLS = True
-
-
-
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -43,16 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',  # Your custom app
-    'channels',
 ]
-
-ASGI_APPLICATION = 'LGM.asgi.application'
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer'
-    }
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,35 +55,22 @@ TEMPLATES = [
     },
 ]
 
-
-# filepath: settings.py
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'snehalvanage57@gmail.com'
-EMAIL_HOST_PASSWORD = 'Snehal@123'
-# LOGIN_URL = '/admin-login/'
-import os
-from dotenv import load_dotenv
-load_dotenv()
-
-TWILIO_KEY = os.getenv("TWILIO_KEY")
-
-
-AUTH_USER_MODEL = 'core.CustomUser'
-
 WSGI_APPLICATION = 'LGM.wsgi.application'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'LGM',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '12345',
         'HOST': 'localhost',
         'PORT': '3306',
     }
 }
+AUTH_USER_MODEL = 'core.CustomUser'
+
+
+# Custom user model (if applicable)
 AUTH_USER_MODEL = 'core.CustomUser'
 
 # Password validation
