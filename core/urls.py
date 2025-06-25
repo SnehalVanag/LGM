@@ -5,7 +5,7 @@ from .views import add_product
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('login/admin/', views.admin_login, name='admin_login'),
     # path('admin-login/', include(('core.urls', 'core'), namespace='core_admin')),
     path('admin-login/', views.admin_login, name='admin_login'),

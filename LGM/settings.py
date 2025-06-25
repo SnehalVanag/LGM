@@ -1,18 +1,16 @@
 from pathlib import Path
 import os
-import pymysql
-pymysql.install_as_MySQLdb()
-from decouple import config
+
+
 from pathlib import Path
-import dj_database_url
-import dj_database_url
 from pathlib import Path # Path might already be there
 from dotenv import load_dotenv
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, ".eVar", ".env"))
-
+import pymysql
+pymysql.install_as_MySQLdb()
 
 
 
@@ -31,8 +29,12 @@ ALLOWED_HOSTS  +=os.environ.get('ALLOWED_HOSTS', '').split()  # Allow multiple h
 
 
 
+SECRET_KEY = '15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i'
 
 DEBUG = True
+
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 MEDIA_URL = '/media/'
@@ -92,22 +94,31 @@ TEMPLATES = [
 AUTH_USER_MODEL = 'core.CustomUser'
 WSGI_APPLICATION = 'LGM.wsgi.application'
 
+# DATABASES = {
+#    'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': "LGM",
+#         'USER': "snehalvanage123",
+#         'PASSWORD': "root#123@12",
+#         'HOST': "snehalvanage123.mysql.pythonanywhere-services.com",
+#         'PORT': "3306"
+# }
+
+# }
+
+
 DATABASES = {
-   'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': "LGM",
-        'USER': "snehalvanage123",
-        'PASSWORD': "root#123@12",
-        'HOST': "snehalvanage123.mysql.pythonanywhere-services.com",
-        'PORT': "3306"
-}
-        'NAME': 'LGM',
-        'USER': 'root',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '3306',
+    'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'snehalvanage123$lgm',  # This is the full name, with username prefix
+            'USER': 'snehalvanage123',             # Your PythonAnywhere DB username
+            'PASSWORD': 'root#123@12',        # Set this when you created the DB
+            'HOST': 'snehalvanage123.mysql.pythonanywhere-services.com',
+            'PORT': '3306',
     }
 }
+
+
 AUTH_USER_MODEL = 'core.CustomUser'
 
 

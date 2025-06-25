@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 # from .models import Franchise
 
+class Admin(models.Model):
+    name = models.CharField(max_length=255)  # <-- this should exist
+    # other fields...
+
 
 class OTP(models.Model):
     email = models.EmailField()
