@@ -8,6 +8,7 @@ import dj_database_url
 import dj_database_url
 from pathlib import Path # Path might already be there
 from dotenv import load_dotenv
+
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, ".eVar", ".env"))
@@ -30,6 +31,8 @@ ALLOWED_HOSTS  +=os.environ.get('ALLOWED_HOSTS', '').split()  # Allow multiple h
 
 
 
+
+DEBUG = True
 
 
 MEDIA_URL = '/media/'
@@ -88,6 +91,7 @@ TEMPLATES = [
 
 AUTH_USER_MODEL = 'core.CustomUser'
 WSGI_APPLICATION = 'LGM.wsgi.application'
+
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -97,9 +101,18 @@ DATABASES = {
         'HOST': "snehalvanage123.mysql.pythonanywhere-services.com",
         'PORT': "3306"
 }
+        'NAME': 'LGM',
+        'USER': 'root',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
 }
 AUTH_USER_MODEL = 'core.CustomUser'
 
+
+# Custom user model (if applicable)
+AUTH_USER_MODEL = 'core.CustomUser'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

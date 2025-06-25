@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path,include
 from core import views
 from .views import add_product
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +27,6 @@ urlpatterns = [
     path('send-signup-otp/', views.send_signup_otp, name='send_signup_otp'),
     path('marketing-login/', views.marketing_login, name='marketing_login'),
     path('franchise-login/', views.franchise_login, name='franchise_login'),
-    # path('add_product/', add_product, name='add_product'),
     path('update_product/<int:pk>/', views.update_product, name='update_product'),
     path('delete_product/<int:pk>/', views.delete_product, name='delete_product'),
     path('dashboard/', views.dashboard, name='dashboard'),
@@ -46,7 +46,12 @@ urlpatterns = [
     path('franchise/<int:pk>/edit/', views.edit_franchise, name='edit_franchise'),
     path('franchise/<int:pk>/delete/', views.delete_franchise, name='delete_franchise'),
     path('add-staff/', views.add_staff, name='add_staff'),
+    path('signup/', views.user_signup, name='user_signup'),
+    path('add-lead/', views.add_lead, name='add_lead'),
+    
 
+
+  ]
 
     
 
@@ -54,4 +59,3 @@ urlpatterns = [
     # path('coupons/', views.coupon_list, name='coupon_list'),  # <-- This is the important one!  # <-- This is required!
 
 
-]
