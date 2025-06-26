@@ -1,15 +1,27 @@
-Django==5.2.1
-# mysqlclient==2.2.0
-# mysqlclient==2.2.0  ← keep commented
-PyMySQL
+# Django==5.2.1
+# # mysqlclient==2.2.0 
+# # PyMySQL
+# PyMySQL==1.1.0  
+# dj-database-url==2.1.0
+# whitenoise==6.6.0
+# Django>=4.0,<5.3
+# mysqlclient
+# dj-database-url
+# whitenoise==6.6.0
+# gunicorn==23.0.0
+# whitenoise
+# dj-database-url
 
+
+
+
+
+
+Django==5.2.1
+PyMySQL==1.1.0
 dj-database-url==2.1.0
 whitenoise==6.6.0
-Django>=4.0,<5.3
-mysqlclient
-dj-database-url
-whitenoise
-gunicorn
-whitenoise
-dj-database-url
-# plus any other packages
+gunicorn==23.0.0
+
+
+
