@@ -1,15 +1,26 @@
 from pathlib import Path
 import os
+import os
+import dj_database_url
+
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = '15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i'
+# SECRET_KEY = '15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i'
 
-DEBUG = True
+# DEBUG = False
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+import os  # Make sure this is at the top of the file
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i")
+
+DEBUG = os.environ.get("DEBUG", "True") == "True"
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+
 
 
 MEDIA_URL = '/media/'
@@ -30,6 +41,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,16 +70,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LGM.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+       
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.environ['LGM'],
+#         'USER': os.environ['root'],
+#         'PASSWORD': os.environ['root'],
+#         'HOST': os.environ['localhost'],
+#         'PORT': os.environ.get('MYSQLPORT', '3306'),
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'LGM',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+    'default': dj_database_url.parse(os.environ.get("mysql://root:LrTXuFVzHfmdikOlVPBOWdSZnEZwZlfW@trolley.proxy.rlwy.net:26218/railway"))
 }
+
 AUTH_USER_MODEL = 'core.CustomUser'
 
 
