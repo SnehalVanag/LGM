@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'core',  # Your custom app
 ]
 
+# MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+
 MIDDLEWARE = [
     
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -115,8 +117,11 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Default auto field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
