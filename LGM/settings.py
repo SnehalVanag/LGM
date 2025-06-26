@@ -2,7 +2,9 @@ from pathlib import Path
 import os
 import os
 import dj_database_url
-
+import pymysql
+pymysql.install_as_MySQLdb()
+# LGM settings.py
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,13 +15,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-import os  # Make sure this is at the top of the file
+import os
+
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i")
 
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 
 
