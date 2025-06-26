@@ -5,6 +5,7 @@ import dj_database_url
 import pymysql
 pymysql.install_as_MySQLdb()
 # LGM settings.py
+import dj_database_url
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,10 +89,16 @@ WSGI_APPLICATION = 'LGM.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("mysql://root:LrTXuFVzHfmdikOlVPBOWdSZnEZwZlfW@trolley.proxy.rlwy.net:26218/railway"))
-}
+# DATABASES = {
+#     'default': dj_database_url.parse(os.environ.get("mysql://root:LrTXuFVzHfmdikOlVPBOWdSZnEZwZlfW@trolley.proxy.rlwy.net:26218/railway"))
+# }
 
+
+DATABASES = {
+    'default': dj_database_url.parse(
+        os.environ.get("mysql://root:LrTXuFVzHfmdikOlVPBOWdSZnEZwZlfW@trolley.proxy.rlwy.net:26218/railway", "sqlite:///db.sqlite3")
+    )
+}
 AUTH_USER_MODEL = 'core.CustomUser'
 
 
