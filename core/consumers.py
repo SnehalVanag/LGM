@@ -1,0 +1,41 @@
+from channels.generic.websocket import AsyncWebsocketConsumer
+import json
+from datetime import datetime
+
+class ChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.channel_layer.group_add(
+            'franchise_chat',
+            self.channel_name
+        )
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(
+            'franchise_chat',
+            self.channel_name
+        )
+
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
+        
+        # Get the user's name (you can modify this based on your user model)
+        sender = self.scope['user'].username if self.scope['user'].is_authenticated else 'Anonymous'
+        
+        await self.channel_layer.group_send(
+            'franchise_chat',
+            {
+                'type': 'chat_message',
+                'message': message,
+                'sender': sender,
+                'timestamp': datetime.now().strftime('%H:%M')
+            }
+        )
+
+    async def chat_message(self, event):
+        await self.send(text_data=json.dumps({
+            'message': event['message'],
+            'sender': event['sender'],
+            'timestamp': event['timestamp']
+        }))
