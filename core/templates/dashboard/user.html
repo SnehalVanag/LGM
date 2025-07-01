@@ -41,10 +41,16 @@
       --radius: 1.2rem;
       --transition: 0.18s cubic-bezier(.4,0,.2,1);
     }
-    html, body {
-      background: var(--navy);
+    html, body 
+       {
+      /* Marble mix color background */
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+      background-blend-mode: lighten;
+      background-size: cover, 340px 340px;
       color: var(--white);
       font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      color: var(--white);
       min-height: 100vh;
     }
     .login-container {
@@ -52,17 +58,48 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(120deg, #0B1120 0%, #0F172A 100%);
+      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+;
     }
     .login-card {
-      background: #181F2F;
+      background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%);
       border-radius: var(--radius);
-      box-shadow: 0 8px 32px 0 rgba(16,185,129,0.13);
+      box-shadow: 0 8px 32px 0 rgba(164, 117, 173, 0.10);
       padding: 2.5rem 2rem 2rem 2rem;
       width: 100%;
       max-width: 370px;
       text-align: center;
-      border: 1.5px solid rgba(255,255,255,0.09);
+      border: 1.5px solid #e0c3fc;
+      transition: box-shadow 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1), background 1.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(120deg, #f7fafc, #e0c3fc, #8ec5fc, #b6e2d3, #ffe082, #f7fafc);
+      background-size: 400% 400%;
+      opacity: 0.22;
+      filter: blur(12px);
+      transition: opacity 1.2s, filter 1.2s;
+      pointer-events: none;
+      animation: cardGradientMoveSoft 12s ease-in-out infinite;
+    }
+    @keyframes cardGradientMoveSoft {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .login-card:hover {
+      box-shadow: 0 16px 48px 0 rgba(164, 117, 173, 0.18), 0 2px 8px 0 rgba(16,185,129,0.10);
+      transform: translateY(-8px) scale(1.03) rotateY(3deg) skewY(-1deg);
+      background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
+    }
+    .login-card:hover::before {
+      opacity: 0.32;
+      filter: blur(6px);
     }
     .login-title {
       font-size: 2rem;
@@ -124,19 +161,35 @@
     /* Global Text Selection Color */
     ::selection {
       background: #FFD700;
-      color: #1E293B;
+      color:rgb(0, 3, 8);
     }
     html ::-moz-selection, body ::-moz-selection {
       background: #FFD700;
       color: #1E293B;
     }
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+      color: #111 !important;
+    }
+    .navbar .nav-link:focus,
+    .navbar .nav-link:hover,
+    .navbar .nav-link.active {
+      color:rgb(7, 7, 7) !important;
+      background: rgb(238, 93, 93);
+      transition: color 0.5s cubic-bezier(.4,0,.2,1), background 0.7s cubic-bezier(.4,0,.2,1), box-shadow 0.6s cubic-bezier(.4,0,.2,1), transform 0.6s cubic-bezier(.4,0,.2,1);
+    }
+     .navbar .nav-link:hover, .navbar .nav-link:focus {
+      color:rgb(7, 7, 7) !important;
+      background: rgb(238, 93, 93);
+      transition: color 0.5s cubic-bezier(.4,0,.2,1), background 0.7s cubic-bezier(.4,0,.2,1), box-shadow 0.6s cubic-bezier(.4,0,.2,1), transform 0.6s cubic-bezier(.4,0,.2,1);
+    }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background: #181F2F; box-shadow: 0 2px 12px 0 rgba(16,185,129,0.04); border-bottom: 1.5px solid rgba(255,255,255,0.04);">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background:rgb(240, 136, 56); box-shadow: 0 2px 12px 0 rgba(16,185,129,0.04); border-bottom: 1.5px solid rgba(255,255,255,0.04);">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}" style="color: var(--emerald); font-weight: 700; letter-spacing: 1px; font-size: 1.4rem;">LGTM</a>
+      <a class="navbar-brand" href="{% url 'home' %}" style="color:black; font-weight: 700; letter-spacing: 1px; font-size: 1.4rem;">LGTM</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
