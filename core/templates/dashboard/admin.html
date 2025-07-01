@@ -12,14 +12,66 @@
     <div class="kpi-value">{{ products_count }}</div>
     <div class="kpi-label">Products</div>
   </a>
-  <div class="kpi-card"><div class="kpi-value">87</div><div class="kpi-label">Franchises</div></div>
-  <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Sales</div></div>
+   <div class="kpi-card">
+    <div class="kpi-value">{{ user_count }}</div>
+    <div class="kpi-label">Leads Generated</div>
+  </div>
+  <a href="#" class="kpi-card" style="text-decoration:none; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#franchiseListModal">
+  <div class="kpi-value">{{ franchises_count }}</div>
+  <div class="kpi-label">Franchises</div>
+</a>
+
+
   <a href="{% url 'coupons' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
     <div class="kpi-value">{{ coupons_count }}</div>
     <div class="kpi-label">Coupons</div>
   </a>
-  <div class="kpi-card"><div class="kpi-value">4.8/5</div><div class="kpi-label">Leads</div></div>
-  <div class="kpi-card"><div class="kpi-value">4.8/5</div><div class="kpi-label">Referral</div></div>
+
+<a href="#" class="kpi-card" style="text-decoration:none; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#marketingListModal">
+  <div class="kpi-value">{{ marketing_members_count }}</div>
+  <div class="kpi-label">Marketing Team</div>
+</a>
+<!-- Marketing Members List Modal -->
+<div class="modal fade" id="marketingListModal" tabindex="-1" aria-labelledby="marketingListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="marketingListModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-users"></i> Marketing Team Members
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle mb-0" style="border-radius: 0.7rem; overflow: hidden;">
+            <thead style="background: #10B981;">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for member in marketing_members %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.email }}</td>
+                <td>{{ member.phone }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-center text-muted">No marketing team members found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 <div class="quick-actions">
   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
@@ -72,6 +124,10 @@
             <label class="form-label" for="franchiseEmail">Email</label>
             <input type="email" class="form-control" id="franchiseEmail" name="contact_email" required>
           </div>
+             <div class="mb-3">
+            <label class="form-label" for="id_phone_number">Phone Number</label>
+            <input type="text" name="phone_number" class="form-control" required>
+          </div>
           <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Franchise</button>
         </form>
       </div>
@@ -108,6 +164,109 @@
     </div>
   </div>
 </div>
+<!-- Franchise List Modal -->
+<div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="franchiseListModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-store"></i> Franchise List
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle mb-0" style="border-radius: 0.7rem; overflow: hidden;">
+            <thead style="background: #10B981;">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for franchise in franchises %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ franchise.name }}</td>
+                <td>{{ franchise.address }}</td>
+                <td>{{ franchise.contact_email }}</td>
+                <td>{{ franchise.phone_number }}</td>
+                <td>
+                  <button class="btn btn-warning btn-sm" onclick="editFranchise({{ franchise.id }})">Edit</button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteFranchise({{ franchise.id }})">Delete</button>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">No franchises found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Add this Edit Franchise Modal after Add Franchise Modal -->
+<!-- filepath: c:\Users\sneha\OneDrive\Desktop\LGM_Proj (3) (2)\LGM_Proj (2)\LGM_Proj\LGM_Proj\LGM_p\core\templates\dashboard\admin.html -->
+<div class="modal fade" id="editFranchiseModal" tabindex="-1" aria-labelledby="editFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="editFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-edit"></i> Edit Franchise
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editFranchiseForm">
+          <input type="hidden" id="editFranchiseId" name="id">
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseName">Name</label>
+            <input type="text" class="form-control" id="editFranchiseName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseLocation">Location</label>
+            <input type="text" class="form-control" id="editFranchiseLocation" name="address" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseEmail">Email</label>
+            <input type="email" class="form-control" id="editFranchiseEmail" name="contact_email" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchisePhone">Phone Number</label>
+            <input type="text" class="form-control" id="editFranchisePhone" name="phone_number" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Update Franchise</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+<!-- Optional: Custom CSS for rounded table -->
+<style>
+  .modal-content .table {
+    border-radius: 0.7rem;
+    overflow: hidden;
+  }
+  .modal-content .table thead {
+    background: #10B981;
+    color: #181F2F;
+    font-weight: 700;
+  }
+  .modal-content .table tbody tr {
+    transition: background 0.2s;
+  }
+  .modal-content .table tbody tr:hover {
+    background: #134e4a !important;
+  }
+</style>
 <!-- Toast Notification -->
 <div id="couponToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 2rem; right: 2rem; min-width: 260px; background: #23293a; color: #FFD700; z-index: 9999; display: none; border-radius: 1rem; box-shadow: 0 2px 16px 0 rgba(16,185,129,0.12);">
   <div class="d-flex">
@@ -115,26 +274,93 @@
     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" onclick="document.getElementById('couponToast').style.display='none';"></button>
   </div>
 </div>
-<div class="activity-feed">
-  <div class="activity-title">Recent Updates</div>
-  <ul class="activity-list">
-    <li class="activity-item"><i class="fa fa-user-shield"></i> Admin rights granted to John Doe</li>
-    <li class="activity-item"><i class="fa fa-database"></i> Database backup completed</li>
-    <li class="activity-item"><i class="fa fa-bug"></i> 3 issues resolved</li>
-  </ul>
-</div>
+
 <div class="dashboard-chart" style="background: #1E293B;">
   <canvas id="adminChart"></canvas>
 </div>
+
 {% endblock %}
 {% block extra_js %}
 <script>
+function editFranchise(id) {
+  // Find the franchise data in the table row
+  const row = document.querySelector(`button[onclick="editFranchise(${id})"]`).closest('tr');
+  const name = row.children[1].textContent.trim();
+  const address = row.children[2].textContent.trim();
+  const contact_email = row.children[3].textContent.trim();
+  const phone_number = row.children[4].textContent.trim();
+
+  // Fill the modal form
+  document.getElementById('editFranchiseId').value = id;
+  document.getElementById('editFranchiseName').value = name;
+  document.getElementById('editFranchiseLocation').value = address;
+  document.getElementById('editFranchiseEmail').value = contact_email;
+  document.getElementById('editFranchisePhone').value = phone_number;
+
+  // Show the modal
+  const modal = new bootstrap.Modal(document.getElementById('editFranchiseModal'));
+  modal.show();
+}
+
+// Handle Edit Franchise form submit
+const editFranchiseForm = document.getElementById('editFranchiseForm');
+editFranchiseForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const id = document.getElementById('editFranchiseId').value;
+  const name = document.getElementById('editFranchiseName').value;
+  const address = document.getElementById('editFranchiseLocation').value;
+  const contact_email = document.getElementById('editFranchiseEmail').value;
+  const phone_number = document.getElementById('editFranchisePhone').value;
+
+  fetch(`/update-franchise/${id}/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success) {
+      showCouponToast('✅ Franchise updated successfully!');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('editFranchiseModal'));
+      if(modal) modal.hide();
+      setTimeout(() => location.reload(), 1200);
+    } else {
+      showCouponToast('❌ Failed to update franchise.');
+    }
+  })
+  .catch(() => showCouponToast('❌ Error updating franchise.'));
+});
+
+
+function deleteFranchise(id) {
+  if (confirm('Are you sure you want to delete this franchise?')) {
+    fetch(`/delete-franchise/${id}/`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        alert('Failed to delete franchise.');
+      }
+    });
+  }
+}
+
 function showCouponToast(msg) {
   const toast = document.getElementById('couponToast');
   document.getElementById('couponToastMsg').innerText = msg;
   toast.style.display = 'block';
   setTimeout(() => { toast.style.display = 'none'; }, 3500);
 }
+
 function animateKpiCount(element, start, end, duration = 600) {
   if (start === end) return;
   const range = end - start;
@@ -166,39 +392,42 @@ addCouponForm.addEventListener('submit', function(e) {
     body: `discount_percentage=${encodeURIComponent(discount)}`
   })
   .then(res => res.json())
-  .then(data => {
+.then(data => {
     if(data.success) {
       showCouponToast('✅ Coupon added successfully!');
-      // Update coupon KPI card count with animation
-      const kpi = document.querySelector(".kpi-card[href$='coupons'] .kpi-value");
-      if(kpi) {
-        const current = parseInt(kpi.textContent);
-        animateKpiCount(kpi, current, current + 1);
+      // Update the coupon count immediately
+      const couponKpi = document.querySelector('a[href$="coupons"] .kpi-value');
+      if (couponKpi) {
+        let current = parseInt(couponKpi.textContent) || 0;
+        couponKpi.textContent = current + 1;
       }
-      // Close modal
       const modal = bootstrap.Modal.getInstance(document.getElementById('addCouponModal'));
       if(modal) modal.hide();
       addCouponForm.reset();
+      setTimeout(() => location.reload(), 1200); // Optional: reload for full sync
     } else {
       showCouponToast('❌ Failed to add coupon.');
     }
   })
   .catch(() => showCouponToast('❌ Error adding coupon.'));
 });
-// Add Franchise AJAX
+
+// ...existing code...
 const addFranchiseForm = document.getElementById('addFranchiseForm');
 addFranchiseForm.addEventListener('submit', function(e) {
   e.preventDefault();
   const name = document.getElementById('franchiseName').value;
   const address = document.getElementById('franchiseLocation').value;
   const contact_email = document.getElementById('franchiseEmail').value;
+  const phone_number = document.querySelector('input[name="phone_number"]').value; // <-- Add this line
+
   fetch('/add-franchise/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'X-CSRFToken': '{{ csrf_token }}'
     },
-    body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}`
+    body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}` // <-- Add phone_number here
   })
   .then(res => res.json())
   .then(data => {
@@ -213,6 +442,7 @@ addFranchiseForm.addEventListener('submit', function(e) {
   })
   .catch(() => showCouponToast('❌ Error adding franchise.'));
 });
+
 // Add Marketing Member AJAX
 const addMarketingMemberForm = document.getElementById('addMarketingMemberForm');
 addMarketingMemberForm.addEventListener('submit', function(e) {

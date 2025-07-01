@@ -4,13 +4,16 @@ import os
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'your-secret-key-here'  # Replace with your own key in production
+SECRET_KEY = '15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'product_images'
 
 # ✅ Add this line to point to your project-level urls.py
 ROOT_URLCONF = 'LGM.urls'

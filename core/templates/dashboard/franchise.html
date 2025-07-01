@@ -1,32 +1,337 @@
 {% extends 'dashboard/dashboard_base.html' %}
-{% block title %}Franchise Dashboard{% endblock %}
+{% block title %}Franchise Dashboard | Products | Admin Dashboard{% endblock %}
 {% block content %}
-<div class="dashboard-header">Franchise Dashboard</div>
-<div class="kpi-cards">
-  <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Branches</div></div>
-  <div class="kpi-card"><div class="kpi-value">1,245</div><div class="kpi-label">Total Users</div></div>
-  <div class="kpi-card"><div class="kpi-value">98%</div><div class="kpi-label">Satisfaction</div></div>
-  <div class="kpi-card"><div class="kpi-value">₹2.1M</div><div class="kpi-label">Monthly Revenue</div></div>
+<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
+  <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
+    <i class="fa fa-sign-out-alt"></i> Logout
+  </a>
 </div>
+<div class="dashboard-header">Franchise Dashboard</div>
+
+<div class="kpi-cards">
+
+<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#franchiseListModal">
+  <div class="kpi-value">{{ franchises_count }}</div>  <div class="kpi-label">Franchises</div>
+  <div style="font-size:12px;color:#FFD700;"></div> 
+</div>
+
+<!-- Franchise List Modal -->
+<div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="franchiseListModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-store"></i> Franchise List
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-hover align-middle mb-0" style="border-radius: 0.7rem; overflow: hidden;">
+            <thead style="background: #10B981;">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for franchise in franchises %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ franchise.name }}</td>
+                <td>{{ franchise.address }}</td>
+                <td>{{ franchise.contact_email }}</td>
+                <td>{{ franchise.phone_number }}</td>
+                <td>
+                  <!-- <button class="btn btn-warning btn-sm" onclick="editFranchise({{ franchise.id }})">Edit</button>
+                  <button class="btn btn-danger btn-sm" onclick="deleteFranchise({{ franchise.id }})">Delete</button> -->
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">No franchises found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Add this Edit Franchise Modal after Add Franchise Modal -->
+<!-- filepath: c:\Users\sneha\OneDrive\Desktop\LGM_Proj (3) (2)\LGM_Proj (2)\LGM_Proj\LGM_Proj\LGM_p\core\templates\dashboard\admin.html -->
+<div class="modal fade" id="editFranchiseModal" tabindex="-1" aria-labelledby="editFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="editFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-edit"></i> Edit Franchise
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editFranchiseForm">
+          <input type="hidden" id="editFranchiseId" name="id">
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseName">Name</label>
+            <input type="text" class="form-control" id="editFranchiseName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseLocation">Location</label>
+            <input type="text" class="form-control" id="editFranchiseLocation" name="address" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchiseEmail">Email</label>
+            <input type="email" class="form-control" id="editFranchiseEmail" name="contact_email" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="editFranchisePhone">Phone Number</label>
+            <input type="text" class="form-control" id="editFranchisePhone" name="phone_number" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Update Franchise</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+  <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}';">
+  <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
+  <div class="kpi-label">Coupons</div>
+  <div style="font-size:12px;color:#FFD700;">View Coupons</div> 
+
+
+
+
+</div>
+<!-- Staff KPI Card -->
+<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#staffListModal">
+  <div class="kpi-value">{{ staff_list|length }}</div>
+  <div class="kpi-label">Staff Members</div>
+  <div style="font-size:12px;color:#FFD700;"></div> 
+</div>
+
+
+
+<!-- Staff List Modal -->
+<div class="modal fade" id="staffListModal" tabindex="-1" aria-labelledby="staffListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="staffListModalLabel" style="color:#FFD700;">Staff List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background:none;color:#FFD700;"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Joined At</th>
+              </tr>
+            </thead>
+            <tbody>
+               {% for staff in staff_list %}
+              <tr>
+                <td>{{ staff.id }}</td>
+                <td>{{ staff.name }}</td>
+                <td>{{ staff.email }}</td>
+                <td>{{ staff.phone }}</td>
+                <td>{{ staff.joined_at|date:'Y-m-d' }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center text-muted">No staff found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="staffListModal" tabindex="-1" aria-labelledby="staffListModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="franchiseListModalLabel" style="color:#FFD700;">Staff List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background:none;color:#FFD700;"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Address</th>
+              </tr>
+            </thead>
+           
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Product List Modal -->
+ <div class="modal fade" id="productListModal" tabindex="-1" aria-labelledby="productListModalLabel" aria-hidden="true">
+ <div class="products-table-container"
+  style="background: var(--charcoal); border-radius: 1.2rem; box-shadow: 0 2px 16px 0 rgba(16,185,129,0.07); border: 1.5px solid rgba(255,255,255,0.06); padding: 2rem 1.5rem; margin-bottom: 2.5rem;">
+  <table class="table table-borderless table-dark table-hover align-middle mb-0" style="--bs-table-bg: transparent;">
+    <thead>
+      <tr style="border-bottom: 2px solid var(--emerald);">
+        <th>#</th>
+        <th>Product Name</th>
+        <th>Image</th>
+        <th>Discount (%)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td style="color: var(--gold); font-weight: 600;">{{ forloop.counter }}</td>
+        <td style="color: #d1fae5;">{{ product.name }}</td>
+        <td>
+          <img src="{{ product.image.url }}" alt="{{ product.name }}"
+            style="height: 48px; border-radius: 0.7rem; box-shadow: 0 2px 8px 0 rgba(16,185,129,0.10); background: var(--gray); padding: 2px;" />
+        </td>
+        <td style="color: #facc15;">{{ product.discount }}%</td>
+
+        <td>
+          <a href="{% url 'update_product' product.id %}" class="btn btn-warning btn-sm"
+            style="border-radius: 1rem; font-weight: 600; margin-right: 0.5rem;" {% if disable_actions %}disabled
+            tabindex="-1" aria-disabled="true" {% endif %}>
+            Update
+          </a>
+          <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm"
+            style="border-radius: 1rem; font-weight: 600;"
+            onclick="return confirm('Are you sure you want to delete this product?');" {% if disable_actions %}disabled
+            tabindex="-1" aria-disabled="true" {% endif %}>
+            Delete
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+ </div>
+
+
+</div>
+
+
+
 <div class="quick-actions">
-  <button class="quick-action-btn"><i class="fa fa-plus"></i> Add Branch</button>
-  <button class="quick-action-btn"><i class="fa fa-users"></i> Manage Staff</button>
-  <button class="quick-action-btn"><i class="fa fa-chart-line"></i> View Reports</button>
+  <!-- <button class="quick-action-btn"><i class="fa fa-chart-line"></i> View Reports</button> -->
+    <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
+  <i class="fa fa-plus"></i> Add Staff
+</button>
+<!-- Add Franchise Modal -->
+<div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-plus"></i> Add Staff
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{% url 'franchise_dashboard' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Staff</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+</div>
+
+
+<div id="branchModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#222;padding:2rem;border-radius:1rem;min-width:320px;position:relative;">
+    <span style="position:absolute;top:10px;right:20px;cursor:pointer;font-size:1.5rem;color:#FFD700;" onclick="closeBranchModal()">&times;</span>
+    <h3 id="modalTitle" style="color:#FFD700;">Add Branch</h3>
+    <form id="branchForm" method="POST" action="{% url 'add_branch' %}">
+      {% csrf_token %}
+      <input type="hidden" name="branch_id" id="branchId">
+      <div>
+        <label>Area:</label>
+        <input type="text" name="area" id="branchArea" required class="form-control">
+      </div>
+      <button type="submit" class="quick-action-btn" style="margin-top:1rem;">Save</button>
+    </form>
+  </div>
 </div>
 <div class="activity-feed">
-  <div class="activity-title">Recent Activity</div>
+  <div class="activity-title">Admin Details</div>
   <ul class="activity-list">
-    <li class="activity-item"><i class="fa fa-store"></i> New branch opened in Pune</li>
-    <li class="activity-item"><i class="fa fa-user-plus"></i> 5 new staff members joined</li>
-    <li class="activity-item"><i class="fa fa-trophy"></i> Franchise of the Month: Mumbai</li>
+      {% if request.session.is_core_admin %}
+  <span style="color: #FFD700; font-weight: 600;">
+    <i class="fa fa-user-circle"></i>
+    {{ request.session.admin_name }}
+  </span>
+{% endif %}
+
   </ul>
 </div>
+
+
+
 <div class="dashboard-chart" style="background: #1E293B;">
   <canvas id="franchiseChart"></canvas>
+</div>
+
+
+
 </div>
 {% endblock %}
 {% block extra_js %}
 <script>
+  
+function openBranchModal() {
+  document.getElementById('branchModal').style.display = 'flex';
+  document.getElementById('modalTitle').innerText = 'Add Branch';
+  document.getElementById('branchForm').reset();
+  document.getElementById('branchId').value = '';
+}
+function closeBranchModal() {
+  document.getElementById('branchModal').style.display = 'none';
+}
+function editBranch(id, name, address, area, email) {
+  openBranchModal();
+  document.getElementById('modalTitle').innerText = 'Edit Branch';
+  document.getElementById('branchId').value = id;
+  document.getElementById('branchName').value = name;
+  document.getElementById('branchAddress').value = address;
+  document.getElementById('branchArea').value = area;
+  document.getElementById('branchEmail').value = email;
+}
+
+function toggleAddStaffModal() {
+  var overlay = document.getElementById('add-staff-modal-overlay');
+  overlay.style.display = (overlay.style.display === 'none' || overlay.style.display === '') ? 'flex' : 'none';
+}
+
 const ctxF = document.getElementById('franchiseChart').getContext('2d');
 new Chart(ctxF, {
   type: 'bar',
@@ -83,5 +388,9 @@ new Chart(ctxF, {
     }
   }]
 });
+
+
+
 </script>
+
 {% endblock %}

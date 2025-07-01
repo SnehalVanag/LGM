@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LGTM</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap JS (include before closing body tag) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   <style>
     :root {
       --navy: #0F172A;
@@ -17,30 +25,60 @@
       --slate: #1F2937;
       --sky: #3B82F6;
       --radius: 1.2rem;
-      --transition: 0.18s cubic-bezier(.4,0,.2,1);
+      --transition: 0.18s cubic-bezier(.4, 0, .2, 1);
     }
-    html, body {
-      background: var(--navy);
-      color: var(--white);
-      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-      min-height: 100vh;
-    }
-    /* Navbar */
+
+    /* Change header/navbar color */
     .navbar {
-      background: var(--charcoal);
-      box-shadow: 0 2px 12px 0 rgba(16,185,129,0.04);
-      border-bottom: 1.5px solid rgba(255,255,255,0.04);
+      background: var(--emerald) !important;
+      /* Changed from charcoal to emerald */
+      box-shadow: 0 2px 12px 0 rgba(16, 185, 129, 0.04);
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.04);
       position: sticky;
       top: 0;
       z-index: 100;
       transition: box-shadow var(--transition);
     }
+
+    .navbar-brand {
+      color: var(--white) !important;
+    }
+
+    .nav-link {
+      color: var(--white) !important;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+      color: var(--gold) !important;
+    }
+
+    html,
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: var(--charcoal);
+      box-shadow: 0 2px 12px 0 rgba(16, 185, 129, 0.04);
+      border-bottom: 1.5px solid rgba(255, 255, 255, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: box-shadow var(--transition);
+    }
+
     .navbar-brand {
       font-weight: 700;
       color: var(--emerald) !important;
       letter-spacing: 1px;
       font-size: 1.6rem;
     }
+
     .nav-link {
       color: var(--white) !important;
       font-weight: 500;
@@ -51,6 +89,7 @@
       transition: color var(--transition);
       padding: 0.5rem 1rem;
     }
+
     .nav-link::after {
       content: '';
       display: block;
@@ -60,17 +99,24 @@
       border-radius: 2px;
       transition: width 0.2s;
       position: absolute;
-      left: 0; bottom: 0;
+      left: 0;
+      bottom: 0;
     }
-    .nav-link:hover, .nav-link:focus {
+
+    .nav-link:hover,
+    .nav-link:focus {
       color: var(--gold) !important;
     }
-    .nav-link:hover::after, .nav-link:focus::after {
+
+    .nav-link:hover::after,
+    .nav-link:focus::after {
       width: 100%;
     }
+
     .navbar-toggler {
       border: none;
     }
+
     /* Hero */
     .hero {
       background: linear-gradient(120deg, var(--emerald) 0%, var(--navy) 100%);
@@ -79,9 +125,10 @@
       margin-bottom: 2.5rem;
       overflow: hidden;
       min-height: 260px;
-      box-shadow: 0 8px 32px 0 rgba(16,185,129,0.10);
+      box-shadow: 0 8px 32px 0 rgba(16, 185, 129, 0.10);
       position: relative;
     }
+
     .hero::before {
       content: '';
       position: absolute;
@@ -90,12 +137,14 @@
       opacity: 0.08;
       z-index: 1;
     }
+
     .hero-content {
       position: relative;
       z-index: 2;
       padding: 3rem 2rem 2rem 2rem;
       text-align: center;
     }
+
     .hero-title {
       font-size: 2.7rem;
       font-weight: 800;
@@ -104,29 +153,32 @@
       letter-spacing: 1px;
       text-shadow: 0 2px 16px var(--emerald);
     }
+
     .hero-desc {
       font-size: 1.2rem;
       color: #d1fae5;
       margin-bottom: 1.5rem;
     }
-    .hero-btn {
-  background: linear-gradient(90deg, var(--emerald), var(--gold));
-  color: var(--charcoal);
-  border: none;
-  border-radius: 2rem;
-  padding: 0.7rem 2.2rem;
-  font-weight: 700;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 12px 0 rgba(16,185,129,0.10);
-  text-decoration: none;
-  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
-}
 
-.hero-btn:hover {
-  background: linear-gradient(90deg, var(--gold), var(--emerald));
-  color: var(--navy);
-  transform: scale(1.05);
-}
+    .hero-btn {
+      background: linear-gradient(90deg, var(--emerald), var(--gold));
+      color: var(--charcoal);
+      border: none;
+      border-radius: 2rem;
+      padding: 0.7rem 2.2rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 12px 0 rgba(16, 185, 129, 0.10);
+      text-decoration: none;
+      transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+
+    .hero-btn:hover {
+      background: linear-gradient(90deg, var(--gold), var(--emerald));
+      color: var(--navy);
+      transform: scale(1.05);
+    }
+
     /* Dashboard Cards */
     .dashboard-cards {
       display: grid;
@@ -134,42 +186,49 @@
       gap: 2rem;
       margin-bottom: 2.5rem;
     }
+
     .dashboard-card {
       background: var(--charcoal);
       border-radius: var(--radius);
-      box-shadow: 0 2px 16px 0 rgba(16,185,129,0.07);
-      border: 1.5px solid rgba(255,255,255,0.06);
+      box-shadow: 0 2px 16px 0 rgba(16, 185, 129, 0.07);
+      border: 1.5px solid rgba(255, 255, 255, 0.06);
       padding: 2rem 1.5rem 1.5rem 1.5rem;
       text-align: center;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
       cursor: pointer;
       position: relative;
     }
+
     .dashboard-card:hover {
       transform: translateY(-8px) scale(1.04);
-      box-shadow: 0 8px 32px 0 rgba(255,215,0,0.13);
+      box-shadow: 0 8px 32px 0 rgba(255, 215, 0, 0.13);
       border-color: var(--gold);
     }
+
     .dashboard-icon {
       font-size: 2.3rem;
       color: var(--emerald);
       margin-bottom: 0.7rem;
       transition: color var(--transition);
     }
+
     .dashboard-card:hover .dashboard-icon {
       color: var(--gold);
     }
+
     .dashboard-title {
       font-size: 1.3rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
       color: var(--white);
     }
+
     .dashboard-desc {
       font-size: 1rem;
       color: #a7f3d0;
       margin-bottom: 1.2rem;
     }
+
     .dashboard-btn {
       background: var(--emerald);
       color: var(--navy);
@@ -179,13 +238,15 @@
       font-weight: 600;
       font-size: 1rem;
       transition: background var(--transition), color var(--transition);
-      box-shadow: 0 2px 8px 0 rgba(16,185,129,0.08);
+      box-shadow: 0 2px 8px 0 rgba(16, 185, 129, 0.08);
       text-decoration: none;
     }
+
     .dashboard-btn:hover {
       background: var(--gold);
       color: var(--charcoal);
     }
+
     /* Quick Stats */
     .quick-stats {
       display: flex;
@@ -194,225 +255,770 @@
       margin-bottom: 2.5rem;
       justify-content: center;
     }
+
     .stat-card {
       background: var(--charcoal);
       border-radius: 1rem;
       padding: 1.2rem 2rem;
       min-width: 160px;
       text-align: center;
-      box-shadow: 0 2px 8px 0 rgba(16,185,129,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 2px 8px 0 rgba(16, 185, 129, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       transition: box-shadow var(--transition), transform var(--transition);
     }
+
     .stat-card:hover {
-      box-shadow: 0 8px 24px 0 rgba(255,215,0,0.13), 0 2px 8px 0 rgba(16,185,129,0.10);
+      box-shadow: 0 8px 24px 0 rgba(255, 215, 0, 0.13), 0 2px 8px 0 rgba(16, 185, 129, 0.10);
       transform: translateY(-6px) scale(1.04);
       z-index: 1;
     }
+
     .stat-value {
       font-size: 1.5rem;
       font-weight: 700;
       color: var(--gold);
       margin-bottom: 0.2rem;
     }
+
     .stat-label {
       font-size: 1rem;
       color: #d1fae5;
     }
+
     /* Global Text Selection Color */
     ::selection {
       background: #FFD700;
       color: #1E293B;
     }
+
     /* For Firefox */
-    html ::-moz-selection, body ::-moz-selection {
+    html ::-moz-selection,
+    body ::-moz-selection {
       background: #FFD700;
       color: #1E293B;
     }
+
     @media (max-width: 991px) {
-      .hero-title { font-size: 2rem; }
-      .dashboard-cards { gap: 1.2rem; }
-      .quick-stats { gap: 1rem; }
-      .stat-card { min-width: 140px; padding: 1rem 0.7rem; }
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .dashboard-cards {
+        gap: 1.2rem;
+      }
+
+      .quick-stats {
+        gap: 1rem;
+      }
+
+      .stat-card {
+        min-width: 140px;
+        padding: 1rem 0.7rem;
+      }
     }
+
     @media (max-width: 768px) {
-      .hero { padding: 1.5rem 0.5rem; }
-      .dashboard-cards { grid-template-columns: 1fr; }
+      .hero {
+        padding: 1.5rem 0.5rem;
+      }
+
+      .dashboard-cards {
+        grid-template-columns: 1fr;
+      }
+
       .quick-stats {
         flex-direction: column;
         align-items: stretch;
         gap: 1rem;
       }
+
       .stat-card {
         width: 100%;
         min-width: 0;
         margin: 0 auto;
       }
     }
+
     @media (max-width: 576px) {
-      .hero-title { font-size: 1.3rem; }
-      .dashboard-card { padding: 1.2rem 0.5rem; }
-      .stat-card { min-width: 100px; padding: 0.8rem 0.5rem; }
-      .cta-footer { font-size: 1rem; padding: 1.2rem 0.5rem; }
+      .hero-title {
+        font-size: 1.3rem;
+      }
+
+      .dashboard-card {
+        padding: 1.2rem 0.5rem;
+      }
+
+      .stat-card {
+        min-width: 100px;
+        padding: 0.8rem 0.5rem;
+      }
+
+      .cta-footer {
+        font-size: 1rem;
+        padding: 1.2rem 0.5rem;
+      }
     }
   </style>
 </head>
+
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">LGTM</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="#">LGTM.....</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="search-bar">
+          <input type="text" class="form-control" placeholder="Search">
+          <button class="btn btn-warning">Search</button>
+        </div>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="{% url 'franchise_dashboard' %}"><i class="fa-solid fa-store"></i> Franchise</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'admin_dashboard' %}"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'lead_dashboard' %}"><i class="fa-solid fa-users"></i> Lead</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'marketing_dashboard' %}"><i class="fa-solid fa-bullhorn"></i> Marketing</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="roleDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fa-solid fa-user-shield"></i> Login
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="roleDropdown">
+              <li><a class="dropdown-item" href="{% url 'admin_login' %}">Admin</a></li>
+              <li><a class="dropdown-item" href="{% url 'user_login' %}">User</a></li>
+              <li><a class="dropdown-item" href="{% url 'marketing_login' %}">Marketing</a></li>
+              <li><a class="dropdown-item" href="{% url 'franchise_login' %}">Franchise</a></li>
+            </ul>
+          </li>
+          <div class="cart-icon ms-3">
+            <button class="btn btn-outline-dark position-relative" onclick="showCart()">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                id="cart-count">0</span>
+            </button>
+          </div>
+         
+          <!-- <li class="nav-item"><a class="nav-link" href="{% url 'lead_dashboard' %}"><i class="fa-solid fa-users"></i>
+              Lead</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'marketing_dashboard' %}"><i
+                class="fa-solid fa-bullhorn"></i> Marketing</a></li> -->
         </ul>
       </div>
     </div>
   </nav>
+  <!--  -->
+  <!DOCTYPE html>
+  <html lang="en">
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1 class="hero-title">LGTM</h1>
-      <p class="hero-desc">Your one-stop gateway for Franchise, Admin, Lead, and Marketing dashboards.<br>Minimal, modern, and powerful.</p>
-      <a href="#dashboard-cards" class="hero-btn">Explore Dashboards</a>
-    </div>
-  </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LGTM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
-  <!-- Dashboard Cards Grid -->
-  <section class="container dashboard-cards" id="dashboard-cards">
-    <div class="dashboard-card">
-      <div class="dashboard-icon"><i class="fa-solid fa-store"></i></div>
-      <div class="dashboard-title">Franchise Dashboard</div>
-      <div class="dashboard-desc">Manage branches, view franchise performance, and access resources.</div>
-      <a href="{% url 'franchise_dashboard' %}" class="dashboard-btn">Go to Dashboard</a>
-    </div>
-    <div class="dashboard-card">
-      <div class="dashboard-icon"><i class="fa-solid fa-user-shield"></i></div>
-      <div class="dashboard-title">Admin Dashboard</div>
-      <div class="dashboard-desc">Control users, view reports, and configure system settings.</div>
-      <a href="{% url 'admin_dashboard' %}" class="dashboard-btn">Go to Dashboard</a>
-    </div>
-    <div class="dashboard-card">
-      <div class="dashboard-icon"><i class="fa-solid fa-users"></i></div>
-      <div class="dashboard-title">Lead Dashboard</div>
-      <div class="dashboard-desc">Track leads, assign tasks, and analyze conversion rates.</div>
-      <a href="{% url 'lead_dashboard' %}" class="dashboard-btn">Go to Dashboard</a>
-    </div>
-    <div class="dashboard-card">
-      <div class="dashboard-icon"><i class="fa-solid fa-bullhorn"></i></div>
-      <div class="dashboard-title">Marketing Dashboard</div>
-      <div class="dashboard-desc">Analyze campaigns, view analytics, and optimize strategies.</div>
-      <a href="{% url 'marketing_dashboard' %}" class="dashboard-btn">Go to Dashboard</a>
-    </div>
-  </section>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Quick Stats / Overview -->
-  <section class="container quick-stats">
-    <div class="stat-card">
-      <div class="stat-value">1,245</div>
-      <div class="stat-label">Total Users</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">87</div>
-      <div class="stat-label">Tasks Pending</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">12</div>
-      <div class="stat-label">Active Campaigns</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">4.8/5</div>
-      <div class="stat-label">User Rating</div>
-    </div>
-  </section>
-
-  <!-- Review Footer (Centered, Attractive, Interactive Star Rating) -->
-<footer class="container mt-5 mb-3">
-  <div class="card bg-dark text-white p-4 d-flex flex-column align-items-center justify-content-center" style="border-radius: 1.2rem; box-shadow: 0 2px 16px 0 rgba(16,185,129,0.10); max-width: 420px; margin: 0 auto;">
-    <h5 class="mb-3 text-center" style="color:rgb(245, 227, 125); font-weight: 700; letter-spacing: 1px;">User Rating</h5>
-    <div class="d-flex flex-column align-items-center">
-      <div id="footerStars" style="display: flex; gap: 0.4rem; justify-content: center; align-items: center; font-size: 2.2rem;">
-        <span class="footer-star" data-value="1"><i class="fa fa-star"></i></span>
-        <span class="footer-star" data-value="2"><i class="fa fa-star"></i></span>
-        <span class="footer-star" data-value="3"><i class="fa fa-star"></i></span>
-        <span class="footer-star" data-value="4"><i class="fa fa-star"></i></span>
-        <span class="footer-star" data-value="5"><i class="fa fa-star"></i></span>
-      </div>
-      <span id="footerStarValue" style="color:#FFD700; font-weight:700; font-size:1.2rem; margin-top: 0.5rem;"></span>
-    </div>
-    <div class="mt-4 d-flex justify-content-center align-items-center" style="gap: 1.2rem; font-size: 2rem;">
-      <a href="https://facebook.com/" target="_blank" class="footer-social" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://twitter.com/" target="_blank" class="footer-social" title="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="https://instagram.com/" target="_blank" class="footer-social" title="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://linkedin.com/" target="_blank" class="footer-social" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://github.com/yourproject" target="_blank" class="footer-social" title="Project GitHub"><i class="fab fa-github"></i></a>
-    </div>
-  </div>
-</footer>
-<style>
-.footer-social {
-  color:rgb(237, 83, 80);
-  transition: color 0.2s, transform 0.2s;
-}
-.footer-social:hover {
-  color:rgb(91, 199, 163);
-  transform: scale(1.18) rotate(-8deg);
-}
-</style>
-<script>
-let footerAvg = 0;
-let footerUserRating = 0;
-const footerStars = document.querySelectorAll('#footerStars .footer-star');
-const footerStarValue = document.getElementById('footerStarValue');
-
-function updateFooterStars(rating) {
-  footerStars.forEach((star, idx) => {
-    star.querySelector('i').style.color = (idx < rating) ? '#FFD700' : '#444';
-    star.querySelector('i').style.textShadow = (idx < rating) ? '0 0 16px #FFD70099, 0 2px 8px #fff2' : 'none';
-    star.querySelector('i').style.transition = 'color 0.2s, text-shadow 0.2s, transform 0.2s';
-    star.querySelector('i').style.transform = (idx < rating) ? 'scale(1.22)' : 'scale(1)';
-  });
-}
-
-function loadFooterStars() {
-  fetch('/get-reviews/')
-    .then(res => res.json())
-    .then(data => {
-      if(data.success) {
-        footerAvg = data.avg_rating || 0;
-        updateFooterStars(Math.round(footerAvg));
-        footerStarValue.innerText = `${footerAvg.toFixed(1)} / 5`;
+    <style>
+      :root {
+        --gold: #FFD700;
+        /* Adjusted to match image's yellow */
+        --black: #000;
+        /* Added for text color */
+        --white: #fff;
+        --orange: #FFA500;
+        /* Added for "Product!!" section */
+        --light-gray-bg: #F3F4F6;
+        /* For main body background */
       }
-    });
+
+      body {
+        background-color: var(--light-gray-bg);
+        /* Light gray background for the body as in the image */
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: var(--gold);
+        /* Yellow background as in the image */
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 0.5rem 1rem;
+      }
+
+      .navbar-brand img {
+        height: 40px;
+        /* Adjust height as needed */
+        margin-right: 10px;
+      }
+
+      .navbar-brand {
+        color: var(--black) !important;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        /* Smaller font size for brand text */
+      }
+
+
+      .nav-link {
+        color: var(--black) !important;
+        /* Black text for nav links */
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus {
+        color: #333 !important;
+        /* Slightly darker on hover */
+      }
+
+      .navbar-toggler {
+        border: none;
+      }
+
+      .search-bar {
+        display: flex;
+        margin-left: auto;
+        /* Pushes search bar to the right */
+      }
+
+      .search-bar input {
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+        padding: 0.375rem 0.75rem;
+        height: 38px;
+        /* Match button height */
+      }
+
+      .search-bar button {
+        background-color: #10B981 !important;
+        /* Emerald green */
+        color: #fff !important;
+        border: 1px solid #10B981 !important;
+        border-radius: 0 5px 5px 0;
+        padding: 0.375rem 0.75rem;
+        height: 38px;
+        transition: background 0.2s;
+      }
+
+      .search-bar button:hover {
+        background-color: #059669 !important;
+        /* Darker green on hover */
+        border-color: #059669 !important;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        background-color: var(--white);
+        /* White background for the hero section */
+        margin: 20px auto;
+        /* Centering and spacing */
+        width: 90%;
+        /* Adjust width as needed */
+        max-width: 1000px;
+        /* Max width for larger screens */
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        height: 300px;
+        /* Fixed height for the image container */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Ensures the image covers the container */
+        border-radius: 8px;
+        /* Same border radius as the container */
+      }
+
+      /* Product Section */
+      .product-section {
+        background-color: var(--orange);
+        /* Orange background as in the image */
+        padding: 20px 0;
+        text-align: center;
+        margin: 20px auto;
+        width: 90%;
+        max-width: 1000px;
+        border-radius: 8px;
+      }
+
+      .product-title {
+        color: var(--white);
+        /* White text for "Product!!" */
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        /* Responsive grid */
+        gap: 15px;
+        padding: 0 15px;
+      }
+
+      .product-item {
+        background-color: var(--white);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        height: 200px;
+        /* Fixed height for product images */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .product-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Ensures images cover their containers */
+        border-radius: 8px;
+      }
+
+      /* Hide existing sections that are not in the image */
+      .hero,
+      .dashboard-cards,
+      .quick-stats,
+      footer {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .navbar-collapse {
+          background-color: var(--gold);
+          padding: 10px;
+          border-radius: 5px;
+          margin-top: 5px;
+        }
+
+        .search-bar {
+          width: 100%;
+          margin-top: 10px;
+          margin-left: 0;
+        }
+
+        .search-bar input,
+        .search-bar button {
+          width: 50%;
+        }
+
+        .product-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      body {
+        background: #f7fafc;
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      }
+
+      .product-section {
+        background: #f0f4f8;
+        border-radius: 18px;
+        margin: 32px auto;
+        padding: 32px 0 40px 0;
+        width: 92%;
+        max-width: 1100px;
+        box-shadow: 0 4px 24px 0 rgba(16, 185, 129, 0.07);
+      }
+
+      .product-title {
+        color: #3b3b3b;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 28px;
+        letter-spacing: 1px;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 28px;
+        padding: 0 24px;
+      }
+
+      .product-item {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px 0 rgba(16, 185, 129, 0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 18px 10px 14px 10px;
+        transition: box-shadow 0.2s;
+      }
+
+      .product-item:hover {
+        box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.13);
+      }
+
+      .product-img {
+        width: 100%;
+        max-width: 180px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        background: #e3e8ef;
+      }
+
+      .product-label {
+        font-size: 1.08rem;
+        color: #4b5563;
+        font-weight: 500;
+        margin-top: 4px;
+        letter-spacing: 0.5px;
+      }
+
+      @media (max-width: 600px) {
+        .product-section {
+          padding: 18px 0 24px 0;
+        }
+
+        .product-title {
+          font-size: 1.3rem;
+        }
+
+        .product-grid {
+          gap: 14px;
+          padding: 0 4px;
+        }
+
+        .product-item {
+          padding: 10px 4px 8px 4px;
+        }
+
+        .product-img {
+          max-width: 100%;
+          height: 90px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- <section class="product-section">
+      <h2 class="product-title">Product!!</h2>
+      <div class="product-grid">
+        <div class="product-item">
+          <img class="product-img"
+            src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80"
+            alt="Electronics">
+          <div class="product-label">Electronics</div>
+        </div>
+        <div class="product-item">
+          <img class="product-img"
+            src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=400&q=80"
+            alt="Furniture">
+          <div class="product-label">Furniture</div>
+        </div>
+        <div class="product-item">
+          <img class="product-img"
+            src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+            alt="Clothes">
+          <div class="product-label">Clothes</div>
+        </div>
+        <div class="product-item">
+          <img class="product-img"
+            src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80"
+            alt="Groceries">
+          <div class="product-label">Groceries</div>
+        </div>
+      </div>
+    </section> -->
+    <section class="category-section" style="background:#fff; border-radius:18px; margin:32px auto 24px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgba(16,185,129,0.07);">
+      <h2 style="color:#10B981; font-weight:700; font-size:2rem; margin-bottom:18px;">Categories</h2>
+      <div class="row" id="category-list">
+        <!-- Category cards will be rendered by JS -->
+      </div>
+    </section>
+
+    <section class="product-section" id="product-section" style="display:none;">
+      <button class="btn btn-link mb-3" onclick="showCategories()"><i class="fa fa-arrow-left"></i> Back to Categories</button>
+      <h2 class="product-title" id="product-title">Products</h2>
+      <div class="product-grid" id="product-list">
+        <!-- Products will be rendered by JS -->
+      </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="cart-items">
+            <!-- Cart items will be rendered here -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" onclick="checkout()">Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Demo categories and products data
+const categories = [
+  { id: 1, name: 'Electronics', img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80' },
+  { id: 2, name: 'Furniture', img: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=400&q=80' },
+  { id: 3, name: 'Clothes', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+  { id: 4, name: 'Groceries', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80' }
+];
+
+const products = [
+  // Electronics
+  { id: 101, category: 1, name: 'Laptop', price: 49999, rating: 4.5, img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80' },
+  { id: 102, category: 1, name: 'Headphones', price: 2999, rating: 4.2, img: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80' },
+  { id: 103, category: 1, name: 'Smartphone', price: 15999, rating: 4.7, img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80' },
+  // Furniture
+  { id: 201, category: 2, name: 'Chair', price: 999, rating: 4.1, img: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=400&q=80' },
+  { id: 202, category: 2, name: 'Table', price: 2499, rating: 4.3, img: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80' },
+  { id: 203, category: 2, name: 'Sofa', price: 7999, rating: 4.6, img: 'https://images.unsplash.com/photo-1501045661006-fcebe0257c3f?auto=format&fit=crop&w=400&q=80' },
+  // Clothes
+  { id: 301, category: 3, name: 'T-Shirt', price: 499, rating: 4.4, img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+  { id: 302, category: 3, name: 'Jeans', price: 999, rating: 4.5, img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' },
+  { id: 303, category: 3, name: 'Jacket', price: 1999, rating: 4.7, img: 'https://images.unsplash.com/photo-1469398715555-76331a6c7fa0?auto=format&fit=crop&w=400&q=80' },
+  // Groceries
+  { id: 401, category: 4, name: 'Apple', price: 99, rating: 4.8, img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80' },
+  { id: 402, category: 4, name: 'Milk', price: 49, rating: 4.3, img: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80' },
+  { id: 403, category: 4, name: 'Bread', price: 39, rating: 4.5, img: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80' }
+];
+
+function renderCategories() {
+  document.getElementById('category-list').innerHTML = categories.map(cat => `
+    <div class="col-md-3 mb-4">
+      <div class="card h-100 shadow-sm category-card" style="cursor:pointer;" onclick="showProducts(${cat.id})">
+        <img src="${cat.img}" class="card-img-top" alt="${cat.name}" style="height:160px;object-fit:cover;">
+        <div class="card-body text-center">
+          <h5 class="card-title">${cat.name}</h5>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  document.querySelector('.category-section').style.display = '';
+  document.getElementById('product-section').style.display = 'none';
 }
 
-footerStars.forEach(star => {
-  star.addEventListener('mouseover', function() {
-    const val = parseInt(this.getAttribute('data-value'));
-    updateFooterStars(val);
-    footerStarValue.innerText = `${val} / 5`;
-  });
-  star.addEventListener('mouseout', function() {
-    updateFooterStars(Math.round(footerUserRating) || Math.round(footerAvg));
-    footerStarValue.innerText = `${(footerUserRating || footerAvg).toFixed(1)} / 5`;
-  });
-  star.addEventListener('click', function() {
-    const val = parseInt(this.getAttribute('data-value'));
-    footerUserRating = val;
-    updateFooterStars(val);
-    footerStarValue.innerText = `${val} / 5`;
-    // Optionally, you can send this rating to the backend here for unique user rating
-  });
-});
+function showProducts(categoryId) {
+  const cat = categories.find(c => c.id === categoryId);
+  document.getElementById('product-title').textContent = cat.name + ' Products';
+  const filtered = products.filter(p => p.category === categoryId);
+  document.getElementById('product-list').innerHTML = filtered.map(product => `
+    <div class="product-item">
+      <img class="product-img" src="${product.img}" alt="${product.name}">
+      <div class="product-label fw-bold">${product.name}</div>
+      <div class="text-warning mb-1">
+        ${'★'.repeat(Math.floor(product.rating))}${product.rating % 1 ? '½' : ''}
+        <span class="text-secondary ms-1" style="font-size:0.95em;">(${product.rating})</span>
+      </div>
+      <div class="mb-2 fw-semibold">₹${product.price}</div>
+      <button class="btn btn-sm btn-success" onclick="addToCart(${product.id})">
+        <i class="fa fa-cart-plus"></i> Add to Cart
+      </button>
+    </div>
+  `).join('');
+  document.querySelector('.category-section').style.display = 'none';
+  document.getElementById('product-section').style.display = '';
+}
 
-loadFooterStars();
-</script>
+function showCategories() {
+  renderCategories();
+}
+
+// Cart logic (localStorage for demo)
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+function setCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+}
+function addToCart(id) {
+  let cart = getCart();
+  const idx = cart.findIndex(item => item.id === id);
+  if (idx > -1) {
+    cart[idx].qty += 1;
+  } else {
+    cart.push({ id, qty: 1 });
+  }
+  setCart(cart);
+  alert('Added to cart!');
+}
+function updateCartCount() {
+  const cart = getCart();
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById('cart-count').textContent = count;
+}
+function showCart() {
+  const cart = getCart();
+  let html = '';
+  if (cart.length === 0) {
+    html = '<div class="text-center text-muted">Your cart is empty.</div>';
+  } else {
+    html = '<ul class="list-group">';
+    cart.forEach(item => {
+      const prod = products.find(p => p.id === item.id);
+      html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>${prod.name} <span class="badge bg-secondary">${item.qty}</span></span>
+        <span>₹${prod.price * item.qty}</span>
+      </li>`;
+    });
+    html += '</ul>';
+    html += `<div class="mt-3 text-end fw-bold">Total: ₹${cart.reduce((sum, item) => sum + products.find(p => p.id === item.id).price * item.qty, 0)}</div>`;
+  }
+  document.getElementById('cart-items').innerHTML = html;
+  var cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+  cartModal.show();
+}
+function checkout() {
+  alert('Checkout is not implemented in this demo.');
+}
+
+// Initial render
+renderCategories();
+updateCartCount();
+    </script>
+
+    <style>
+      /* Add a little Amazon-like style */
+      .cart-icon .btn {
+        border: none;
+        background: transparent;
+        font-size: 1.3rem;
+      }
+
+      .product-item {
+        position: relative;
+        border: 1px solid #eee;
+        min-height: 320px;
+      }
+
+      .product-item .btn-success {
+        position: absolute;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+      }
+
+      .category-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.13);
+  border-color: #10B981;
+  transform: translateY(-6px) scale(1.04);
+}
+    </style>
+    <!-- ...existing code... -->
+    <section class="hero-section p-0" style="overflow:hidden;">
+      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://i.imgur.com/b2t1L6r.png" class="d-block w-100 hero-image" alt="Businessman holding icons">
+          </div>
+          <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80"
+              class="d-block w-100 hero-image" alt="Teamwork">
+          </div>
+          <div class="carousel-item">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1000&q=80"
+              class="d-block w-100 hero-image" alt="Office">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Add below your last product-section, before </body> -->
+    <!-- <section class="aboutus-section" style="background:#fff; border-radius:18px; margin:32px auto 24px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgba(16,185,129,0.07);">
+  <h2 style="color:#10B981; font-weight:700; font-size:2rem; margin-bottom:18px;">About Us</h2>
+  <p style="color:#374151; font-size:1.1rem; max-width:800px; margin:auto;">
+    We are LGTM, a leading business in lead generation and franchise solutions. Our mission is to empower businesses with innovative marketing, quality products, and exceptional customer care. With years of experience, we help our partners grow and succeed in a competitive market.
+  </p>
+</section> -->
+    <!-- About Us Section with Image -->
+    <section class="aboutus-section"
+      style="background:#fff; border-radius:18px; margin:32px auto 24px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgba(16,185,129,0.07); display:flex; flex-wrap:wrap; align-items:center; gap:32px;">
+      <div style="flex:1 1 260px; min-width:220px; text-align:center;">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"
+          alt="About LGTM"
+          style="width:100%; max-width:320px; border-radius:14px; box-shadow:0 2px 12px 0 rgba(16,185,129,0.10);">
+      </div>
+      <div style="flex:2 1 340px; min-width:260px;">
+        <h2 style="color:#10B981; font-weight:700; font-size:2rem; margin-bottom:18px;">About Us</h2>
+        <p style="color:#374151; font-size:1.1rem; margin-bottom:10px;">
+          <b>LGTM</b> is a leading business in lead generation and franchise solutions. Our mission is to empower
+          businesses with innovative marketing, quality products, and exceptional customer care.
+        </p>
+        <p style="color:#374151; font-size:1.1rem;">
+          With years of experience, we help our partners grow and succeed in a competitive market. Our dedicated team is
+          passionate about delivering results and building long-term relationships with our clients.
+        </p>
+      </div>
+    </section>
+
+
+    <section class="testimonial-section"
+      style="background:#f0f4f8; border-radius:18px; margin:0 auto 24px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgba(59,130,246,0.07);">
+      <h2 style="color:#3b3b3b; font-weight:700; font-size:2rem; margin-bottom:18px;">Testimonials</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px;">
+        <div style="background:#fff; border-radius:14px; box-shadow:0 2px 8px 0 rgba(16,185,129,0.08); padding:20px;">
+          <p style="font-style:italic; color:#374151;">"LGTM helped us double our leads in just three months! Their team
+            is professional and always available."</p>
+          <div style="color:#10B981; font-weight:600; margin-top:10px;">— Priya S., Franchise Owner</div>
+        </div>
+        <div style="background:#fff; border-radius:14px; box-shadow:0 2px 8px 0 rgba(16,185,129,0.08); padding:20px;">
+          <p style="font-style:italic; color:#374151;">"The product quality and customer support are top-notch. Highly
+            recommended for any business."</p>
+          <div style="color:#10B981; font-weight:600; margin-top:10px;">— Rahul M., Retail Partner</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contactus-section"
+      style="background:#fff; border-radius:18px; margin:0 auto 32px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgba(16,185,129,0.07);">
+      <h2 style="color:#10B981; font-weight:700; font-size:2rem; margin-bottom:18px;">Contact Us</h2>
+      <form style="max-width:600px; margin:auto;">
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Your Name" required>
+        </div>
+        <div class="mb-3">
+          <input type="email" class="form-control" placeholder="Your Email" required>
+        </div>
+        <div class="mb-3">
+          <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success px-4">Send Message</button>
+      </form>
+    </section>
+
+  </body>
+
+  </html>
+  <!--  -->
 </body>
+
 </html>
