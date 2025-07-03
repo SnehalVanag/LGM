@@ -182,16 +182,16 @@ def marketing_dashboard(request):
     franchises_count = Franchise.objects.count()
     staff_count = Staff.objects.count()
     user_count = AppUser.objects.count()
+    from .models import Lead
+    leads_count = Lead.objects.count()
     franchises = Franchise.objects.all()
-    # franchises_count = franchises.count()
-
     context = {
         'products_count': products_count,
         'franchises_count': franchises_count,
         'staff_count': staff_count,
         'user_count': user_count,
+        'leads_count': leads_count,
         'franchises': franchises,
-        # Add other context variables as needed
     }
     return render(request, 'dashboard/marketing.html', context)
 
@@ -215,7 +215,38 @@ def coupon_list(request):
     coupons = Coupon.objects.all()
     return render(request, 'dashboard/coupon_list.html', {'coupons': coupons})
 def home(request):
-    return render(request, 'dashboard/home.html')
+    error = None
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        role = request.POST.get('role')  # 'user' or 'admin'
+        if role == 'admin':
+            try:
+                admin = Admin.objects.get(name=username)
+                if password == admin.password:
+                    request.session['admin_logged_in'] = True
+                    request.session['admin_id'] = admin.admin_id
+                    request.session['is_core_admin'] = True
+                    request.session['admin_name'] = admin.name
+                    return redirect(reverse('admin_dashboard'))
+                else:
+                    error = 'Invalid admin username or password.'
+            except Admin.DoesNotExist:
+                error = 'Invalid admin username or password.'
+        elif role == 'user':
+            try:
+                user = AppUser.objects.get(username=username)
+                if password == user.password:
+                    request.session['user_logged_in'] = True
+                    request.session['user_id'] = user.id
+                    return redirect(reverse('home'))  # Redirect to homepage after login
+                else:
+                    error = 'Invalid user username or password.'
+            except AppUser.DoesNotExist:
+                error = 'Invalid user username or password.'
+        else:
+            error = 'Please select a role.'
+    return render(request, 'dashboard/home.html', {'error': error})
 
 
 def manager_dashboard(request):
@@ -266,7 +297,7 @@ def admin_login(request):
                 error = 'Invalid username or password.'
         except Admin.DoesNotExist:
             error = 'Invalid username or password.'
-    return render(request, 'dashboard/admin_login.html', {'error': error})
+    return render(request, 'dashboard/login.html', {'error': error})
 
 # def user_login(request):
 #     error = None
@@ -390,7 +421,7 @@ def user_dashboard(request):
 
 def admin_logout(request):
     request.session.flush()
-    return redirect(reverse('admin_login'))
+    return redirect(reverse('login'))
 
 
 def products(request):
@@ -535,22 +566,26 @@ def user_signup(request):
 #         return JsonResponse({'success': True, 'otp': otp})
 #     return JsonResponse({'success': False})
 
-def user_login(request):
+def login_view(request):
     error = None
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        # Only try admin login
         try:
-            user = AppUser.objects.get(username=username)
-            if password == user.password:
-                request.session['user_logged_in'] = True
-                request.session['user_id'] = user.id
-                return redirect(reverse('home'))  # Redirect to homepage after login
+            admin = Admin.objects.get(name=username)
+            if password == admin.password:
+                request.session['admin_logged_in'] = True
+                request.session['admin_id'] = admin.admin_id
+                request.session['is_core_admin'] = True
+                request.session['admin_name'] = admin.name
+                return redirect(reverse('admin_dashboard'))
             else:
                 error = 'Invalid username or password.'
-        except AppUser.DoesNotExist:
+        except Admin.DoesNotExist:
             error = 'Invalid username or password.'
-    return render(request, 'dashboard/user.html', {'error': error})
+    return render(request, 'dashboard/login.html', {'error': error})
+
 @csrf_exempt
 def send_signup_otp(request):
     if request.method == 'POST':
@@ -649,3 +684,36 @@ def delete_product(request, pk):
         product.delete()
         return redirect('products')
     return render(request, 'dashboard/delete_product.html', {'product': product})
+
+from .lead_forms import LeadForm
+from .models import Lead
+
+def add_lead(request):
+    if request.method == 'POST':
+        form = LeadForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('marketing_dashboard')
+    else:
+        form = LeadForm()
+    return render(request, 'dashboard/add_lead.html', {'form': form})
+
+def login_view(request):
+    error = None
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # Only try admin login
+        try:
+            admin = Admin.objects.get(name=username)
+            if password == admin.password:
+                request.session['admin_logged_in'] = True
+                request.session['admin_id'] = admin.admin_id
+                request.session['is_core_admin'] = True
+                request.session['admin_name'] = admin.name
+                return redirect(reverse('admin_dashboard'))
+            else:
+                error = 'Invalid username or password.'
+        except Admin.DoesNotExist:
+            error = 'Invalid username or password.'
+    return render(request, 'dashboard/login.html', {'error': error})

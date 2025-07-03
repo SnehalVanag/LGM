@@ -64,8 +64,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'snehalvanage57@gmail.com'
-EMAIL_HOST_PASSWORD = 'Snehal@123'
+EMAIL_HOST_USER = 'shreyashgurav31@gmail.com'
+EMAIL_HOST_PASSWORD = '12345'
 # LOGIN_URL = '/admin-login/'
 
 
@@ -77,7 +77,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'LGM',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'Sweety@71099',
         'HOST': 'localhost',
         'PORT': '3306',
         # 'NAME': os.environ.get('LGM'),

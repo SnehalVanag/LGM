@@ -382,10 +382,7 @@
               <i class="fa-solid fa-user-shield"></i> Login
             </a>
             <ul class="dropdown-menu" aria-labelledby="roleDropdown">
-              <li><a class="dropdown-item" href="{% url 'admin_login' %}">Admin</a></li>
-              <li><a class="dropdown-item" href="{% url 'user_login' %}">User</a></li>
-              <li><a class="dropdown-item" href="{% url 'marketing_login' %}">Marketing</a></li>
-              <li><a class="dropdown-item" href="{% url 'franchise_login' %}">Franchise</a></li>
+              <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
             </ul>
           </li>
           <div class="cart-icon ms-3">
@@ -395,15 +392,11 @@
                 id="cart-count">0</span>
             </button>
           </div>
-         
-          <!-- <li class="nav-item"><a class="nav-link" href="{% url 'lead_dashboard' %}"><i class="fa-solid fa-users"></i>
-              Lead</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'marketing_dashboard' %}"><i
-                class="fa-solid fa-bullhorn"></i> Marketing</a></li> -->
         </ul>
       </div>
     </div>
   </nav>
+
   <!--  -->
   <!DOCTYPE html>
   <html lang="en">
@@ -755,6 +748,29 @@
         <!-- Products will be rendered by JS -->
       </div>
     </section>
+
+    <!-- Entity Query Example: Display all products from Django context -->
+    {% if products %}
+    <section class="product-section" style="background:#fff; border-radius:18px; margin:32px auto 24px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgba(16,185,129,0.07);">
+      <h2 style="color:#10B981; font-weight:700; font-size:2rem; margin-bottom:18px;">Products (from Django)</h2>
+      <div class="row">
+        {% for product in products %}
+        <div class="col-md-3 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}" style="height:160px;object-fit:cover;">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">₹{{ product.price }}</p>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center text-muted">No products found.</div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+    <!-- ...existing code... -->
 
     <!-- Cart Modal -->
     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
