@@ -55,6 +55,21 @@ TEMPLATES = [
     },
 ]
 
+<<<<<<< HEAD
+=======
+
+# filepath: settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'shreyashgurav31@gmail.com'  # your real email
+EMAIL_HOST_PASSWORD = '12345'  # app password, not your Gmail password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+AUTH_USER_MODEL = 'core.CustomUser'
+
+>>>>>>> 431d79da821a3cda90728b96d7f18a90e2af6957
 WSGI_APPLICATION = 'LGM.wsgi.application'
 
 DATABASES = {

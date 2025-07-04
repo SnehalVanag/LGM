@@ -20,20 +20,22 @@
       --transition: 0.18s cubic-bezier(.4,0,.2,1);
     }
     html, body {
-      background: var(--navy);
+    background: var(--navy);
       color: var(--white);
       font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
       min-height: 100vh;
+    
     }
     .signup-container {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(120deg, #0B1120 0%, #0F172A 100%);
+       background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
     }
     .signup-card {
-      background: #181F2F;
+      background: linear-gradient(120deg, #f7fafc, #e0c3fc, #8ec5fc, #b6e2d3, #ffe082, #f7fafc);
+
       border-radius: var(--radius);
       box-shadow: 0 8px 32px 0 rgba(16,185,129,0.13);
       padding: 2.5rem 2rem 2rem 2rem;
@@ -41,7 +43,31 @@
       max-width: 400px;
       text-align: center;
       border: 1.5px solid rgba(255,255,255,0.09);
+      transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition), background 0.3s;
+      position: relative;
+      overflow: hidden;
     }
+    .signup-card:hover {
+      box-shadow: 0 16px 48px 0 rgba(255,215,0,0.18), 0 2px 8px 0 rgba(16,185,129,0.13);
+      border-color: var(--gold);
+      background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
+      transform: translateY(-8px) scale(1.03) rotate(-1deg);
+      z-index: 2;
+    }
+    .signup-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png') repeat;
+      opacity: 0.06;
+      z-index: 1;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .signup-card:hover::before {
+      opacity: 0.12;
+    }
+    .signup-card > * { position: relative; z-index: 2; }
     .signup-title {
       font-size: 2rem;
       font-weight: 800;

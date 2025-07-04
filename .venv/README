@@ -1,0 +1,17 @@
+
+<!-- migration commands -->
+
+python manage.py makemigrations
+
+
+python manage.py migrate
+
+
+<!-- run project -->
+
+python .\manage.py runserver
+
+
+
+
+

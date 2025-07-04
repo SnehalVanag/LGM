@@ -1,4 +1,31 @@
 {% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Products | Shop{% endblock %}
+{% block content %}
+<div class="container my-4">
+  <h2 class="mb-4" style="color:#222; font-weight:700;">Top Deals of the Day</h2>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    {% for product in products %}
+    <div class="col">
+      <div class="card h-100 shadow-sm product-item">
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height:180px; object-fit:contain; background:#f8f8f8;">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text" style="flex:1;">{{ product.description|truncatechars:80 }}</p>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span class="badge bg-success">{{ product.discount }}% OFF</span>
+            <button class="btn btn-warning btn-sm">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center">
+      <p>No products available.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}{% extends 'dashboard/dashboard_base.html' %}
 {% block title %}Products | Admin Dashboard{% endblock %}
 {% block content %}
 <div class="dashboard-header d-flex justify-content-between align-items-center">
