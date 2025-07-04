@@ -32,7 +32,10 @@ from django.shortcuts import render, redirect
 from .models import Staff
 from .forms import StaffForm
 from .models import Staff, Franchise, Lead  # Add Lead to your imports
+from django.shortcuts import render 
 
+def login_view(request):
+    return render(request, 'dashboard/login.html')
 def edit_franchise(request, pk):
     franchise = get_object_or_404(Franchise, pk=pk)
     if request.method == 'POST':
