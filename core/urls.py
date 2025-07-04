@@ -1,11 +1,10 @@
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from core import views
 from .views import add_product
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Unified login page for both admin and user
     path('login/', views.login_view, name='login'),
     path('', views.home, name='home'),
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
@@ -28,7 +27,7 @@ urlpatterns = [
     path('coupons/', views.coupon_list, name='coupon_list'),
     path('add-branch/', views.add_branch, name='add_branch'),
     path('delete-branch/<int:branch_id>/', views.delete_branch, name='delete_branch'),
-    path('products/', views.products, name='products'),
+     path('products/', views.products, name='products'),
     path('add-product/', views.add_product, name='add_product'),
     path('delete-franchise/<int:id>/', views.delete_franchise, name='delete_franchise'),
     path('staff/add/', views.add_staff, name='add_staff'),
@@ -42,11 +41,5 @@ urlpatterns = [
     path('add-staff/', views.add_staff, name='add_staff'),
     path('add-lead/', views.add_lead, name='add_lead'),
 
-
-    
-
-
     # path('coupons/', views.coupon_list, name='coupon_list'),  # <-- This is the important one!  # <-- This is required!
-
-
 ]
