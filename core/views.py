@@ -32,6 +32,45 @@ from django.shortcuts import render, redirect
 from .models import Staff
 from .forms import StaffForm
 from .models import Staff, Franchise, Lead  # Add Lead to your imports
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from .models import OTP
+from django.conf import settings
+
+def send_otp(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        # Create or get OTP object
+        otp_obj, created = OTP.objects.get_or_create(email=email)
+        otp = otp_obj.generate_otp()
+        
+        # Send email
+        subject = 'Your OTP for Registration'
+        message = f'Your OTP is: {otp}'
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [email]
+        
+        try:
+            send_mail(subject, message, from_email, recipient_list)
+            return JsonResponse({'status': 'success', 'message': 'OTP sent successfully'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+def verify_otp(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        otp = request.POST.get('otp')
+        
+        try:
+            otp_obj = OTP.objects.get(email=email, otp=otp)
+            return JsonResponse({'status': 'success', 'message': 'OTP verified successfully'})
+        except OTP.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Invalid OTP'})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 def edit_franchise(request, pk):
     franchise = get_object_or_404(Franchise, pk=pk)

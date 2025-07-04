@@ -12,4 +12,6 @@ urlpatterns = [
     path('lead-dashboard/', views.lead_dashboard, name='lead_dashboard'),
     path('marketing-dashboard/', views.marketing_dashboard, name='marketing_dashboard'),
     path('', include('core.urls')),
+    path('send-otp/', views.send_otp, name='send_otp'),
+    path('verify-otp/', views.verify_otp, name='verify_otp'),
 ]
