@@ -165,17 +165,10 @@
  <!-- Add Lead Modal -->
 <div class="modal fade" id="addLeadModal" tabindex="-1" aria-labelledby="addLeadModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-<<<<<<< HEAD
-    <div class="modal-content" style="background:; border-radius: 1.2rem; color: #fff;">
-      <div class="modal-header" style="border-bottom: 1px ;">
-        <h5 class="modal-title" id="addFranchiseModalLabel" style="color:; font-weight: 700;">
-          <i class="fa fa-plus"></i> Add Franchise
-=======
     <div class="modal-content" style="background: #181F2D; border-radius: 1.2rem; color: #fff;">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
         <h5 class="modal-title" id="addLeadModalLabel" style="color: #FFD700; font-weight: 700;">
           <i class="fa fa-plus"></i> Add Leads
->>>>>>> 7a09c5963705200bc3674456ca98ecc05b0ce306
         </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -273,29 +266,6 @@
   <canvas id="marketingChart"></canvas>
 </div>
 
-<<<<<<< HEAD
-<tbody>
-  {% for franchise in franchises %}
-  <tr>
-    <td>{{ forloop.counter }}</td>
-    <td>{{ franchise.name }}</td>
-    <td>{{ franchise.address }}</td>
-    <td>{{ franchise.contact_email }}</td>
-    <td>{{ franchise.phone_number }}</td>
-    <td>
-      <button class="btn btn-warning btn-sm" onclick="editFranchise({{ franchise.id }})">Edit</button>
-      <button class="btn btn-danger btn-sm" onclick="deleteFranchise({{ franchise.id }})">Delete</button>
-    </td>
-  </tr>
-  {% empty %}
-  <tr>
-    <td colspan="6" class="text-center text-muted"></td>
-  </tr>
-  {% endfor %}
-</tbody>
-=======
-
->>>>>>> 7a09c5963705200bc3674456ca98ecc05b0ce306
 {% endblock %}
 {% block extra_js %}
 <script>
