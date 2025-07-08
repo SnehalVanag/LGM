@@ -262,13 +262,63 @@
     <li class="activity-item"><i class="fa fa-envelope-open"></i> 2,000 emails sent</li>
   </ul>
 </div>
-<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);">
-  <canvas id="marketingChart"></canvas>
+
+<!-- Add this below your KPI cards or wherever you want the chart -->
+<div class="dashboard-chart" style="background: #1E293B; margin-top: 2rem;">
+  <canvas id="leadsFranchiseChart"></canvas>
 </div>
 
 {% endblock %}
 {% block extra_js %}
 <script>
+  // ...existing code...
+
+// Bar/Line chart for Leads vs Franchises
+const ctxLF = document.getElementById('leadsFranchiseChart').getContext('2d');
+new Chart(ctxLF, {
+  type: 'bar', // Change to 'line' for a line chart
+  data: {
+    labels: ['Leads', 'Franchises'],
+    datasets: [{
+      label: 'Count',
+      data: [{{ leads_count }}, {{ franchises_count }}],
+      backgroundColor: [
+        'rgba(255, 215, 0, 0.7)',
+        'rgba(16, 185, 129, 0.7)'
+      ],
+      borderColor: [
+        '#FFD700',
+        '#10B981'
+      ],
+      borderWidth: 2
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1E293B',
+        titleColor: '#FFD700',
+        bodyColor: '#fff',
+        borderColor: '#10B981',
+        borderWidth: 1
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(255,255,255,0.08)' },
+        ticks: { color: '#fff', font: { weight: 'bold' } }
+      },
+      x: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: { color: '#FFD700', font: { weight: 'bold' } }
+      }
+    }
+  }
+});
+
+// ...existing code...
   function editFranchise(id) {
     // Find the franchise data in the table row
     const row = document.querySelector(`button[onclick="editFranchise(${id})"]`).closest('tr');
@@ -445,17 +495,19 @@
         },
         body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}`
       })
-        .then(res => res.json())
-        .then data => {
-          if (data.success) {
-            showCouponToast('✅ Franchise added successfully!');
-            const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
-            if (modal) modal.hide();
-            addFranchiseForm.reset();
-          } else {
-            showCouponToast('❌ Failed to add franchise.');
-          }
-        })
+       // ...existing code...
+.then(res => res.json())
+.then(data => {
+  if (data.success) {
+    showCouponToast('✅ Franchise added successfully!');
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
+    if (modal) modal.hide();
+    addFranchiseForm.reset();
+  } else {
+    showCouponToast('❌ Failed to add franchise.');
+  }
+})
+// ...existing code...
         .catch(() => showCouponToast('❌ Error adding franchise.'));
     });
   }
@@ -471,59 +523,60 @@
     section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
   }
 
-  const ctxM = document.getElementById('marketingChart').getContext('2d');
-  new Chart(ctxM, {
-    type: 'line',
-    data: {
-      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-      datasets: [{
-        label: 'Campaign Reach',
-        data: [2000, 3500, 5000, 8900],
-        borderColor: '#FFD700',
-        backgroundColor: 'rgba(255,215,0,0.12)',
-        tension: 0.4,
-        pointBackgroundColor: '#10B981',
-        pointRadius: 5,
-        fill: true
-      }]
-    },
-    options: {
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#1E293B',
-          titleColor: '#FFD700',
-          bodyColor: '#fff',
-          borderColor: '#10B981',
-          borderWidth: 1
-        }
-      },
-      layout: { padding: 16 },
-      backgroundColor: '#1E293B',
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: { color: 'rgba(255,255,255,0.08)' },
-          ticks: { color: '#fff', font: { weight: 'bold' } }
-        },
-        x: {
-          grid: { color: 'rgba(255,255,255,0.04)' },
-          ticks: { color: '#FFD700', font: { weight: 'bold' } }
-        }
-      }
-    },
-    plugins: [{
-      id: 'customCanvasBackgroundColor',
-      beforeDraw: (chart) => {
-        const ctx = chart.canvas.getContext('2d');
-        ctx.save();
-        ctx.globalCompositeOperation = 'destination-over';
-        ctx.fillStyle = '#1E293B';
-        ctx.fillRect(0, 0, chart.width, chart.height);
-        ctx.restore();
-      }
-    }]
-  });
+  // const ctxM = document.getElementById('marketingChart').getContext('2d');
+  // new Chart(ctxM, {
+  //   type: 'line',
+  //   data: {
+  //     labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+  //     datasets: [{
+  //       label: 'Campaign Reach',
+  //       data: [2000, 3500, 5000, 8900],
+  //       borderColor: '#FFD700',
+  //       backgroundColor: 'rgba(255,215,0,0.12)',
+  //       tension: 0.4,
+  //       pointBackgroundColor: '#10B981',
+  //       pointRadius: 5,
+  //       fill: true
+  //     }]
+  //   },
+  //   options: {
+  //     plugins: {
+  //       legend: { display: false },
+  //       tooltip: {
+  //         backgroundColor: '#1E293B',
+  //         titleColor: '#FFD700',
+  //         bodyColor: '#fff',
+  //         borderColor: '#10B981',
+  //         borderWidth: 1
+  //       }
+  //     },
+  //     layout: { padding: 16 },
+  //     backgroundColor: '#1E293B',
+  //     scales: {
+  //       y: {
+  //         beginAtZero: true,
+  //         grid: { color: 'rgba(255,255,255,0.08)' },
+  //         ticks: { color: '#fff', font: { weight: 'bold' } }
+  //       },
+  //       x: {
+  //         grid: { color: 'rgba(255,255,255,0.04)' },
+  //         ticks: { color: '#FFD700', font: { weight: 'bold' } }
+  //       }
+  //     }
+  //   },
+  //   plugins: [{
+  //     id: 'customCanvasBackgroundColor',
+  //     beforeDraw: (chart) => {
+  //       const ctx = chart.canvas.getContext('2d');
+  //       ctx.save();
+  //       ctx.globalCompositeOperation = 'destination-over';
+  //       ctx.fillStyle = '#1E293B';
+  //       ctx.fillRect(0, 0, chart.width, chart.height);
+  //       ctx.restore();
+  //     }
+  //   }]
+  // });
+
 </script>
 <style>
   .modal-overlay {

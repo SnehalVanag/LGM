@@ -48,6 +48,8 @@ urlpatterns = [
     path('add-staff/', views.add_staff, name='add_staff'),
     path('signup/', views.user_signup, name='user_signup'),
     path('add-lead/', views.add_lead, name='add_lead'),
+     path('send-otp/', views.send_otp, name='send_otp'),
+    path('verify-otp/', views.verify_otp, name='verify_otp'),
     
 
 
