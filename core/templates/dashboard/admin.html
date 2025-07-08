@@ -277,14 +277,64 @@
   </div>
 </div>
 
-<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png'); box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
+<!-- <div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png'); box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
 ">
   <canvas id="adminChart"></canvas>
-</div>
-
-{% endblock %}
+</div> -->
+<div class="dashboard-chart" style="background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%); border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); padding: 1.5rem;">
+  <canvas id="marketingFranchiseChart"></canvas>
+</div>{% endblock %}
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+  //
+  const ctx = document.getElementById('marketingFranchiseChart').getContext('2d');
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], // Example months
+    datasets: [
+      {
+        label: 'Marketing Members',
+        data: [{{ marketing_members_count }}, {{ marketing_members_count }}, {{ marketing_members_count }}, {{ marketing_members_count }}, {{ marketing_members_count }}, {{ marketing_members_count }}], // Replace with real data if available
+        borderColor: '#FFD700',
+        backgroundColor: 'rgba(255,215,0,0.15)',
+        tension: 0.4,
+        pointBackgroundColor: '#FFD700',
+        pointRadius: 5,
+        fill: true
+      },
+      {
+        label: 'Franchises',
+        data: [{{ franchises_count }}, {{ franchises_count }}, {{ franchises_count }}, {{ franchises_count }}, {{ franchises_count }}, {{ franchises_count }}], // Replace with real data if available
+        borderColor: '#10B981',
+        backgroundColor: 'rgba(16,185,129,0.15)',
+        tension: 0.4,
+        pointBackgroundColor: '#10B981',
+        pointRadius: 5,
+        fill: true
+      }
+    ]
+  },
+  options: {
+    plugins: {
+      legend: { display: true },
+      title: { display: true, text: 'Marketing Members & Franchises Over Time' }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { color: '#2d3748', font: { weight: 'bold' } },
+        grid: { color: 'rgba(44,62,80,0.08)' }
+      },
+      x: {
+        ticks: { color: '#00897b', font: { weight: 'bold' } },
+        grid: { color: 'rgba(44,62,80,0.04)' }
+      }
+    }
+  }
+});
+  //
 function editFranchise(id) {
   // Find the franchise data in the table row
   const row = document.querySelector(`button[onclick="editFranchise(${id})"]`).closest('tr');

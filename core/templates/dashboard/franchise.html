@@ -420,16 +420,60 @@
 
 <div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
 ">
-  <canvas id="franchiseChart"></canvas>
-</div>
 
+
+<!-- Add this below your KPI cards -->
+<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);">
+  <canvas id="dashboardSummaryChart"></canvas>
+</div>
 
 
 </div>
 {% endblock %}
 {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-  
+  //
+  const summaryCtx = document.getElementById('dashboardSummaryChart').getContext('2d');
+new Chart(summaryCtx, {
+  type: 'bar', // Change to 'line' for a line chart
+  data: {
+    labels: ['Franchises', 'Products', 'Staff Members'],
+    datasets: [{
+      label: 'Total Count',
+      data: [
+        {{ franchises|length }},
+        {{ products|length }},
+        {{ staff_list|length }}
+      ],
+      backgroundColor: [
+        'rgba(255,215,0,0.85)',
+        'rgba(59,130,246,0.85)',
+        'rgba(16,185,129,0.85)'
+      ],
+      borderRadius: 8
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: 'Summary Overview' }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: { color: '#fff', font: { weight: 'bold' } },
+        grid: { color: 'rgba(255,255,255,0.08)' }
+      },
+      x: {
+        ticks: { color: '#FFD700', font: { weight: 'bold' } },
+        grid: { color: 'rgba(255,255,255,0.04)' }
+      }
+    }
+  }
+});
+  //
 function openBranchModal() {
   document.getElementById('branchModal').style.display = 'flex';
   document.getElementById('modalTitle').innerText = 'Add Branch';
