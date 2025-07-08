@@ -6,7 +6,7 @@ from .forms import FranchiseForm, ProductForm
 from .models import Franchise, Coupon, Product
 from django.utils import timezone
 from .models import Admin
-from django.contrib.auth.hashers import check_password 
+from django.contrib.auth.hashers import check_password, make_password
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
@@ -26,9 +26,12 @@ from .models import Franchise
 from .models import Staff
 from .forms import StaffForm
 from django.contrib.auth import get_user_model
-# from django.contrib.auth.decorators import login_required
 from .models import Franchise
 from .forms import FranchiseForm  # You need to create this form
+from django.shortcuts import render, redirect
+from .models import Staff
+from .forms import StaffForm
+from .models import Staff, Franchise, Lead  # Add Lead to your imports
 
 def edit_franchise(request, pk):
     franchise = get_object_or_404(Franchise, pk=pk)
@@ -135,6 +138,7 @@ def add_staff(request):
             staff_count = Staff.objects.count()
             return JsonResponse({'success': True, 'staff_count': staff_count})
     return JsonResponse({'success': False})
+
 def edit_staff(request, pk):
     staff = get_object_or_404(Staff, pk=pk)
     if request.method == 'POST':
@@ -160,7 +164,6 @@ def delete_branch(request, branch_id):
         return redirect('franchise_dashboard')
     return redirect('franchise_dashboard')
 
-
 def add_branch(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -177,50 +180,36 @@ def add_branch(request):
         return redirect('franchise_dashboard')  # or your dashboard view name
     return redirect('franchise_dashboard')
 
-def marketing_dashboard(request):
-    products_count = Product.objects.count()
-    franchises_count = Franchise.objects.count()
-    staff_count = Staff.objects.count()
-    user_count = AppUser.objects.count()
-    franchises = Franchise.objects.all()
-    # franchises_count = franchises.count()
-
-    context = {
-        'products_count': products_count,
-        'franchises_count': franchises_count,
-        'staff_count': staff_count,
-        'user_count': user_count,
-        'franchises': franchises,
-        # Add other context variables as needed
-    }
-    return render(request, 'dashboard/marketing.html', context)
-
 # def marketing_dashboard(request):
-#     staff_list = Staff.objects.all()
-#     staff_count = staff_list.count()
+#     products_count = Product.objects.count()
+#     franchises_count = Franchise.objects.count()
+#     staff_count = Staff.objects.count()
 #     user_count = AppUser.objects.count()
 #     franchises = Franchise.objects.all()
+#     # franchises_count = franchises.count()
 
-#     # User = get_user_model()
-#     # user_count = User.objects.filter(is_active=True).count()
-#     return render(request, 'dashboard/marketing.html', {
-#         'staff_list': staff_list,
+#     context = {
+#         'products_count': products_count,
+#         'franchises_count': franchises_count,
 #         'staff_count': staff_count,
 #         'user_count': user_count,
 #         'franchises': franchises,
-#     # return render(request, 'dashboard/marketing.html')
-#   })
+#         # Add other context variables as needed
+#     }
+#     return render(request, 'dashboard/marketing.html', context)
+
+
+
 
 def coupon_list(request):
     coupons = Coupon.objects.all()
     return render(request, 'dashboard/coupon_list.html', {'coupons': coupons})
+
 def home(request):
     return render(request, 'dashboard/home.html')
 
-
 def manager_dashboard(request):
     return render(request, 'dashboard/home.html')
-
 
 def add_product(request):
     if request.method == 'POST':
@@ -232,23 +221,6 @@ def add_product(request):
         form = ProductForm()
     return render(request, 'dashboard/add_product.html', {'form': form})
 
-
-# def admin_login(request):
-#     error = None
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         try:
-#             admin = Admin.objects.get(name=username)
-#             if password == admin.password:
-#                 request.session['admin_logged_in'] = True
-#                 request.session['admin_id'] = admin.admin_id
-#                 return redirect(reverse('admin_dashboard'))  # This will navigate!
-#             else:
-#                 error = 'Invalid username or password.'
-#         except Admin.DoesNotExist:
-#             error = 'Invalid username or password.'
-#     return render(request, 'dashboard/admin_login.html', {'error': error})
 def admin_login(request):
     error = None
     if request.method == 'POST':
@@ -267,20 +239,6 @@ def admin_login(request):
         except Admin.DoesNotExist:
             error = 'Invalid username or password.'
     return render(request, 'dashboard/admin_login.html', {'error': error})
-
-# def user_login(request):
-#     error = None
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('home')
-#         else:
-#             error = 'Invalid username or password.'
-#     return render(request, 'dashboard/user.html', {'error': error, 'user_login': True})
-
 
 def get_all_coupons():
     coupons = Coupon.objects.all()
@@ -331,10 +289,8 @@ def coupons(request):
     coupons_list = get_all_coupons()
     return render(request, 'dashboard/coupons.html', {"coupons": coupons_list})
 
-
 def admin_dashboard(request):
     franchises = Franchise.objects.all()
-
     if not request.session.get('admin_logged_in'):
         return redirect(reverse('admin_login'))
     products_count = Product.objects.count()
@@ -342,8 +298,7 @@ def admin_dashboard(request):
     franchises_count = Franchise.objects.count()
     marketing_members = MarketingTeamMember.objects.all()
     marketing_members_count = marketing_members.count()
-    
-    
+    user_count = AppUser.objects.count()
     return render(request, 'dashboard/admin.html', {
         'products_count': products_count,
         'coupons_count': coupons_count,
@@ -351,108 +306,27 @@ def admin_dashboard(request):
         'franchises': franchises,
         'marketing_members': marketing_members,
         'marketing_members_count': marketing_members_count,
+        'user_count': user_count,
     })
 
 def products_view(request):
     products = Product.objects.all()
     return render(request, 'dashboard/products.html', {'products': products})
 # @login_required
-def franchise_dashboard(request):
-    franchises = Franchise.objects.all()
-    return render(request, 'dashboard/franchise.html', {
-        'franchises': franchises,
-        'admin_user': request.user,
-    })
-
-# @login_required
-# def franchise_dashboard(request):
-#     franchises = Franchise.objects.all()
-#     return render(request, 'dashboard/franchise.html', {
-#         'franchises': franchises,
-#         'admin_user': request.user,
-#     })
-# def franchise_dashboard(request):
-#     franchises = Franchise.objects.all()
-#     admin_user = request.user
-#     return render(request, 'dashboard/franchise.html', {
-#     'franchises': franchises,
-#     'admin_user': admin_user,  # <--- comma here
-# })    
 
 def lead_dashboard(request):
     return render(request, 'dashboard/lead.html')
 
-
-
 def user_dashboard(request):
     return render(request, 'dashboard/user.html')
-
 
 def admin_logout(request):
     request.session.flush()
     return redirect(reverse('admin_login'))
 
-
 def products(request):
     products_list = Product.objects.all()
     return render(request, 'dashboard/products.html', {"products": products_list})
-
-
-
-# def add_franchise(request):
-#     if request.method == 'POST':
-#         form = FranchiseForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('admin_dashboard')  # or wherever you want to go after adding
-#     else:
-#         form = FranchiseForm()
-#     return render(request, 'dashboard/add_franchise.html', {'form': form})
-
-# def add_franchise(request):
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         address = request.POST.get('address')
-#         contact_email = request.POST.get('contact_email')
-#         phone_number = request.POST.get('phone_number')  # <-- Get phone_number
-
-#         Franchise.objects.create(
-#             name=name,
-#             address=address,
-#             contact_email=contact_email,
-#             phone_number=phone_number  # <-- Save phone_number
-#         )
-#         return JsonResponse({'success': True})
-#     return JsonResponse({'success': False})
-
-
-# @csrf_exempt
-# def add_franchise(request):
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         address = request.POST.get('address')
-#         contact_email = request.POST.get('contact_email')
-#         if name and address and contact_email:
-#             Franchise.objects.create(name=name, address=address, contact_email=contact_email)
-#             return JsonResponse({'success': True})
-#         return JsonResponse({'success': False, 'error': 'Missing fields'})
-#     return JsonResponse({'success': False, 'error': 'Invalid request'})
-def add_franchise(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        address = request.POST.get('address')
-        contact_email = request.POST.get('contact_email')
-        phone_number = request.POST.get('phone_number')
-        print('Phone:', phone_number)  # Debug: See if value is received
-
-        Franchise.objects.create(
-            name=name,
-            address=address,
-            contact_email=contact_email,
-            phone_number=phone_number
-        )
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False})
 
 
 @csrf_exempt
@@ -486,7 +360,6 @@ def delete_franchise(request, id):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
-
 def get_reviews(request):
     reviews = Review.objects.order_by('-created_at')[:10]
     count = Review.objects.count()
@@ -501,39 +374,26 @@ def get_reviews(request):
     }
     return JsonResponse(data)
 
-
 def user_signup(request):
     error = None
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST['username']
         email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-        otp = request.POST.get('otp')
-        session_otp = request.session.get('signup_otp')
-        if password1 != password2:
-            error = 'Passwords do not match.'
-        elif otp != session_otp:
-            error = 'Invalid OTP.'
-        elif AppUser.objects.filter(username=username).exists():
+        password = request.POST['password']
+        is_active = request.POST.get('is_active', 'True') == 'True'
+        if AppUser.objects.filter(username=username).exists():
             error = 'Username already exists.'
         elif AppUser.objects.filter(email=email).exists():
             error = 'Email already exists.'
         else:
-            AppUser.objects.create(username=username, email=email, password=password1)
-            del request.session['signup_otp']
-            return redirect('user_login')
+            AppUser.objects.create(
+                username=username,
+                email=email,
+                password=make_password(password),
+                is_active=is_active,
+            )
+            return redirect('user_login')  # Fixed: use correct login url name
     return render(request, 'dashboard/user_signup.html', {'error': error})
-
-# def send_signup_otp(request):
-#     if request.method == 'POST':
-#         email = request.POST.get('email')
-#         otp = str(random.randint(100000, 999999))
-#         request.session['signup_otp'] = otp
-#         # Send OTP to email (simulate for now)
-#         # send_mail('Your OTP', f'Your OTP is {otp}', settings.DEFAULT_FROM_EMAIL, [email])
-#         return JsonResponse({'success': True, 'otp': otp})
-#     return JsonResponse({'success': False})
 
 def user_login(request):
     error = None
@@ -542,7 +402,7 @@ def user_login(request):
         password = request.POST.get('password')
         try:
             user = AppUser.objects.get(username=username)
-            if password == user.password:
+            if check_password(password, user.password):
                 request.session['user_logged_in'] = True
                 request.session['user_id'] = user.id
                 return redirect(reverse('home'))  # Redirect to homepage after login
@@ -551,6 +411,7 @@ def user_login(request):
         except AppUser.DoesNotExist:
             error = 'Invalid username or password.'
     return render(request, 'dashboard/user.html', {'error': error})
+
 @csrf_exempt
 def send_signup_otp(request):
     if request.method == 'POST':
@@ -600,24 +461,6 @@ def franchise_login(request):
             error = 'Invalid username or password.'
     return render(request, 'dashboard/admin_login.html', {'error': error, 'franchise_login': True})
 
-# def add_product(request):
-#     if request.method == 'POST':
-#         form = ProductForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('products')
-#     else:
-#         form = ProductForm()
-#     return render(request, 'dashboard/add_product.html', {'form': form})
-# def add_product(request):
-#     if request.method == 'POST':
-#         form = ProductForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('dashboard')
-#     else:
-#         form = ProductForm()
-#     return render(request, 'dashboard/add_product.html', {'form': form})
 def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -639,7 +482,6 @@ def update_product(request, pk):
         form = ProductForm(instance=product)
     return render(request, 'dashboard/add_product.html', {'form': form, 'update': True})
 
-
 def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
 
@@ -649,3 +491,132 @@ def delete_product(request, pk):
         product.delete()
         return redirect('products')
     return render(request, 'dashboard/delete_product.html', {'product': product})
+
+def user_signup(request):
+    error = None
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST.get('email')
+        password = request.POST['password']
+        is_active = request.POST.get('is_active', 'True') == 'True'
+        if AppUser.objects.filter(username=username).exists():
+            error = 'Username already exists.'
+        elif AppUser.objects.filter(email=email).exists():
+            error = 'Email already exists.'
+        else:
+            AppUser.objects.create(
+                username=username,
+                email=email,
+                password=make_password(password),
+                is_active=is_active,
+            )
+            return redirect('user_login')  # Fixed: use correct login url name
+    return render(request, 'dashboard/user_signup.html', {'error': error})
+    
+
+def marketing_dashboard(request):
+    staff_list = Staff.objects.all()
+    staff_count = staff_list.count()
+    user_count = AppUser.objects.count()
+    franchises = Franchise.objects.all()
+    products_count = Product.objects.count()
+    franchises_count = Franchise.objects.count()
+    from .models import Lead
+    leads_count = Lead.objects.count()
+    from .forms_lead import LeadForm
+    lead_form = LeadForm()
+    return render(request, 'dashboard/marketing.html', {
+        'staff_list': staff_list,
+        'staff_count': staff_count,
+        'user_count': user_count,
+        'franchises': franchises,
+        'leads_count': leads_count,
+        'form': lead_form,
+        'products_count': products_count,
+        'franchises_count': franchises_count,
+    })
+def franchise_dashboard(request):
+    staff_list = Staff.objects.all()
+    franchises = Franchise.objects.all()  # Get all franchises
+    franchises_count = Franchise.objects.count()
+    # Import the Lead model first
+    from .models import Lead
+    # Then use it
+    leads_count = Lead.objects.count()
+    
+    if request.method == 'POST':
+        form = StaffForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('franchise_dashboard')
+    else:
+        form = StaffForm()
+    return render(request, 'dashboard/franchise.html', {
+        'staff_list': staff_list,
+        'form': form,
+        'franchises': franchises,  # Pass franchises to template
+        'franchises_count': franchises_count,
+        'leads_count': leads_count,
+    })
+# def franchise_dashboard(request):
+#     staff_list = Staff.objects.all()
+#     franchises_count = Franchise.objects.count()
+#     # Add this line to get the real lead count
+#     leads_count = Lead.objects.count()
+    
+#     if request.method == 'POST':
+#         form = StaffForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('franchise_dashboard')
+#     else:
+#         form = StaffForm()
+#     return render(request, 'dashboard/franchise.html', {
+#         'staff_list': staff_list,
+#         'form': form,
+#         'franchises_count': franchises_count,
+#         'leads_count': leads_count,  # Add this line to pass lead count to template
+#     })
+
+def add_lead(request):
+    if request.method == 'POST':
+        from .forms_lead import LeadForm
+        form = LeadForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('marketing_dashboard')  # Redirect to marketing dashboard after adding lead
+    else:
+        from .forms_lead import LeadForm
+        form = LeadForm()
+    return render(request, 'dashboard/add_lead.html', {'form': form})
+
+
+
+# def add_franchise(request):
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         address = request.POST.get('address')
+#         contact_email = request.POST.get('contact_email')
+#         phone_number = request.POST.get('phone_number')
+#         print('Phone:', phone_number)  # Debug: See if value is received
+
+#         Franchise.objects.create(
+#             name=name,
+#             address=address,
+#             contact_email=contact_email,
+#             phone_number=phone_number
+#         )
+#         return JsonResponse({'success': True})
+#     return JsonResponse({'success': False})
+from .models import Franchise  # or your actual model
+from .forms import FranchiseForm  # if you're using a Django form
+
+def add_franchise(request):
+    if request.method == "POST":
+        form = FranchiseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('marketing_dashboard')  # Redirect after save
+    else:
+        form = FranchiseForm()
+    return render(request, 'your_template.html', {'form': form})

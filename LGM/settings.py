@@ -1,19 +1,16 @@
 from pathlib import Path
 import os
-import pymysql
-pymysql.install_as_MySQLdb()
-
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'your-secret-key-here'  # Replace with your own key in production
+SECRET_KEY = '15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'product_images'
@@ -58,19 +55,8 @@ TEMPLATES = [
     },
 ]
 
-
-# filepath: settings.py
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'shreyashgurav31@gmail.com'  # your real email
-EMAIL_HOST_PASSWORD = '12345'  # app password, not your Gmail password
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-AUTH_USER_MODEL = 'core.CustomUser'
-
 WSGI_APPLICATION = 'LGM.wsgi.application'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -79,13 +65,12 @@ DATABASES = {
         'PASSWORD': '12345',
         'HOST': 'localhost',
         'PORT': '3306',
-        # 'NAME': os.environ.get('LGM'),
-        # 'USER': os.environ.get('root'),
-        # 'PASSWORD': os.environ.get('root'),
-        # 'HOST': os.environ.get('localhost'),
-        # 'PORT': os.environ.get('3306'),
     }
 }
+AUTH_USER_MODEL = 'core.CustomUser'
+
+
+# Custom user model (if applicable)
 AUTH_USER_MODEL = 'core.CustomUser'
 
 # Password validation
