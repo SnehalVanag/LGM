@@ -6,7 +6,7 @@
     <i class="fa fa-sign-out-alt"></i> Logout
   </a>
 </div>
-<div class="dashboard-header">Marketing Dashboard</div>
+<div class="dashboard-header" style="color:rgb(245, 240, 212); font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Marketing Dashboard</div>
 <div class="kpi-cards">
   <!-- Lead KPI Card -->
   <div class="kpi-card">
@@ -40,7 +40,7 @@
   <div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content" style="background: #181F2D; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-content" style="background: ; border-radius: 1.2rem; color: #fff;">
         <div class="modal-body">
           <div class="table-responsive">
             <table class="table table-dark table-hover align-middle mb-0"
@@ -88,7 +88,7 @@
 <div class="modal fade" id="editFranchiseModal" tabindex="-1" aria-labelledby="editFranchiseModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: #181F2D; border-radius: 1.2rem; color: #fff;">
+    <div class="modal-content" style="background:; border-radius: 1.2rem; color: #fff;">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
         <h5 class="modal-title" id="editFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
           <i class="fa fa-edit"></i> Edit Franchise
@@ -126,7 +126,7 @@
 <div id="staff-modal-overlay" class="modal-overlay" style="display:none;">
   <div class="modal-content">
     <span class="close-btn" onclick="toggleStaffModal()">&times;</span>
-    <h3 style="color:#FFD700; margin-bottom:16px;">Staff Members</h3>
+    <h3 style="color:black; margin-bottom:16px;">Staff Members</h3>
     <div class="staff-list">
       <table style="width:100%; background:#232f3e; color:#fff; border-radius:8px;">
         <thead>
@@ -173,9 +173,9 @@
 <!-- Add Franchise Modal -->
 <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: #181F2D; border-radius: 1.2rem; color: #fff;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
-        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+    <div class="modal-content" style="background:; border-radius: 1.2rem; color: #fff;">
+      <div class="modal-header" style="border-bottom: 1px ;">
+        <h5 class="modal-title" id="addFranchiseModalLabel" style="color:; font-weight: 700;">
           <i class="fa fa-plus"></i> Add Franchise
         </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -237,7 +237,7 @@
     <li class="activity-item"><i class="fa fa-envelope-open"></i> 2,000 emails sent</li>
   </ul>
 </div>
-<div class="dashboard-chart" style="background: #1E293B;">
+<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);">
   <canvas id="marketingChart"></canvas>
 </div>
 
@@ -256,7 +256,7 @@
   </tr>
   {% empty %}
   <tr>
-    <td colspan="6" class="text-center text-muted">No franchises found.</td>
+    <td colspan="6" class="text-center text-muted"></td>
   </tr>
   {% endfor %}
 </tbody>
@@ -578,7 +578,7 @@ document.getElementById('addStaffForm').addEventListener('submit', function (e) 
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(30, 41, 59, 0.85);
+    background:;
     display: none;
     align-items: center;
     justify-content: center;
@@ -656,14 +656,14 @@ document.getElementById('addStaffForm').addEventListener('submit', function (e) 
     box-shadow:0 4px 24px 0 rgb(16, 1, 1);
   }
   .kpi-card {
-      background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+    background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
 
     border: 2.5px solid rgba(10,10,10, 0.08 );
     border-radius: 1.2rem;
     box-shadow: 0 4px 24px rgba(10, 10, 10, 0.08);
     padding: 2.2rem 2.1rem 1.2rem 2.1rem;
-    min-width: 170px;
-    min-height: 120px;
+    min-width: 200px;
+    min-height: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -695,8 +695,9 @@ document.getElementById('addStaffForm').addEventListener('submit', function (e) 
     opacity: 0.92;
   }
   /* Sidebar and General Text Colors */
-  .sidebar, .dashboard-header, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
-    color: #fff !important;
+  .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
     font-size: 0.98rem;
     letter-spacing: 0.5px;
   }
@@ -706,7 +707,7 @@ document.getElementById('addStaffForm').addEventListener('submit', function (e) 
     border-right: 2px solid #10B981;
   }
   .sidebar a, .sidebar .nav-link {
-    color: #FFD700 !important;
+    color:rgb(247, 246, 243) !important;
     font-size: 0.98rem;
     transition: color 0.3s, background 0.3s;
   }
@@ -724,12 +725,15 @@ document.getElementById('addStaffForm').addEventListener('submit', function (e) 
     text-shadow: 0 2px 8px rgba(16,185,129,0.10);
   }
   .activity-feed {
-    background: linear-gradient(135deg, #232f3e 0%, #1e293b 100%);
-    border-radius: 1.2rem;
-    color: #fff;
-    margin-top: 2rem;
-    padding: 1.2rem 1.5rem;
-    box-shadow: 0 2px 12px rgba(16,185,129,0.08);
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+margin-bottom: 2.2rem;
+  border-radius: 1.2rem;
+  padding:1.2rem 1.5rem;
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(6, 6, 6, 0.18); /* Added extra box shadow for more depth */
+  align-items: center;
+  justify-content: flex-start;
+  
+    
   }
   .activity-title {
     color: #10B981;
@@ -738,33 +742,41 @@ document.getElementById('addStaffForm').addEventListener('submit', function (e) 
     margin-bottom: 0.7rem;
   }
   .activity-item {
-    color: #FFD700;
+    color:rgb(9, 9, 9);
     font-size: 0.98rem;
     margin-bottom: 0.3rem;
   }
   .quick-actions {
-    margin: 1.5rem 0 0.5rem 0;
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
     display: flex;
-    gap: 1.2rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.2rem;
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(6, 6, 6, 0.18); /* Added extra box shadow for more depth */
+  align-items: center;
+  justify-content: flex-start;
   }
   .quick-action-btn {
-    background: linear-gradient(135deg, #10B981 0%, #232f3e 100%);
-    color: #FFD700;
-    border: none;
-    border-radius: 1.2rem;
+     background: #fff;
+    color: #0d47a1;
+    border: 1.5px solid #e0c3fc;
+    border-radius: 2rem;
     font-weight: 600;
     padding: 0.5rem 1.5rem;
-    font-size: 1rem;
-    transition: background 0.4s, color 0.4s, transform 0.4s;
-    box-shadow: 0 2px 8px rgba(16,185,129,0.10);
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      box-shadow:0 4px 24px 0 rgb(16, 1, 1)
+;
   }
   .quick-action-btn:hover {
-    background: linear-gradient(135deg, #FFD700 0%, #10B981 100%);
-    color: #232f3e;
-    transform: scale(1.05);
+       background:rgb(243, 153, 153);
+    color: #00897b;
+    box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
   }
   .modal-content {
-    background: linear-gradient(135deg, #232f3e 0%, #1e293b 100%);
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
     color: #fff;
     border-radius: 1.2rem;
     box-shadow: 0 8px 32px rgba(16,185,129,0.10);
@@ -781,7 +793,8 @@ document.getElementById('addStaffForm').addEventListener('submit', function (e) 
     color: #FFD700;
   }
   .staff-list th {
-    background: linear-gradient(135deg, #10B981 0%, #232f3e 100%);
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
     color: #FFD700;
     font-weight: bold;
   }
@@ -794,11 +807,13 @@ document.getElementById('addStaffForm').addEventListener('submit', function (e) 
   }
 
   .table-dark {
-    background: linear-gradient(135deg, #232f3e 0%, #1e293b 100%);
+         background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
     color: #FFD700;
   }
   .table-dark th {
-    background: linear-gradient(135deg, #10B981 0%, #232f3e 100%);
+         background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
     color: #fff;
   }
   .btn-warning {

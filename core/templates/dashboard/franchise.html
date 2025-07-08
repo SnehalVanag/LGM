@@ -1,6 +1,121 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% block title %}Franchise Dashboard | Products | Admin Dashboard{% endblock %}
 {% block content %}
+<style>
+.franchise-kpi-cards {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.2rem;
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); /* Added extra box shadow for more depth */
+}
+.franchise-kpi-card {
+    background:linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png') ;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    flex: 1 1 calc(33.333% - 1rem);
+    transition: background 0.7s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    border: ;
+    color:rgb(3, 3, 3); /* New card font color (dark slate) */
+}
+.franchise-kpi-card .kpi-value {
+    color:rgb(4, 4, 4); /* New color for value (deep blue) */
+}
+.franchise-kpi-card .kpi-label {
+    color:rgb(3, 3, 3); /* New color for label (teal) */
+}
+.franchise-kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+  
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 0;
+}
+.franchise-kpi-card:hover::before {
+    opacity: 0.18;
+}
+.franchise-kpi-card:hover {
+    background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
+    box-shadow: 0 8px 32px 0 rgba(255,165,0,0.18), 0 1.5px 8px 0 rgba(255,215,0,0.10);
+    transform: translateY(-6px) scale(1.04) rotate(-1deg);
+    z-index: 2;
+}
+.franchise-kpi-card:hover .kpi-label, .franchise-kpi-card:hover .kpi-value {
+    color:;
+    text-shadow: 0 2px 8px rgba(255,165,0,0.18);
+}
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.kpi-label {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+.quick-actions {
+  background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.2rem;
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(6, 6, 6, 0.18); /* Added extra box shadow for more depth */
+  align-items: center;
+  justify-content: flex-start;
+}
+.quick-action-btn {
+    background: #fff;
+    color: #0d47a1;
+    border: 1.5px solid #e0c3fc;
+    border-radius: 2rem;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      box-shadow:0 4px 24px 0 rgb(16, 1, 1)
+;
+}
+.quick-action-btn:hover {
+    background:rgb(243, 153, 153);
+    color: #00897b;
+    box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
+}
+.activity-feed {
+  background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+  border-radius: 1rem;
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0 1.5rem 0;
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
+}
+.activity-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0d47a1;
+  margin-bottom: 0.7rem;
+}
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.dashboard-sidebar, .sidebar, #sidebar, .side-nav {
+   background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
+  color: #0d47a1;
+}
+</style>
 <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
   <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
     <i class="fa fa-sign-out-alt"></i> Logout
@@ -8,12 +123,20 @@
 </div>
 <div class="dashboard-header">Franchise Dashboard</div>
 
-<div class="kpi-cards">
-  <!-- <div class="kpi-card"><div class="kpi-value">12</div><div class="kpi-label">Branches</div></div> -->
-   <!-- Franchise KPI Card -->
-<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#franchiseListModal">
-  <div class="kpi-value">{{ franchises|length }}</div>
-  <div class="kpi-label">Franchises</div>
+<div class="franchise-kpi-cards">
+  <div class="franchise-kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#franchiseListModal">
+    <div class="kpi-value">{{ franchises|length }}</div>
+    <div class="kpi-label">Franchises</div>
+  </div>
+  <div class="franchise-kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
+    <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
+    <div class="kpi-label">Coupons</div>
+    <div style="font-size:12px;color:#FFD700;">View Coupons</div>
+  </div>
+  <div class="franchise-kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#productListModal">
+    <div class="kpi-value">{{ products|length }}</div>
+    <div class="kpi-label">Products</div>
+  </div>
 </div>
 
 <!-- Franchise List Modal -->
@@ -59,17 +182,6 @@
     </div>
   </div>
 </div>
-  <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
-  <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
-  <div class="kpi-label">Coupons</div>
-  <div style="font-size:12px;color:#FFD700;">View Coupons</div>
-  
-</div>
-<!-- Product KPI Card -->
-<div class="kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#productListModal">
-  <div class="kpi-value">{{ products|length }}</div>
-  <div class="kpi-label">Products</div>
-</div>
 
 <!-- Product List Modal -->
 <div class="modal fade" id="productListModal" tabindex="-1" aria-labelledby="productListModalLabel" aria-hidden="true">
@@ -112,13 +224,6 @@
     </div>
   </div>
 </div>
-  <!-- <div class="kpi-card">
-    <a href="{% url 'products' %}" style="text-decoration:none; cursor:pointer;">
-      <div class="kpi-value">{{ products_count }}</div>
-      <div class="kpi-label">Products</div>
-    </a>
-  </div> -->
-</div>
 
 <div class="quick-actions">
    <button class="quick-action-btn" onclick="openBranchModal()"><i class="fa fa-plus"></i> Add Staff</button> 
@@ -126,8 +231,8 @@
 </div>
 
 <div id="branchModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:;z-index:999;align-items:center;justify-content:center;">
-  <div style="background:#222;padding:2rem;border-radius:1rem;min-width:320px;position:relative;">
-    <span style="position:absolute;top:10px;right:20px;cursor:pointer;font-size:1.5rem;color:#FFD700;" onclick="closeBranchModal()">&times;</span>
+  <div style="background:;padding:2rem;border-radius:1rem;min-width:320px;position:relative;">
+    <span style="position:absolute;top:10px;right:20px;cursor:pointer;font-size:1.5rem;" onclick="closeBranchModal()">&times;</span>
     <h3 id="modalTitle" style="color:#FFD700;">Add Branch</h3>
     <form id="branchForm" method="POST" action="{% url 'add_branch' %}">
       {% csrf_token %}
@@ -204,11 +309,11 @@
 
 <!-- Franchise List Section -->
 
-<div class="dashboard-chart" style="background: #1E293B;">
+<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
+">
   <canvas id="franchiseChart"></canvas>
 </div>
-{% endblock %}
-{% block extra_js %}
+
 <script>
 function openBranchModal() {
   document.getElementById('branchModal').style.display = 'flex';

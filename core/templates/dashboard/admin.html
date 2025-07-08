@@ -2,11 +2,11 @@
 {% block title %}Admin Dashboard{% endblock %}
 {% block content %}
 <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
-  <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
+  <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 1000; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
     <i class="fa fa-sign-out-alt"></i> Logout
   </a>
 </div>
-<div class="dashboard-header">Admin Dashboard</div>
+<div class="dashboard-header" style="color:rgb(245, 240, 212); font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Admin Dashboard</div>
 <div class="kpi-cards">
   <a href="{% url 'products' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
     <div class="kpi-value">{{ products_count }}</div>
@@ -262,16 +262,19 @@
   .modal-content .table tbody tr:hover {
     background: #134e4a !important;
   }
+  
+  
+
 </style>
 <!-- Toast Notification -->
-<div id="couponToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" style="position: fixed; top: 2rem; right: 2rem; min-width: 260px; background: #23293a; color: #FFD700; z-index: 9999; display: none; border-radius: 1rem; box-shadow: 0 2px 16px 0 rgba(16,185,129,0.12);">
   <div class="d-flex">
     <div class="toast-body" id="couponToastMsg" style="font-weight: 600;"></div>
     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" onclick="document.getElementById('couponToast').style.display='none';"></button>
   </div>
 </div>
 
-<div class="dashboard-chart" style="background: #1E293B;">
+<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png'); box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
+">
   <canvas id="adminChart"></canvas>
 </div>
 
@@ -411,7 +414,6 @@ addCouponForm.addEventListener('submit', function(e) {
   .catch(() => showCouponToast('❌ Error adding coupon.'));
 });
 
-// ...existing code...
 const addFranchiseForm = document.getElementById('addFranchiseForm');
 addFranchiseForm.addEventListener('submit', function(e) {
   e.preventDefault();
@@ -490,7 +492,7 @@ new Chart(ctxA, {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: '#1E293B',
+        backgroundColor: '',
         titleColor: '#FFD700',
         bodyColor: '#fff',
         borderColor: '#10B981',
@@ -498,7 +500,7 @@ new Chart(ctxA, {
       }
     },
     layout: { padding: 16 },
-    backgroundColor: '#1E293B',
+    backgroundColor: '',
     scales: {
       y: {
         beginAtZero: true,
@@ -524,4 +526,124 @@ new Chart(ctxA, {
   }]
 });
 </script>
+<style>
+.kpi-cards {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.2rem;
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
+}
+.kpi-card {
+    background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+    border-radius: 1rem;
+    padding: 2.2rem 2.1rem 1.2rem 2.1rem;
+    min-width: 200px;
+    min-height: 70px;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.7s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+    color: #2d3748;
+}
+.kpi-card .kpi-value {
+    color:rgb(6, 6, 6);
+}
+.kpi-card .kpi-label {
+    color: #00897b;
+}
+.kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+  
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 0;
+}
+.kpi-card:hover::before {
+    opacity: 0.18;
+}
+.kpi-card:hover {
+    background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
+    box-shadow: 0 8px 32px 0 rgba(255,165,0,0.18), 0 1.5px 8px 0 rgba(255,215,0,0.10);
+    color: #fff;
+    transform: translateY(-6px) scale(1.04) rotate(-1deg);
+    z-index: 2;
+}
+.kpi-card:hover .kpi-label, .kpi-card:hover .kpi-value {
+   
+    text-shadow: 0 2px 8px rgba(255,165,0,0.18);
+}
+.kpi-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.kpi-label {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+.quick-actions {
+  background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+  border-radius: 1rem;
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0 1.5rem 0;
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+.quick-action-btn {
+  background: #fff;
+  color: #0d47a1;
+  border: 1.5px solid rgb(242, 127, 127);
+  border-radius: 2rem;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px 0 rgba(142,197,252,0.08);
+}
+.quick-action-btn:hover {
+  background:rgb(243, 143, 143);
+  color: #00897b;
+  box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
+}
+ /* Sidebar and General Text Colors */
+  .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
+    background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+    font-size: 0.98rem;
+    letter-spacing: 0.5px;
+  }
+  .sidebar {
+    box-shadow:0 4px 24px 0 rgb(16, 1, 1);
+    border-right: 2px solid #10B981;
+  }
+  .sidebar a, .sidebar .nav-link {
+    color:rgb(254, 253, 250) !important;
+    font-size: 0.98rem;
+    transition: color 0.3s, background 0.3s;
+  }
+  .sidebar a:hover, .sidebar .nav-link:hover {
+    color: #10B981 !important;
+    background: rgba(16,185,129,0.08);
+    border-radius: 0.7rem;
+  }
+  .dashboard-header {
+    background: none !important;
+  }
+
+</style>
 {% endblock %}
