@@ -2,16 +2,20 @@
 {% block title %}Franchise Dashboard | Products | Admin Dashboard{% endblock %}
 {% block content %}
 <style>
+
 .franchise-kpi-cards {
     display: flex;
+    flex-wrap: nowrap;         /* Prevent wrapping to next line */
     gap: 1.5rem;
-    flex-wrap: wrap;
+    overflow-x: auto;          /* Allow horizontal scroll if needed */
     margin-bottom: 2.2rem;
     border-radius: 1.5rem;
     padding: 2rem 1.5rem;
-    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); /* Added extra box shadow for more depth */
+    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
 }
 .franchise-kpi-card {
+   min-width: 220px;          /* Ensures cards don't shrink too much */
+    flex: 0 0 220px; 
     background:linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png') ;
     border-radius: 1rem;
     padding: 1.5rem;
@@ -29,6 +33,9 @@
 }
 .franchise-kpi-card .kpi-label {
     color:rgb(3, 3, 3); /* New color for label (teal) */
+}
+  .franchise-kpi-card .kpi-label {
+    color: #00897b;
 }
 .franchise-kpi-card::before {
     content: '';
@@ -141,7 +148,6 @@
     <div class="kpi-value">{{ staff_list|length }}</div>
     <div class="kpi-label">Staff Members</div>
   </div>
- 
 </div>
 
 <!-- Franchise List Modal -->
@@ -228,11 +234,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
 </div>
 
 
@@ -382,9 +383,6 @@
   </div>
 </div>
 </div>
-
-
-
 </div>
 
 
@@ -423,7 +421,7 @@
 
 
 <!-- Add this below your KPI cards -->
-<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);">
+<div class="dashboard-chart" style="background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%); border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); padding: 1.5rem;">
   <canvas id="dashboardSummaryChart"></canvas>
 </div>
 

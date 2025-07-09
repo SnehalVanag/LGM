@@ -13,7 +13,7 @@
           <p class="card-text" style="flex:1;">{{ product.description|truncatechars:80 }}</p>
           <div class="d-flex justify-content-between align-items-center mt-2">
             <span class="badge bg-success">{{ product.discount }}% OFF</span>
-            <button class="btn btn-warning btn-sm">Add to Cart</button>
+            <!-- <button class="btn btn-warning btn-sm">Add to Cart</button> -->
           </div>
         </div>
       </div>
@@ -24,10 +24,8 @@
     </div>
     {% endfor %}
   </div>
-</div>
-{% endblock %}{% extends 'dashboard/dashboard_base.html' %}
-{% block title %}Products | Admin Dashboard{% endblock %}
-{% block content %}
+</div> 
+
 <div class="dashboard-header d-flex justify-content-between align-items-center">
   <span>Products</span>
   <a href="{% url 'add_product' %}" class="btn btn-success" style="border-radius: 2rem; font-weight: 700;">+ Add
