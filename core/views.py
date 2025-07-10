@@ -40,37 +40,58 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
-def user_login(request):
+# def user_login(request):
 
 
-    error = None
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        role = request.POST['role']
-        if role == 'admin':
-            # Custom admin table login
-            try:
-                admin = Admin.objects.get(name=username)
-                if password == admin.password:
-                    request.session['admin_logged_in'] = True
-                    request.session['admin_id'] = admin.admin_id
-                    request.session['is_core_admin'] = True
-                    request.session['admin_name'] = admin.name
-                    return redirect('admin_dashboard')
-                else:
-                    error = 'Invalid username or password.'
-            except Admin.DoesNotExist:
-                error = 'Invalid username or password.'
-        else:
-            # Normal user login using Django's User/AppUser
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('user_dashboard')
-            else:
-                error = "Invalid username or password."
-    return render(request, 'dashboard/user.html', {'error': error})
+#     error = None
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         role = request.POST['role']
+#         if role == 'admin':
+#             # Custom admin table login
+#             try:
+#                 admin = Admin.objects.get(name=username)
+#                 if password == admin.password:
+#                     request.session['admin_logged_in'] = True
+#                     request.session['admin_id'] = admin.admin_id
+#                     request.session['is_core_admin'] = True
+#                     request.session['admin_name'] = admin.name
+#                     return redirect('admin_dashboard')
+#                 else:
+#                     error = 'Invalid username or password.'
+#             except Admin.DoesNotExist:
+#                 error = 'Invalid username or password.'
+#         else:
+#             # Normal user login using Django's User/AppUser
+#             user = authenticate(request, username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('user_dashboard')
+#             else:
+#                 error = "Invalid username or password."
+#     return render(request, 'dashboard/user.html', {'error': error})
+
+
+# def user_login(request):
+#     error = None
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         role = request.POST['role']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             if role == 'admin' and user.is_staff:
+#                 login(request, user)
+#                 return redirect('admin_dashboard')  # Change to your admin dashboard URL name
+#             elif role == 'user' and not user.is_staff:
+#                 login(request, user)
+#                 return redirect('user_dashboard')  # Change to your user dashboard URL name
+#             else:
+#                 error = "Invalid credentials for selected role."
+#         else:
+#             error = "Invalid username or password."
+#     return render(request, 'dashboard/user.html', {'error': error})
 
 def send_otp(request):
     if request.method == 'POST':
@@ -469,22 +490,22 @@ def user_signup(request):
             return redirect('user_login')  # Fixed: use correct login url name
     return render(request, 'dashboard/user_signup.html', {'error': error})
 
-# def user_login(request):
-#     error = None
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         try:
-#             user = AppUser.objects.get(username=username)
-#             if check_password(password, user.password):
-#                 request.session['user_logged_in'] = True
-#                 request.session['user_id'] = user.id
-#                 return redirect(reverse('home'))  # Redirect to homepage after login
-#             else:
-#                 error = 'Invalid username or password.'
-#         except AppUser.DoesNotExist:
-#             error = 'Invalid username or password.'
-#     return render(request, 'dashboard/user.html', {'error': error})
+def user_login(request):
+    error = None
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            user = AppUser.objects.get(username=username)
+            if check_password(password, user.password):
+                request.session['user_logged_in'] = True
+                request.session['user_id'] = user.id
+                return redirect(reverse('home'))  # Redirect to homepage after login
+            else:
+                error = 'Invalid username or password.'
+        except AppUser.DoesNotExist:
+            error = 'Invalid username or password.'
+    return render(request, 'dashboard/user.html', {'error': error})
 
 @csrf_exempt
 def send_signup_otp(request):
@@ -599,6 +620,8 @@ def marketing_dashboard(request):
     leads_count = Lead.objects.count()
     from .forms_lead import LeadForm
     lead_form = LeadForm()
+    leads = Lead.objects.all()  # or filter as needed
+
     return render(request, 'dashboard/marketing.html', {
         'staff_list': staff_list,
         'staff_count': staff_count,
@@ -608,7 +631,10 @@ def marketing_dashboard(request):
         'form': lead_form,
         'products_count': products_count,
         'franchises_count': franchises_count,
+        'leads': leads,
+        'leads_count': leads.count(),
     })
+
 def franchise_dashboard(request):
     staff_list = Staff.objects.all()
     franchises = Franchise.objects.all()  # Get all franchises
