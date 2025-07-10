@@ -58,7 +58,7 @@
                   <td>{{ franchise.address }}</td>
                   <td>{{ franchise.contact_email }}</td>
                   <td>{{ franchise.phone_number }}</td>
-                  <td>
+                  <td class="franchise-list-btns">
                     <button class="btn btn-warning btn-sm" onclick="editFranchise({{ franchise.id }})">Edit</button>
                     <button class="btn btn-danger btn-sm" onclick="deleteFranchise({{ franchise.id }})">Delete</button>
                   </td>
@@ -497,7 +497,7 @@ new Chart(ctxLF, {
       })
        // ...existing code...
 .then(res => res.json())
-.then(data => {
+.then data => {
   if (data.success) {
     showCouponToast('✅ Franchise added successfully!');
     const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
@@ -576,6 +576,95 @@ new Chart(ctxLF, {
   //     }
   //   }]
   // });
+
+  // Coupons List Modal
+  const couponListModal = document.getElementById('couponListModal');
+  if (couponListModal) {
+    couponListModal.addEventListener('show.bs.modal', function () {
+      // Fetch and display coupons data
+      fetch('/get-coupons/')
+        .then(res => res.json())
+        .then(data => {
+          const tbody = couponListModal.querySelector('table tbody');
+          tbody.innerHTML = '';
+          data.coupons.forEach((coupon, index) => {
+            const row = `<tr>
+              <td>${index + 1}</td>
+              <td>${coupon.code}</td>
+              <td>${coupon.discount_percentage}</td>
+              <td>${coupon.status}</td>
+              <td>
+                <button class="btn btn-warning btn-sm" onclick="editCoupon(${coupon.id}, '${coupon.code}', ${coupon.discount_percentage}, '${coupon.status}')">Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteCoupon(${coupon.id})">Delete</button>
+              </td>
+            </tr>`;
+            tbody.insertAdjacentHTML('beforeend', row);
+          });
+        });
+    });
+  }
+
+  // Edit Coupon
+  function editCoupon(id, code, discount, status) {
+    document.getElementById('editCouponId').value = id;
+    document.getElementById('editCouponCode').value = code;
+    document.getElementById('editCouponDiscount').value = discount;
+    document.getElementById('editCouponStatus').value = status;
+    const modal = new bootstrap.Modal(document.getElementById('editCouponModal'));
+    modal.show();
+  }
+
+  const editCouponForm = document.getElementById('editCouponForm');
+  if (editCouponForm) {
+    editCouponForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const id = document.getElementById('editCouponId').value;
+      const code = document.getElementById('editCouponCode').value;
+      const discount = document.getElementById('editCouponDiscount').value;
+      const status = document.getElementById('editCouponStatus').value;
+      fetch(`/update-coupon/${id}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: `code=${encodeURIComponent(code)}&discount_percentage=${encodeURIComponent(discount)}&status=${encodeURIComponent(status)}`
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showCouponToast('✅ Coupon updated successfully!');
+          const modal = bootstrap.Modal.getInstance(document.getElementById('editCouponModal'));
+          if (modal) modal.hide();
+          setTimeout(() => location.reload(), 1200);
+        } else {
+          showCouponToast('❌ Failed to update coupon.');
+        }
+      })
+      .catch(() => showCouponToast('❌ Error updating coupon.'));
+    });
+  }
+
+  function deleteCoupon(id) {
+    if (confirm('Are you sure you want to delete this coupon?')) {
+      fetch(`/delete-coupon/${id}/`, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}'
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showCouponToast('✅ Coupon deleted successfully!');
+          setTimeout(() => location.reload(), 1000);
+        } else {
+          showCouponToast('❌ Failed to delete coupon.');
+        }
+      })
+      .catch(() => showCouponToast('❌ Error deleting coupon.'));
+    }
+  }
 
 </script>
 <style>
@@ -671,6 +760,7 @@ new Chart(ctxLF, {
     padding: 2.2rem 2.1rem 1.2rem 2.1rem;
     min-width: 200px;
     min-height: 70px;
+    max-width: 260px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -709,7 +799,7 @@ new Chart(ctxLF, {
     letter-spacing: 0.5px;
   }
   .sidebar {
-    box-shadow:0 4px 24px 0 rgb(16, 1, 1);
+    box-shadow:;
 ;
     border-right: 2px solid #10B981;
   }
@@ -720,7 +810,7 @@ new Chart(ctxLF, {
   }
   .sidebar a:hover, .sidebar .nav-link:hover {
     color: #10B981 !important;
-    background: rgba(16,185,129,0.08);
+    background: ;
     border-radius: 0.7rem;
   }
   .dashboard-header {
@@ -832,7 +922,7 @@ margin-bottom: 2.2rem;
     transition: background 0.3s, color 0.3s;
   }
   .btn-warning:hover {
-    background: #10B981;
+    background:rgb(35, 40, 38);
     color: #fff;
   }
   .btn-danger {
@@ -847,6 +937,30 @@ margin-bottom: 2.2rem;
     background: #232f3e;
     color: #FFD700;
   }
+  .franchise-list-btns .btn-warning {
+  background: #FFD700;
+  color: #232f3e;
+  border: none;
+  font-weight: 600;
+  border-radius: 0.7rem;
+  transition: background 0.3s, color 0.3s;
+}
+.franchise-list-btns .btn-warning:hover {
+  background: #10B981;
+  color: #fff;
+}
+.franchise-list-btns .btn-danger {
+  background: #EF4444;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+}
+.franchise-list-btns .btn-danger:hover {
+  background: #232f3e;
+  color: #FFD700;
+}
   /* ...existing code... */
 </style>
 {% endblock %}
