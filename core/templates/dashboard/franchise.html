@@ -2,7 +2,6 @@
 {% block title %}Franchise Dashboard | Products | Admin Dashboard{% endblock %}
 {% block content %}
 <style>
-
 .franchise-kpi-cards {
     display: flex;
     flex-wrap: nowrap;         /* Prevent wrapping to next line */
@@ -143,11 +142,11 @@
     <div class="kpi-label">Coupons</div>
     <div style="font-size:12px;color:#FFD700;">View Coupons</div>
   </div>
-  <div class="franchise-kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#productListModal">
+  <div class="franchise-kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'products' %}'">
     <div class="kpi-value">{{ products|length }}</div>
     <div class="kpi-label">Products</div>
   </div>
-   <div class="franchise-kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#productListModal">
+   <div class="franchise-kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#staffListModal">
     <div class="kpi-value">{{ staff_list|length }}</div>
     <div class="kpi-label">Staff Members</div>
   </div>

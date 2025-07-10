@@ -8,7 +8,7 @@
 </div>
 <div class="dashboard-header" style="color:rgb(245, 240, 212); font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Admin Dashboard</div>
 <div class="kpi-cards">
-  <a href="{% url 'products' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
+  <a class="kpi-card" style="text-decoration:none; cursor:pointer;">
     <div class="kpi-value">{{ products_count }}</div>
     <div class="kpi-label">Products</div>
   </a>
@@ -77,7 +77,10 @@
   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
   <i class="fa fa-plus"></i> Add Franchise
 </button>
-  <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="fa fa-box"></i> Add Product</button>
+  {% comment %} <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addProductModal" ><i class="fa fa-box"></i> Add Product</button> {% endcomment %}
+  <button class="quick-action-btn" onclick="window.location.href='{% url 'products' %}'">
+  <i class="fa fa-box"></i> Add Product
+</button>
   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addMarketingMemberModal"><i class="fa fa-users"></i> Add Marketing Team Members</button>
   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addCouponModal"><i class="fa fa-ticket-alt"></i> Add Coupons</button>
 </div>
