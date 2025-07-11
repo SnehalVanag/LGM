@@ -107,11 +107,20 @@ class Admin(models.Model):
     name = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
 
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+       
 class Product(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='product_images/')
     discount = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     description = models.TextField(blank=True)  # <-- Add this line
+    categories = models.ManyToManyField(Category, related_name='products')
+
 
     def __str__(self):
         return self.name

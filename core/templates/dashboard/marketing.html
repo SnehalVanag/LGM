@@ -489,7 +489,6 @@ new Chart(ctxLF, {
             showCouponToast('❌ Delete failed.');
           }
         });
-    };
   }
   // Delete
   let deleteFranchiseId = null;
@@ -537,20 +536,18 @@ new Chart(ctxLF, {
         },
         body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}`
       })
-       // ...existing code...
-.then(res => res.json())
-.then data => {
-  if (data.success) {
-    showCouponToast('✅ Franchise added successfully!');
-    const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
-    if (modal) modal.hide();
-    addFranchiseForm.reset();
-  } else {
-    showCouponToast('❌ Failed to add franchise.');
-  }
-})
-// ...existing code...
-        .catch(() => showCouponToast('❌ Error adding franchise.'));
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showCouponToast('✅ Franchise added successfully!');
+          const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
+          if (modal) modal.hide();
+          addFranchiseForm.reset();
+        } else {
+          showCouponToast('❌ Failed to add franchise.');
+        }
+      })
+      .catch(() => showCouponToast('❌ Error adding franchise.'));
     });
   }
   // ...existing code...
