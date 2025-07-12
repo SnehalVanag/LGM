@@ -73,6 +73,7 @@
 
   <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
     <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
+     <div class="kpi-value">{{ coupons_count }}</div>
     <div class="kpi-label">Coupons</div>
     <div style="font-size:12px;color:#FFD700;">View Coupons</div>
   </div>
@@ -202,12 +203,14 @@
     </div>
   </div>
 </div>
-
-
 </div>
+
 <div class="quick-actions">
-    <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addLeadModal">
+    <!-- <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addLeadModal">
   <i class="fa fa-plus"></i> Add Leads
+</button> -->
+    <button type="button" class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addStaffModal">
+ <i class="fa fa-plus"></i> Add Leads
 </button>
  <!-- Add Lead Modal -->
 <div class="modal fade" id="addLeadModal" tabindex="-1" aria-labelledby="addLeadModalLabel" aria-hidden="true">
@@ -226,7 +229,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add Lead</button>
+          <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStaffModal">Add Lead</button>
         </div>
       </form>
     </div>
@@ -238,13 +241,13 @@
     <i class="fa fa-plus"></i> Add Franchise
   </button>
   <!-- Add Franchise Modal -->
-  <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel"
+  <!-- <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
         <div class="modal-header" style="border-bottom: 1px solid #10B981;">
           <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
-            <i class="fa fa-plus"></i> Add Franchise
+            <i class="fa fa-plus"></i> Add Franchise...
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -272,38 +275,80 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Add Staff Modal -->
-  <div id="add-staff-modal-overlay" class="modal-overlay" style="display:none;">
-    <div class="modal-content">
-      <h3 style="color:#FFD700; margin-bottom:16px;">Add Lead</h3>
-      <form id="addStaffForm" method="post">
-        {% csrf_token %}
-        <div style="margin-bottom:12px;">
-          <label>Name:</label>
-          <input type="text" name="name" required style="width:100%;padding:6px;">
-        </div>
-        <div style="margin-bottom:12px;">
-          <label>Email:</label>
-          <input type="email" name="email" required style="width:100%;padding:6px;">
-        </div>
-        <div style="margin-bottom:12px;">
-          <label>phone:</label>
-          <input type="text" name="role" required style="width:100%;padding:6px;">
-        </div>
-        <div style="margin-bottom:12px;">
-          <label>location:</label>
-          <input type="text" name="role" required style="width:100%;padding:6px;">
-        </div>
-        <button type="submit" class="quick-action-btn" style="width:100%;">Add</button>
-      </form>
+  </div> -->
+<!-- Add Franchise Modal -->
+<div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: ; border-radius: 1.2rem; color: ;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: ; font-weight: 700;">
+          <i class="fa fa-plus"></i> Add Franchise
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addFranchiseForm">
+          <div class="mb-3">
+            <label class="form-label" for="franchiseName">Name</label>
+            <input type="text" class="form-control" id="franchiseName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="franchiseLocation">Location</label>
+            <input type="text" class="form-control" id="franchiseLocation" name="address" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="franchiseEmail">Email</label>
+            <input type="email" class="form-control" id="franchiseEmail" name="contact_email" required>
+          </div>
+             <div class="mb-3">
+            <label class="form-label" for="id_phone_number">Phone Number</label>
+            <input type="text" name="phone_number" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Franchise</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
-">
+<!-- Add Staff Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: ; border-radius: 1.2rem; color: ;">
+      <div class="modal-header" style="border-bottom: 1px solid #FFD700;">
+        <h5 class="modal-title" id="addStaffModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-plus"></i> Add Lead'''
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addStaffForm" method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label" for="staffName">Name</label>
+            <input type="text" class="form-control" id="staffName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="staffEmail">Email</label>
+            <input type="email" class="form-control" id="staffEmail" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="staffPhone">Phone</label>
+            <input type="text" class="form-control" id="staffPhone" name="phone" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="staffLocation">Location</label>
+            <input type="text" class="form-control" id="staffLocation" name="location" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);">
 <!-- Add this below your KPI cards or wherever you want the chart -->
 <div class="dashboard-chart" style="background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%); border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); padding: 1.5rem;">
   <canvas id="leadsFranchiseChart"></canvas>
@@ -312,8 +357,337 @@
 
 {% endblock %}
 {% block extra_js %}
+
+
+
+
+<style>
+  .kpi-card .kpi-label {
+    color: #00897b;
+}
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: linear-gradient(135deg, #181F2F 0%, #232f3e 60%, #10B981 100%);
+    padding: 32px 24px 24px 24px;
+    border-radius: 12px;
+    min-width: 350px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(16,185,129,0.18);
+    position: relative;
+    animation: modalIn 0.2s;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 2rem;
+    color: #FFD700;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  @keyframes modalIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .staff-list table {
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .staff-list th,
+  .staff-list td {
+    padding: 10px 12px;
+    text-align: left;
+  }
+
+  .staff-list th {
+    background: linear-gradient(135deg, #10B981 0%, #232f3e 100%);
+    color: #FFD700;
+    font-weight: bold;
+  }
+  .staff-list tr:nth-child(even), .staff-list tr:nth-child(odd) {
+    background: linear-gradient(135deg, #232f3e 0%, #1e293b 100%);
+  }
+  .staff-list td {
+    color: #FFD700;
+    font-size: 0.98rem;
+  }
+
+  /* Unified KPI Card Styles (matches homepage) */
+  .kpi-cards {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.2rem;
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    box-shadow:0 4px 24px 0 rgb(16, 1, 1);
+  }
+  .kpi-card {
+    background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+    border: 2.5px solid rgba(10,10,10, 0.08 );
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 24px rgba(10, 10, 10, 0.08);
+    padding: 2.2rem 2.1rem 1.2rem 2.1rem;
+    min-width: 200px;
+    min-height: 70px;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.7s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
+  .kpi-card:hover {
+    background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
+    box-shadow: 0 8px 32px 0 rgba(255,165,0,0.18), 0 1.5px 8px 0 rgba(255,215,0,0.10);
+    transform: translateY(-6px) scale(1.04) rotate(-1deg);
+    z-index: 2;
+  }
+  .kpi-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color:rgb(53, 53, 52);
+    margin-bottom: 0.2rem;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(16,185,129,0.10);
+  }
+  /* .kpi-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.5px;
+    opacity: 0.92;
+  } */
+   .kpi-label {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+  /* Sidebar and General Text Colors */
+  .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+    font-size: 0.98rem;
+    letter-spacing: 0.5px;
+  }
+  .sidebar {
+    box-shadow:;
+;
+    border-right: 2px solid #10B981;
+  }
+  .sidebar a, .sidebar .nav-link {
+    color:rgb(247, 246, 243) !important;
+    font-size: 0.98rem;
+    transition: color 0.3s, background 0.3s;
+  }
+  .sidebar a:hover, .sidebar .nav-link:hover {
+    color: #10B981 !important;
+    background: ;
+    border-radius: 0.7rem;
+  }
+  .dashboard-header {
+    color: #FFD700;
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1.2px;
+    text-shadow: 0 2px 8px rgba(16,185,129,0.10);
+  }
+  .activity-feed {
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+margin-bottom: 2.2rem;
+  border-radius: 1.2rem;
+  padding:1.2rem 1.5rem;
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(6, 6, 6, 0.18); /* Added extra box shadow for more depth */
+  align-items: center;
+  justify-content: flex-start;
+  
+    
+  }
+  .activity-title {
+    color: #10B981;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+  }
+  .activity-item {
+    color:rgb(9, 9, 9);
+    font-size: 0.98rem;
+    margin-bottom: 0.3rem;
+  }
+  .quick-actions {
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+    display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.2rem;
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(6, 6, 6, 0.18); /* Added extra box shadow for more depth */
+  align-items: center;
+  justify-content: flex-start;
+  }
+  .quick-action-btn {
+     background: #fff;
+    color: #0d47a1;
+    border: 1.5px solid #e0c3fc;
+    border-radius: 2rem;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      box-shadow:0 4px 24px 0 rgb(16, 1, 1)
+;
+  }
+  .quick-action-btn:hover {
+       background:rgb(243, 153, 153);
+    color: #00897b;
+    box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
+  }
+  .modal-content {
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+    color: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 8px 32px rgba(16,185,129,0.10);
+  }
+  .modal-header {
+    border-bottom: 1px solid #10B981;
+    background: transparent;
+  }
+  .modal-title {
+    color: #FFD700;
+    font-weight: 700;
+  }
+  .close-btn {
+    color: #FFD700;
+  }
+  .staff-list th {
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+    color: #FFD700;
+    font-weight: bold;
+  }
+  .staff-list tr:nth-child(even), .staff-list tr:nth-child(odd) {
+    background: linear-gradient(135deg, #232f3e 0%, #1e293b 100%);
+  }
+  .staff-list td {
+    color: #FFD700;
+    font-size: 0.98rem;
+  }
+
+  .table-dark {
+         background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+    color: #FFD700;
+  }
+  .table-dark th {
+         background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+    color: #fff;
+  }
+  .btn-warning {
+    background: #FFD700;
+    color: #232f3e;
+    border: none;
+    font-weight: 600;
+    border-radius: 0.7rem;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-warning:hover {
+    background:rgb(35, 40, 38);
+    color: #fff;
+  }
+  .btn-danger {
+    background: #EF4444;
+    color: #fff;
+    border: none;
+    border-radius: 0.7rem;
+    font-weight: 600;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-danger:hover {
+    background: #232f3e;
+    color: #FFD700;
+  }
+  .franchise-list-btns .btn-warning {
+  background: #FFD700;
+  color: #232f3e;
+  border: none;
+  font-weight: 600;
+  border-radius: 0.7rem;
+  transition: background 0.3s, color 0.3s;
+}
+.franchise-list-btns .btn-warning:hover {
+  background: #10B981;
+  color: #fff;
+}
+.franchise-list-btns .btn-danger {
+  background: #EF4444;
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+}
+.franchise-list-btns .btn-danger:hover {
+  background: #232f3e;
+  color: #FFD700;
+}
+  /* ...existing code... */
+</style>
+<style>
+  .modal-content .table {
+    border-radius: 0.7rem;
+    overflow: hidden;
+  }
+  .modal-content .table thead {
+    background: #10B981;
+    color: #181F2F;
+    font-weight: 700;
+  }
+  .modal-content .table tbody tr {
+    transition: background 0.2s;
+  }
+  .modal-content .table tbody tr:hover {
+    background: #134e4a !important;
+  }
+  
+  
+
+</style>
 <script>
-  // ...existing code...
+    // ...existing code...
 
 // Bar/Line chart for Leads vs Franchises
 const ctxLF = document.getElementById('leadsFranchiseChart').getContext('2d');
@@ -651,311 +1025,13 @@ new Chart(ctxLF, {
       .catch(() => showCouponToast('❌ Error deleting coupon.'));
     }
   }
+}
+
 
 </script>
-<style>
-  .kpi-card .kpi-label {
-    color: #00897b;
-}
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  .modal-content {
-    background: linear-gradient(135deg, #181F2F 0%, #232f3e 60%, #10B981 100%);
-    padding: 32px 24px 24px 24px;
-    border-radius: 12px;
-    min-width: 350px;
-    max-width: 600px;
-    width: 90%;
-    box-shadow: 0 8px 32px rgba(16,185,129,0.18);
-    position: relative;
-    animation: modalIn 0.2s;
-  }
-
-  .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 18px;
-    font-size: 2rem;
-    color: #FFD700;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  @keyframes modalIn {
-    from {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  .staff-list table {
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-    border-radius: 8px;
-  }
-
-  .staff-list th,
-  .staff-list td {
-    padding: 10px 12px;
-    text-align: left;
-  }
-
-  .staff-list th {
-    background: linear-gradient(135deg, #10B981 0%, #232f3e 100%);
-    color: #FFD700;
-    font-weight: bold;
-  }
-  .staff-list tr:nth-child(even), .staff-list tr:nth-child(odd) {
-    background: linear-gradient(135deg, #232f3e 0%, #1e293b 100%);
-  }
-  .staff-list td {
-    color: #FFD700;
-    font-size: 0.98rem;
-  }
-
-  /* Unified KPI Card Styles (matches homepage) */
-  .kpi-cards {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 2.2rem;
-    border-radius: 1.5rem;
-    padding: 2rem 1.5rem;
-    box-shadow:0 4px 24px 0 rgb(16, 1, 1);
-  }
-  .kpi-card {
-    background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-
-    border: 2.5px solid rgba(10,10,10, 0.08 );
-    border-radius: 1.2rem;
-    box-shadow: 0 4px 24px rgba(10, 10, 10, 0.08);
-    padding: 2.2rem 2.1rem 1.2rem 2.1rem;
-    min-width: 200px;
-    min-height: 70px;
-    max-width: 260px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.7s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: pointer;
-    position: relative;
-    margin-bottom: 0.5rem;
-  }
-  .kpi-card:hover {
-    background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
-    box-shadow: 0 8px 32px 0 rgba(255,165,0,0.18), 0 1.5px 8px 0 rgba(255,215,0,0.10);
-    transform: translateY(-6px) scale(1.04) rotate(-1deg);
-    z-index: 2;
-  }
-  .kpi-value {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color:rgb(53, 53, 52);
-    margin-bottom: 0.2rem;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 8px rgba(16,185,129,0.10);
-  }
-  /* .kpi-label {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #fff;
-    letter-spacing: 0.5px;
-    opacity: 0.92;
-  } */
-   .kpi-label {
-    font-size: 1rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05rem;
-}
-  /* Sidebar and General Text Colors */
-  .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
-     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-
-    font-size: 0.98rem;
-    letter-spacing: 0.5px;
-  }
-  .sidebar {
-    box-shadow:;
-;
-    border-right: 2px solid #10B981;
-  }
-  .sidebar a, .sidebar .nav-link {
-    color:rgb(247, 246, 243) !important;
-    font-size: 0.98rem;
-    transition: color 0.3s, background 0.3s;
-  }
-  .sidebar a:hover, .sidebar .nav-link:hover {
-    color: #10B981 !important;
-    background: ;
-    border-radius: 0.7rem;
-  }
-  .dashboard-header {
-    color: #FFD700;
-    font-size: 2.1rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1.2px;
-    text-shadow: 0 2px 8px rgba(16,185,129,0.10);
-  }
-  .activity-feed {
-     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-margin-bottom: 2.2rem;
-  border-radius: 1.2rem;
-  padding:1.2rem 1.5rem;
-  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(6, 6, 6, 0.18); /* Added extra box shadow for more depth */
-  align-items: center;
-  justify-content: flex-start;
-  
-    
-  }
-  .activity-title {
-    color: #10B981;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.7rem;
-  }
-  .activity-item {
-    color:rgb(9, 9, 9);
-    font-size: 0.98rem;
-    margin-bottom: 0.3rem;
-  }
-  .quick-actions {
-     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-    display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 2.2rem;
-  border-radius: 1.5rem;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(6, 6, 6, 0.18); /* Added extra box shadow for more depth */
-  align-items: center;
-  justify-content: flex-start;
-  }
-  .quick-action-btn {
-     background: #fff;
-    color: #0d47a1;
-    border: 1.5px solid #e0c3fc;
-    border-radius: 2rem;
-    font-weight: 600;
-    padding: 0.5rem 1.5rem;
-    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-      box-shadow:0 4px 24px 0 rgb(16, 1, 1)
-;
-  }
-  .quick-action-btn:hover {
-       background:rgb(243, 153, 153);
-    color: #00897b;
-    box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
-  }
-  .modal-content {
-     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-
-    color: #fff;
-    border-radius: 1.2rem;
-    box-shadow: 0 8px 32px rgba(16,185,129,0.10);
-  }
-  .modal-header {
-    border-bottom: 1px solid #10B981;
-    background: transparent;
-  }
-  .modal-title {
-    color: #FFD700;
-    font-weight: 700;
-  }
-  .close-btn {
-    color: #FFD700;
-  }
-  .staff-list th {
-     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-
-    color: #FFD700;
-    font-weight: bold;
-  }
-  .staff-list tr:nth-child(even), .staff-list tr:nth-child(odd) {
-    background: linear-gradient(135deg, #232f3e 0%, #1e293b 100%);
-  }
-  .staff-list td {
-    color: #FFD700;
-    font-size: 0.98rem;
-  }
-
-  .table-dark {
-         background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-
-    color: #FFD700;
-  }
-  .table-dark th {
-         background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-
-    color: #fff;
-  }
-  .btn-warning {
-    background: #FFD700;
-    color: #232f3e;
-    border: none;
-    font-weight: 600;
-    border-radius: 0.7rem;
-    transition: background 0.3s, color 0.3s;
-  }
-  .btn-warning:hover {
-    background:rgb(35, 40, 38);
-    color: #fff;
-  }
-  .btn-danger {
-    background: #EF4444;
-    color: #fff;
-    border: none;
-    border-radius: 0.7rem;
-    font-weight: 600;
-    transition: background 0.3s, color 0.3s;
-  }
-  .btn-danger:hover {
-    background: #232f3e;
-    color: #FFD700;
-  }
-  .franchise-list-btns .btn-warning {
-  background: #FFD700;
-  color: #232f3e;
-  border: none;
-  font-weight: 600;
-  border-radius: 0.7rem;
-  transition: background 0.3s, color 0.3s;
-}
-.franchise-list-btns .btn-warning:hover {
-  background: #10B981;
-  color: #fff;
-}
-.franchise-list-btns .btn-danger {
-  background: #EF4444;
-  color: #fff;
-  border: none;
-  border-radius: 0.7rem;
-  font-weight: 600;
-  transition: background 0.3s, color 0.3s;
-}
-.franchise-list-btns .btn-danger:hover {
-  background: #232f3e;
-  color: #FFD700;
-}
-  /* ...existing code... */
-</style>
 {% endblock %}

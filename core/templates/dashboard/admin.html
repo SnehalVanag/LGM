@@ -1,8 +1,10 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% block title %}Admin Dashboard{% endblock %}
 {% block content %}
+
 <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
-  <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color:; border: 1.5px ; border-radius: 2rem; font-weight: 1000; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
+  <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning"
+    style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
     <i class="fa fa-sign-out-alt"></i> Logout
   </a>
 </div>
@@ -490,42 +492,7 @@ addCouponForm.addEventListener('submit', function(e) {
   .catch(() => showCouponToast('❌ Error adding coupon.'));
 });
 
-// Add Product Modal
-<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background:; border-radius: 1.2rem; color: #fff;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
-        <h5 class="modal-title" id="addProductModalLabel" style="color:; font-weight: 700;">
-          <i class="fa fa-box"></i> Add Product
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="addProductForm" enctype="multipart/form-data">
-          <div class="mb-3">
-            <label class="form-label" for="productName">Product Name</label>
-            <input type="text" class="form-control" id="productName" name="name" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="productDescription">Description</label>
-            <textarea class="form-control" id="productDescription" name="description" required></textarea>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="productPrice">Price</label>
-            <input type="number" class="form-control" id="productPrice" name="price" min="0" step="0.01" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="productImage">Product Image</label>
-            <input type="file" class="form-control" id="productImage" name="image" accept="image/*" required>
-          </div>
-          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Product</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 
-// Add Product AJAX (with image upload)
 const addProductForm = document.getElementById('addProductForm');
 if (addProductForm) {
 addProductForm.addEventListener('submit', function(e) {

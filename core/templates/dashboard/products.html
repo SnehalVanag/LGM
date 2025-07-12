@@ -24,17 +24,34 @@
     {% endfor %}
   </div>
 </div>  -->
-
+<style>
+   .quick-action-btn {
+     background: #fff;
+    color: #0d47a1;
+    border: 1.5px solid #e0c3fc;
+    border-radius: 2rem;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      box-shadow:0 4px 24px 0 rgb(16, 1, 1)
+;
+  }
+  .quick-action-btn:hover {
+    background:rgb(243, 153, 153);
+    color: #00897b;
+    box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
+  }
+</style>
 <div class="dashboard-header d-flex justify-content-between align-items-center">
   <span>Products</span>
-  <a href="{% url 'add_product' %}" class="btn btn-success" style="border-radius: 2rem; font-weight: 700;">+ Add
+  <a href="{% url 'add_product' %}" class="quick-action-btn" style="border-radius: 2rem; font-weight: 700;">+ Add
     Product</a>
 </div>
 <div class="products-table-container"
-  style="background: var(--charcoal); border-radius: 1.2rem; box-shadow: 0 2px 16px 0 rgba(16,185,129,0.07); border: 1.5px solid rgba(255,255,255,0.06); padding: 2rem 1.5rem; margin-bottom: 2.5rem;">
-  <table class="table table-borderless table-dark table-hover align-middle mb-0" style="--bs-table-bg: transparent;">
+  >
+  <table class="table table-borderless table-dark table-hover align-middle mb-0" style="--bs-table-bg: transparent; border-radius: 1.2rem; overflow: hidden; box-shadow: 0 4px 24px rgba(6, 6, 6, 0.85);">
     <thead>
-      <tr style="border-bottom: 2px solid var(--emerald);">
+      <tr style="color:rgb(62, 57, 26); font-weight: 700;">
         <th>#</th>
         <th>Product Name</th>
         <th>Image</th>
