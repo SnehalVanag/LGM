@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from datetime import datetime, timedelta
@@ -299,9 +300,25 @@ def add_branch(request):
 def coupon_list(request):
     coupons = Coupon.objects.all()
     return render(request, 'dashboard/coupon_list.html', {'coupons': coupons})
+from .models import Product, Category
 
 def home(request):
-    return render(request, 'dashboard/home.html')
+    categories = Category.objects.all()
+    selected_category = request.GET.get('category')
+    if selected_category:
+        products = Product.objects.filter(categories__id=selected_category)
+    else:
+        products = Product.objects.all()
+    return render(request, 'dashboard/home.html', {
+        'products': products,
+        'categories': categories,
+        'selected_category': selected_category,
+    })
+# def home(request):
+#     products = Product.objects.all()
+#     return render(request, 'dashboard/home.html', {'products': products})
+# def home(request):
+#     return render(request, 'dashboard/home.html')
 
 def manager_dashboard(request):
     return render(request, 'dashboard/home.html')
@@ -566,6 +583,17 @@ def add_product(request):
         form = ProductForm()
     return render(request, 'dashboard/add_product.html', {'form': form})
 
+# def add_product(request):
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             product = form.save()
+#             form.save_m2m()  # Save categories
+#             return redirect('products')
+#     else:
+#         form = ProductForm()
+#     return render(request, 'dashboard/add_product.html', {'form': form})
+
 def update_product(request, pk):
     product = Product.objects.get(pk=pk)
     if request.method == 'POST':
@@ -585,7 +613,9 @@ def delete_product(request, pk):
     if request.method == 'POST':
         product.delete()
         return redirect('products')
+    # return render(request, 'dashboard/products.html')
     return render(request, 'dashboard/delete_product.html', {'product': product})
+
 
 def user_signup(request):
     error = None
@@ -710,9 +740,16 @@ def add_lead(request):
 #     return JsonResponse({'success': False})
 from .models import Franchise  # or your actual model
 from .forms import FranchiseForm  # if you're using a Django form
+from .models import Franchise
+from django.http import JsonResponse
 
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
+@csrf_exempt
 def add_franchise(request):
     if request.method == "POST":
+<<<<<<< HEAD
         name = request.POST.get('name')
         address = request.POST.get('address')
         contact_email = request.POST.get('contact_email')
@@ -758,3 +795,31 @@ def delete_coupon(request, id):
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
     return JsonResponse({'success': False, 'error': 'Invalid request'})
+=======
+        form = FranchiseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            franchises_count = Franchise.objects.count()
+            # If AJAX, return JSON with new count
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': True, 'franchises_count': franchises_count})
+            # Otherwise, redirect as usual
+            return redirect('marketing_dashboard')
+        else:
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+    else:
+        form = FranchiseForm()
+    return render(request, 'your_template.html', {'form': form})
+# def add_franchise(request):
+#     if request.method == "POST":
+#         form = FranchiseForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             franchises_count = Franchise.objects.count()
+
+#             return redirect('marketing_dashboard')  # Redirect after save
+#     else:
+#         form = FranchiseForm()
+#     return render(request, 'your_template.html', {'form': form})
+>>>>>>> a18a099e47305c70cf6bb134ffb28d0a70a0f3e5
