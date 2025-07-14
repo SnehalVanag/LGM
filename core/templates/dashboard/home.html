@@ -1221,6 +1221,12 @@ function showProducts(categoryId) {
       <button class="btn btn-sm btn-success" onclick="addToCart(${product.id})">
         <i class="fa fa-cart-plus"></i> Add to Cart
       </button>
+      <span class="badge bg-success">${product.discount}% OFF</span>
+          <div class="mt-2 d-flex gap-2">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm" style="border-radius: 1rem; font-weight: 600;" onclick="return confirm('Are you sure you want to delete this product?');">Delete</button>
+            </form>
+          </div>
     </div>
   `).join('');
   document.querySelector('.category-section').style.display = 'none';
@@ -1617,7 +1623,8 @@ updateCartCount();
         }
       </style>
     </footer>
-  <!-- ...existing code... -->
+  </div>
+</div>
 </body>
 
 </html>

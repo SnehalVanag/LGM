@@ -713,10 +713,48 @@ from .forms import FranchiseForm  # if you're using a Django form
 
 def add_franchise(request):
     if request.method == "POST":
-        form = FranchiseForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('marketing_dashboard')  # Redirect after save
-    else:
-        form = FranchiseForm()
-    return render(request, 'your_template.html', {'form': form})
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        contact_email = request.POST.get('contact_email')
+        # Add other fields as needed
+        if name and address and contact_email:
+            Franchise.objects.create(
+                name=name,
+                address=address,
+                contact_email=contact_email
+            )
+            return redirect('add_franchise')  # Redirect to refresh the list
+    franchises = Franchise.objects.all()
+    return render(request, 'dashboard/add_franchise.html', {'franchises': franchises})
+
+@csrf_exempt
+def update_coupon(request, id):
+    if request.method == 'POST':
+        try:
+            coupon = Coupon.objects.get(pk=id)
+            discount = request.POST.get('discount_percentage')
+            code = request.POST.get('coupon_code')
+            if discount:
+                coupon.discount_percentage = float(discount)
+            if code:
+                coupon.coupon_code = code
+            coupon.save()
+            return JsonResponse({'success': True})
+        except Coupon.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Coupon not found'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+@csrf_exempt
+def delete_coupon(request, id):
+    if request.method == 'POST':
+        try:
+            coupon = Coupon.objects.get(pk=id)
+            coupon.delete()
+            return JsonResponse({'success': True})
+        except Coupon.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Coupon not found'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})

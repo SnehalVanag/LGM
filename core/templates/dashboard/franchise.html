@@ -375,10 +375,10 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{% url 'franchise_dashboard' %}">
+        <form method="POST" action="{% url 'add_franchise' %}">
           {% csrf_token %}
           {{ form.as_p }}
-          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Staff</button>
+          <button type="submit">Add Franchise</button>
         </form>
       </div>
     </div>

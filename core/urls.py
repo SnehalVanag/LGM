@@ -50,7 +50,8 @@ urlpatterns = [
     path('add-lead/', views.add_lead, name='add_lead'),
      path('send-otp/', views.send_otp, name='send_otp'),
     path('verify-otp/', views.verify_otp, name='verify_otp'),
-    
+    path('update-coupon/<str:id>/', views.update_coupon, name='update_coupon'),
+    path('delete-coupon/<str:id>/', views.delete_coupon, name='delete_coupon'),
 
 
   ]

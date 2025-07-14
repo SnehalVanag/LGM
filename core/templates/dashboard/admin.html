@@ -35,7 +35,7 @@
 <div class="modal fade" id="marketingListModal" tabindex="-1" aria-labelledby="marketingListModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content" style="background:; border-radius: 1.2rem; color:;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+      <div class="modal-header" style="border-bottom: 1px ;">
         <h5 class="modal-title" id="marketingListModalLabel" style=" font-weight: 700;">
           <i class="fa fa-users"></i> Marketing Team Members
         </h5>
@@ -44,7 +44,7 @@
       <div class="modal-body">
         <div class="table-responsive">
           <table class="table table-dark table-hover align-middle mb-0" style="border-radius: 0.7rem; overflow: hidden;">
-            <thead style="background: #10B981;">
+            <thead style="background:;">
               <tr>
                 <th>#</th>
                 <th>Name</th>
@@ -115,7 +115,8 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="addFranchiseForm">
+        <form id="addFranchiseForm" method="post" action="{% url 'add_franchise' %}" autocomplete="off">
+          {% csrf_token %}
           <div class="mb-3">
             <label class="form-label" for="franchiseName">Name</label>
             <input type="text" class="form-control" id="franchiseName" name="name" required>
@@ -132,7 +133,9 @@
             <label class="form-label" for="id_phone_number">Phone Number</label>
             <input type="text" name="phone_number" class="form-control" required>
           </div>
-          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Franchise</button>
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fa fa-plus"></i> Add Franchise
+          </button>
         </form>
       </div>
     </div>
@@ -260,7 +263,7 @@
     overflow: hidden;
   }
   .modal-content .table thead {
-    background: #10B981;
+    background:;
     color: #181F2F;
     font-weight: 700;
   }
@@ -390,7 +393,7 @@ function deleteFranchise(id) {
       }
     })
     .then(res => res.json())
-    .then(data => {
+    .then data => {
       if (data.success) {
         showCouponToast('✅ Franchise deleted successfully!');
         setTimeout(() => location.reload(), 1000);
@@ -494,7 +497,7 @@ addCouponForm.addEventListener('submit', function(e) {
 <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="background:; border-radius: 1.2rem; color: #fff;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+      <div class="modal-header" style="border-bottom: 1px ;">
         <h5 class="modal-title" id="addProductModalLabel" style="color:; font-weight: 700;">
           <i class="fa fa-box"></i> Add Product
         </h5>

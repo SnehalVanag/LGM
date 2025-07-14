@@ -8,3 +8,20 @@
   <input type="password" name="password" required>
   <button type="submit">Login</button>
 </form>
+{% if user.is_authenticated %}
+  <h1>Welcome to the Admin Dashboard</h1>
+  <h2>Franchises</h2>
+  <ul>
+    {% for franchise in franchises %}
+      <li>{{ franchise.name }}</li>
+    {% empty %}
+      <li>No franchises found.</li>
+    {% endfor %}
+  </ul>
+  <h2>Add Franchise</h2>
+  <form method="POST" action="{% url 'add_franchise' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Franchise</button>
+  </form>
+{% endif %}
