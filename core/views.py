@@ -1,8 +1,8 @@
-
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from datetime import datetime, timedelta
 import random, string
+import json
 from django.contrib import messages
 from .forms import FranchiseForm, ProductForm
 from .models import Franchise, Coupon, Product
@@ -749,53 +749,6 @@ from django.http import JsonResponse
 @csrf_exempt
 def add_franchise(request):
     if request.method == "POST":
-<<<<<<< HEAD
-        name = request.POST.get('name')
-        address = request.POST.get('address')
-        contact_email = request.POST.get('contact_email')
-        # Add other fields as needed
-        if name and address and contact_email:
-            Franchise.objects.create(
-                name=name,
-                address=address,
-                contact_email=contact_email
-            )
-            return redirect('add_franchise')  # Redirect to refresh the list
-    franchises = Franchise.objects.all()
-    return render(request, 'dashboard/add_franchise.html', {'franchises': franchises})
-
-@csrf_exempt
-def update_coupon(request, id):
-    if request.method == 'POST':
-        try:
-            coupon = Coupon.objects.get(pk=id)
-            discount = request.POST.get('discount_percentage')
-            code = request.POST.get('coupon_code')
-            if discount:
-                coupon.discount_percentage = float(discount)
-            if code:
-                coupon.coupon_code = code
-            coupon.save()
-            return JsonResponse({'success': True})
-        except Coupon.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Coupon not found'})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
-    return JsonResponse({'success': False, 'error': 'Invalid request'})
-
-@csrf_exempt
-def delete_coupon(request, id):
-    if request.method == 'POST':
-        try:
-            coupon = Coupon.objects.get(pk=id)
-            coupon.delete()
-            return JsonResponse({'success': True})
-        except Coupon.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Coupon not found'})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
-    return JsonResponse({'success': False, 'error': 'Invalid request'})
-=======
         form = FranchiseForm(request.POST)
         if form.is_valid():
             form.save()
@@ -811,15 +764,49 @@ def delete_coupon(request, id):
     else:
         form = FranchiseForm()
     return render(request, 'your_template.html', {'form': form})
-# def add_franchise(request):
-#     if request.method == "POST":
-#         form = FranchiseForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             franchises_count = Franchise.objects.count()
 
-#             return redirect('marketing_dashboard')  # Redirect after save
-#     else:
-#         form = FranchiseForm()
-#     return render(request, 'your_template.html', {'form': form})
->>>>>>> a18a099e47305c70cf6bb134ffb28d0a70a0f3e5
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from .models import Coupon
+
+@csrf_exempt
+def update_coupon(request, id):
+    if request.method == 'POST':
+        try:
+            coupon = Coupon.objects.get(coupon_id=id)
+            code = request.POST.get('code')
+            expiry = request.POST.get('expiry')
+            discount = request.POST.get('discount')
+            max_usage = request.POST.get('max_usage')
+            if code:
+                coupon.coupon_code = code
+            if expiry:
+                from datetime import datetime
+                try:
+                    coupon.expiry_date = datetime.strptime(expiry, '%Y-%m-%d').date()
+                except ValueError:
+                    return JsonResponse({'success': False, 'error': 'Invalid expiry format'})
+            if discount:
+                coupon.discount_percentage = float(discount)
+            if max_usage:
+                coupon.max_usage = int(max_usage)
+            coupon.save()
+            return JsonResponse({'success': True})
+        except Coupon.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Coupon not found'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+@csrf_exempt
+def delete_coupon(request, id):
+    if request.method == 'POST':
+        try:
+            coupon = Coupon.objects.get(coupon_id=id)
+            coupon.delete()
+            return JsonResponse({'success': True})
+        except Coupon.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Coupon not found'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})

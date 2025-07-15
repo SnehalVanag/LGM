@@ -3,6 +3,9 @@ from django.urls import path,include
 from core import views
 from .views import add_product
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -52,10 +55,15 @@ urlpatterns = [
     path('verify-otp/', views.verify_otp, name='verify_otp'),
     path('update-coupon/<str:id>/', views.update_coupon, name='update_coupon'),
     path('delete-coupon/<str:id>/', views.delete_coupon, name='delete_coupon'),
+    path('edit-franchise/<int:pk>/', views.edit_franchise, name='edit_franchise'),
+    path('delete-franchise/<int:pk>/', views.delete_franchise, name='delete_franchise'),
+    path('edit-staff/<int:pk>/', views.edit_staff, name='edit_staff'),
+    path('delete-staff/<int:pk>/', views.delete_staff, name='delete_staff'),
 
 
   ]
-
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     
 
 

@@ -47,20 +47,20 @@
                   <td>
                     <!-- Action buttons (Edit, Delete) -->
                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFranchiseModal{{ franchise.id }}">
-                      <i class="fa fa-edit"></i> Edit
+                      <i class="fa fa-edit">Edit</i> 
                     </button>
                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFranchiseModal{{ franchise.id }}">
-                      <i class="fa fa-trash"></i> Delete
+                      <i class="fa fa-trash">Delete</i>
                     </button>
                   </td>
                 </tr>
                 <!-- Edit Franchise Modal -->
                 <div class="modal fade" id="editFranchiseModal{{ franchise.id }}" tabindex="-1" aria-labelledby="editFranchiseModalLabel{{ franchise.id }}" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+                    <div class="modal-content" style="background:; border-radius: 1.2rem; color: #fff;">
                       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
                         <h5 class="modal-title" id="editFranchiseModalLabel{{ franchise.id }}" style="color: #FFD700; font-weight: 700;">
-                          <i class="fa fa-store"></i> Edit Franchise
+                          <i class="fa fa-store">Edit Franchise</i>
                         </h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
@@ -91,7 +91,7 @@
                 <!-- Delete Franchise Modal -->
                 <div class="modal fade" id="deleteFranchiseModal{{ franchise.id }}" tabindex="-1" aria-labelledby="deleteFranchiseModalLabel{{ franchise.id }}" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+                    <div class="modal-content" style="background:; border-radius: 1.2rem; color:;">
                       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
                         <h5 class="modal-title" id="deleteFranchiseModalLabel{{ franchise.id }}" style="color: #FFD700; font-weight: 700;">
                           <i class="fa fa-trash"></i> Delete Franchise
@@ -106,7 +106,7 @@
                           {% csrf_token %}
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                           <button type="submit" class="btn btn-danger">
-                            <i class="fa fa-trash"></i> Delete Franchise
+                            <i class="fa fa-trash">Delete Franchise</i>
                           </button>
                         </form>
                       </div>
@@ -126,7 +126,7 @@
 <!-- Add Franchise Modal -->
 <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+    <div class="modal-content" style="background: ; border-radius: 1.2rem; color:;">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
         <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
           <i class="fa fa-store"></i> Add Franchise
@@ -149,7 +149,7 @@
             <input type="email" name="contact_email" class="form-control">
           </div>
           <button type="submit" class="btn btn-success w-100">
-            <i class="fa fa-plus"></i> Add Franchise
+            <i class="fa fa-plus">Add Franchise</i>
           </button>
         </form>
       </div>

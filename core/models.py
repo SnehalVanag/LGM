@@ -118,8 +118,9 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='product_images/')
     discount = models.DecimalField(max_digits=5, decimal_places=2, default=0)
-    description = models.TextField(blank=True)  # <-- Add this line
+    description = models.TextField(blank=True)
     categories = models.ManyToManyField(Category, related_name='products')
+    is_available = models.BooleanField(default=True)
 
 
     def __str__(self):

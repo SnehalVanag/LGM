@@ -137,7 +137,7 @@
 <div class="glow-shape glow-shape3"></div>
 
 <nav class="sidebar" id="sidebarNav">
-  <div class="sidebar-header">Dashboard Hub111</div>
+  <div class="sidebar-header">Dashboard Hub</div>
   <div class="sidebar-nav">
     {% if request.user.is_superuser %}
       <a class="sidebar-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}" href="{% url 'admin_dashboard' %}">
