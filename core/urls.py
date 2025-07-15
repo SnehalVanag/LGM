@@ -60,6 +60,8 @@ urlpatterns = [
     path('edit-staff/<int:pk>/', views.edit_staff, name='edit_staff'),
     path('delete-staff/<int:pk>/', views.delete_staff, name='delete_staff'),
     path('update-franchise/<int:id>/', views.update_franchise, name='update_franchise'),
+    path('toggle-product-status/<int:id>/', views.toggle_product_status, name='toggle_product_status')
+
 
 
 

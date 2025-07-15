@@ -41,6 +41,18 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .models import Franchise
+@csrf_exempt
+def toggle_product_status(request, id):
+    if request.method == 'POST':
+        try:
+            product = Product.objects.get(pk=id)
+            data = json.loads(request.body)
+            product.is_available = data.get('is_available', True)
+            product.save()
+            return JsonResponse({'success': True})
+        except Product.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Product not found'})
+    return JsonResponse({'success': False, 'error': 'Invalid method'})
 
 def update_franchise(request, id):
     if request.method == 'POST':
@@ -316,18 +328,34 @@ def coupon_list(request):
     return render(request, 'dashboard/coupon_list.html', {'coupons': coupons})
 from .models import Product, Category
 
+# def home(request):
+#     categories = Category.objects.all()
+#     selected_category = request.GET.get('category')
+#     if selected_category:
+#         products = Product.objects.filter(categories__id=selected_category)
+#     else:
+#         products = Product.objects.all()
+#     return render(request, 'dashboard/home.html', {
+#         'products': products,
+#         'categories': categories,
+#         'selected_category': selected_category,
+#     })
 def home(request):
     categories = Category.objects.all()
     selected_category = request.GET.get('category')
+
     if selected_category:
-        products = Product.objects.filter(categories__id=selected_category)
+        products = Product.objects.filter(categories__id=selected_category, is_available=True)
     else:
-        products = Product.objects.all()
+        products = Product.objects.filter(is_available=True)
+
     return render(request, 'dashboard/home.html', {
         'products': products,
         'categories': categories,
         'selected_category': selected_category,
     })
+
+
 # def home(request):
 #     products = Product.objects.all()
 #     return render(request, 'dashboard/home.html', {'products': products})

@@ -103,9 +103,88 @@
             <span class="text-muted">No actions available</span>
           {% endif %}
         </td>
+        <td>
+  <div class="form-check form-switch">
+    <input class="form-check-input toggle-product-status"
+           type="checkbox"
+           data-id="{{ product.id }}"
+           {% if product.is_available %}checked{% endif %}>
+    <label class="form-check-label" style="color: #FFD700; font-weight: 500;">
+      {% if product.is_available %}Enabled{% else %}Disabled{% endif %}
+    </label>
+  </div>
+
+</td>
+
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+<script>
+document.querySelectorAll('.toggle-product-status').forEach((toggle) => {
+  toggle.addEventListener('change', function () {
+    const productId = this.getAttribute('data-id');
+    const isEnabled = this.checked;
+
+    fetch(`/toggle-product-status/${productId}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken') // Ensure CSRF token function is present
+      },
+      body: JSON.stringify({ is_available: isEnabled })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        showCouponToast(`✅ Product ${isEnabled ? 'enabled' : 'disabled'} successfully!`);
+        this.nextElementSibling.textContent = isEnabled ? 'Enabled' : 'Disabled';
+      } else {
+        showCouponToast('❌ Failed to update product status.');
+        this.checked = !isEnabled; // revert toggle
+      }
+    })
+    .catch(err => {
+      console.error('Toggle failed:', err);
+      showCouponToast('❌ Error updating product status.');
+      this.checked = !isEnabled; // revert toggle
+    });
+  });
+});
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+</script>
+<script>
+function showCouponToast(message) {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.position = 'fixed';
+  toast.style.bottom = '20px';
+  toast.style.right = '20px';
+  toast.style.background = '#10B981';
+  toast.style.color = '#fff';
+  toast.style.padding = '12px 18px';
+  toast.style.borderRadius = '1rem';
+  toast.style.fontWeight = 'bold';
+  toast.style.boxShadow = '0 4px 10px rgba(0,0,0,0.3)';
+  toast.style.zIndex = 9999;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+</script>
+
 {% endblock %}
