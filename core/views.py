@@ -40,7 +40,21 @@ from .models import OTP
 from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+from .models import Franchise
 
+def update_franchise(request, id):
+    if request.method == 'POST':
+        try:
+            franchise = Franchise.objects.get(id=id)
+            franchise.name = request.POST.get('name')
+            franchise.address = request.POST.get('address')
+            franchise.contact_email = request.POST.get('contact_email')
+            franchise.phone_number = request.POST.get('phone_number')
+            franchise.save()
+            return JsonResponse({'success': True})
+        except Franchise.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Franchise not found'}, status=404)
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
 # def user_login(request):
 
 
