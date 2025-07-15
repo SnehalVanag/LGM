@@ -1,8 +1,8 @@
-
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from datetime import datetime, timedelta
 import random, string
+import json
 from django.contrib import messages
 from .forms import FranchiseForm, ProductForm
 from .models import Franchise, Coupon, Product
@@ -707,19 +707,29 @@ def franchise_dashboard(request):
 #         'franchises_count': franchises_count,
 #         'leads_count': leads_count,  # Add this line to pass lead count to template
 #     })
+from .forms_lead import LeadForm  # Assuming your form is here
 
 def add_lead(request):
     if request.method == 'POST':
-        from .forms_lead import LeadForm
         form = LeadForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('marketing_dashboard')  # Redirect to marketing dashboard after adding lead
-    else:
-        from .forms_lead import LeadForm
-        form = LeadForm()
-    return render(request, 'dashboard/add_lead.html', {'form': form})
+            leads_count = Lead.objects.count()
 
+            # If AJAX request
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': True, 'leads_count': leads_count})
+
+            # Regular POST (non-AJAX)
+            return redirect('marketing_dashboard')
+        else:
+            # Return errors if invalid and request is AJAX
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+    else:
+        form = LeadForm()
+    
+    return render(request, 'dashboard/add_lead.html', {'form': form})
 
 
 # def add_franchise(request):
@@ -764,14 +774,49 @@ def add_franchise(request):
     else:
         form = FranchiseForm()
     return render(request, 'your_template.html', {'form': form})
-# def add_franchise(request):
-#     if request.method == "POST":
-#         form = FranchiseForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             franchises_count = Franchise.objects.count()
 
-#             return redirect('marketing_dashboard')  # Redirect after save
-#     else:
-#         form = FranchiseForm()
-#     return render(request, 'your_template.html', {'form': form})
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from .models import Coupon
+
+@csrf_exempt
+def update_coupon(request, id):
+    if request.method == 'POST':
+        try:
+            coupon = Coupon.objects.get(coupon_id=id)
+            code = request.POST.get('code')
+            expiry = request.POST.get('expiry')
+            discount = request.POST.get('discount')
+            max_usage = request.POST.get('max_usage')
+            if code:
+                coupon.coupon_code = code
+            if expiry:
+                from datetime import datetime
+                try:
+                    coupon.expiry_date = datetime.strptime(expiry, '%Y-%m-%d').date()
+                except ValueError:
+                    return JsonResponse({'success': False, 'error': 'Invalid expiry format'})
+            if discount:
+                coupon.discount_percentage = float(discount)
+            if max_usage:
+                coupon.max_usage = int(max_usage)
+            coupon.save()
+            return JsonResponse({'success': True})
+        except Coupon.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Coupon not found'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+@csrf_exempt
+def delete_coupon(request, id):
+    if request.method == 'POST':
+        try:
+            coupon = Coupon.objects.get(coupon_id=id)
+            coupon.delete()
+            return JsonResponse({'success': True})
+        except Coupon.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Coupon not found'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})

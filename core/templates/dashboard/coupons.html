@@ -2,29 +2,33 @@
 {% block title %}Coupons | Admin Dashboard{% endblock %}
 {% block content %}
 <div class="dashboard-header">Coupons</div>
-  <table class="table table-borderless table-dark table-hover align-middle mb-0" style="--bs-table-bg: transparent; border-radius: 1.2rem; overflow: hidden; box-shadow: 0 4px 24px rgba(6, 6, 6, 0.85);">
-    <thead>
-      <tr style="color:rgb(62, 57, 26); font-weight: 700;">
+  <table class="table table-bordered table-hover align-middle mb-0" style="border-radius: 1.2rem; overflow: hidden;">
+    <thead class="table-dark">
+      <tr>
         <th>ID</th>
+        <th>Coupon Code</th>
         <th>Expiry</th>
         <th>Discount (%)</th>
         <th>Max Usage</th>
-        <th>Coupon Code</th>
-        <th>Actions</th>
+        <!-- <th>Actions</th> -->
       </tr>
     </thead>
     <tbody>
       {% for coupon in coupons %}
       <tr>
-        <td style="color: black; font-weight: 600;">{{ coupon.id }}</td>
-        <td style="color:rgb(0, 11, 6);">{{ coupon.expiry }}</td>
-        <td style="color:rgb(1, 17, 11); font-weight: 600;">{{ coupon.discount }}</td>
-        <td style="color:rgb(0, 3, 7); font-weight: 600;">{{ coupon.max_usage }}</td>
-        <td style="color: black; font-family: monospace;">{{ coupon.code }}</td>
-        <td>
+        <td>{{ coupon.id }}</td>
+        <td>{{ coupon.code }}</td>
+        <td>{{ coupon.expiry }}</td>
+        <td>{{ coupon.discount }}</td>
+        <td>{{ coupon.max_usage }}</td>
+        <!-- <td>
           <button class="btn btn-warning btn-sm" onclick="editCoupon({{ coupon.id }}, '{{ coupon.code }}', '{{ coupon.expiry }}', {{ coupon.discount }}, {{ coupon.max_usage }})">Edit</button>
           <button class="btn btn-danger btn-sm" onclick="deleteCoupon({{ coupon.id }})">Delete</button>
-        </td>
+        </td> -->
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center">No coupons available.</td>
       </tr>
       {% endfor %}
     </tbody>
@@ -74,7 +78,7 @@ function showCouponToast(msg) {
   toast.style.position = 'fixed';
   toast.style.bottom = '30px';
   toast.style.right = '30px';
-  toast.style.background = '#232f3e';
+  toast.style.background = '';
   toast.style.color = '#FFD700';
   toast.style.padding = '12px 24px';
   toast.style.borderRadius = '8px';

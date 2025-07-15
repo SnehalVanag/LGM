@@ -209,18 +209,24 @@
     <!-- <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addLeadModal">
   <i class="fa fa-plus"></i> Add Leads
 </button> -->
-    <button type="button" class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addStaffModal">
+    <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addLeadModal">
  <i class="fa fa-plus"></i> Add Leads
 </button>
- <!-- Add Lead Modal -->
+<!-- Add Lead Modal -->
 <div class="modal fade" id="addLeadModal" tabindex="-1" aria-labelledby="addLeadModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: #181F2D; border-radius: 1.2rem; color: #fff;">
+    <div class="modal-content" style="
+      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%),
+                  url('https://www.transparenttextures.com/patterns/marble.png');
+      background-blend-mode: overlay;
+      border-radius: 1.2rem;
+      color: #fff;
+    ">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
         <h5 class="modal-title" id="addLeadModalLabel" style="color: #FFD700; font-weight: 700;">
           <i class="fa fa-plus"></i> Add Leads
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" action="{% url 'add_lead' %}">
         {% csrf_token %}
@@ -229,101 +235,26 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStaffModal">Add Lead</button>
+          <button type="submit" class="btn btn-primary">Add Lead</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-  
-  <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
-    <i class="fa fa-plus"></i> Add Franchise
-  </button>
-  <!-- Add Franchise Modal -->
-  <!-- <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
-        <div class="modal-header" style="border-bottom: 1px solid #10B981;">
-          <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
-            <i class="fa fa-plus"></i> Add Franchise...
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="addFranchiseForm">
-            <div class="mb-3">
-              <label class="form-label" for="franchiseName">Name</label>
-              <input type="text" class="form-control" id="franchiseName" name="name" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="franchiseLocation">Location</label>
-              <input type="text" class="form-control" id="franchiseLocation" name="address" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="franchiseEmail">Email</label>
-              <input type="email" class="form-control" id="franchiseEmail" name="contact_email" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="id_phone_number">Phone Number</label>
-              <input type="text" name="phone_number" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add
-              Franchise</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> -->
-<!-- Add Franchise Modal -->
-<div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: ; border-radius: 1.2rem; color: ;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
-        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: ; font-weight: 700;">
-          <i class="fa fa-plus"></i> Add Franchise
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="addFranchiseForm">
-          <div class="mb-3">
-            <label class="form-label" for="franchiseName">Name</label>
-            <input type="text" class="form-control" id="franchiseName" name="name" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="franchiseLocation">Location</label>
-            <input type="text" class="form-control" id="franchiseLocation" name="address" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="franchiseEmail">Email</label>
-            <input type="email" class="form-control" id="franchiseEmail" name="contact_email" required>
-          </div>
-             <div class="mb-3">
-            <label class="form-label" for="id_phone_number">Phone Number</label>
-            <input type="text" name="phone_number" class="form-control" required>
-          </div>
-          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Franchise</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Add Lead old Modal -->
+<!-- Add Lead (Old) Modal -->
 <div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: ; border-radius: 1.2rem; color: ;">
+    <div class="modal-content" style="background: #181F2D; border-radius: 1.2rem; color: #fff;">
       <div class="modal-header" style="border-bottom: 1px solid #FFD700;">
         <h5 class="modal-title" id="addStaffModalLabel" style="color: #FFD700; font-weight: 700;">
-          <i class="fa fa-plus"></i> Add Lead'''
+          <i class="fa fa-plus"></i>Add Lead---
         </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="  button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form id="addStaffForm" method="post">
-          {% csrf_token %}
+      <form id="addLeadForm" method="post" action="{% url 'add_lead' %}">
+        {% csrf_token %}
+        <div class="modal-body">
           <div class="mb-3">
             <label class="form-label" for="staffName">Name</label>
             <input type="text" class="form-control" id="staffName" name="name" required>
@@ -340,12 +271,64 @@
             <label class="form-label" for="staffLocation">Location</label>
             <input type="text" class="form-control" id="staffLocation" name="location" required>
           </div>
-          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add</button>
+            <div class="mb-3">
+            <label class="form-label" for="staffAddress">Address</label>
+            <input type="text" class="form-control" id="staffAddress" name="location" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" style="border-radius: 2rem; font-weight: 700;">Add Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
+  <i class="fa fa-plus"></i> Add Franchise
+</button>
+
+
+<!-- Add Franchise Modal -->
+<div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: ; border-radius: 1.2rem; color: ;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: ; font-weight: 700;">
+          <i class="fa fa-plus"></i> Add Franchise
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addFranchiseForm" method="post" action="{% url 'add_franchise' %}" autocomplete="off">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label" for="franchiseName">Name</label>
+            <input type="text" class="form-control" id="franchiseName" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="franchiseLocation">Location</label>
+            <input type="text" class="form-control" id="franchiseLocation" name="address" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="franchiseEmail">Email</label>
+            <input type="email" class="form-control" id="franchiseEmail" name="contact_email" required>
+          </div>
+             <div class="mb-3">
+            <label class="form-label" for="id_phone_number">Phone Number</label>
+            <input type="text" name="phone_number" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fa fa-plus"></i> Add Franchise
+          </button>
         </form>
       </div>
     </div>
   </div>
 </div>
+
 </div>
 
 <div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);">
@@ -511,7 +494,7 @@
     transition: color 0.3s, background 0.3s;
   }
   .sidebar a:hover, .sidebar .nav-link:hover {
-    color: #10B981 !important;
+    color:rgb(5, 5, 5) !important;
     background: ;
     border-radius: 0.7rem;
   }
@@ -570,7 +553,7 @@ margin-bottom: 2.2rem;
   }
   .quick-action-btn:hover {
        background:rgb(243, 153, 153);
-    color: #00897b;
+    color:rgb(17, 18, 18);
     box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
   }
   .modal-content {
@@ -892,37 +875,73 @@ new Chart(ctxLF, {
   // Optional: AJAX submit for add staff form
 
   // ...existing code...
-  const addFranchiseForm = document.getElementById('addFranchiseForm');
-  if (addFranchiseForm) {
-    addFranchiseForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const name = document.getElementById('franchiseName').value;
-      const address = document.getElementById('franchiseLocation').value;
-      const contact_email = document.getElementById('franchiseEmail').value;
-      const phone_number = document.querySelector('input[name="phone_number"]').value;
 
-      fetch('/add-franchise/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}`
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          showCouponToast('✅ Franchise added successfully!');
-          const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
-          if (modal) modal.hide();
-          addFranchiseForm.reset();
-        } else {
-          showCouponToast('❌ Failed to add franchise.');
-        }
-      })
-      .catch(() => showCouponToast('❌ Error adding franchise.'));
-    });
-  }
+  const addLeadForm = document.getElementById('addLeadForm');
+
+addLeadForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById('leadName').value;
+  const email = document.getElementById('leadEmail').value;
+  const phone = document.getElementById('leadPhone').value;
+  const location = document.getElementById('leadLocation').value;
+
+  fetch('/add-lead/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': '{{ csrf_token }}'  // Ensure Django template context includes this
+    },
+    body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&location=${encodeURIComponent(location)}`
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        showCouponToast('✅ Lead added successfully!');
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addLeadModal'));
+        if (modal) modal.hide();
+        addLeadForm.reset();
+        setTimeout(() => location.reload(), 1200);
+      } else {
+        showCouponToast('❌ Failed to add lead.');
+        console.error(data.errors);
+      }
+    })
+    .catch(() => showCouponToast('❌ Error adding lead.'));
+});
+
+  // Add Franchise AJAX (robust error handling)
+const addFranchiseForm = document.getElementById('addFranchiseForm');
+addFranchiseForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('franchiseName').value;
+  const address = document.getElementById('franchiseLocation').value;
+  const contact_email = document.getElementById('franchiseEmail').value;
+  const phone_number = document.querySelector('input[name="phone_number"]').value;
+  fetch('/add-franchise/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: `name=${encodeURIComponent(name)}&address=${encodeURIComponent(address)}&contact_email=${encodeURIComponent(contact_email)}&phone_number=${encodeURIComponent(phone_number)}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success) {
+      showCouponToast('✅ Franchise added successfully!');
+      const modal = bootstrap.Modal.getInstance(document.getElementById('addFranchiseModal'));
+      if(modal) modal.hide();
+      addFranchiseForm.reset();
+      setTimeout(() => location.reload(), 1200);
+    } else {
+      showCouponToast('❌ Failed to add franchise.');
+    }
+  })
+  .catch(() => showCouponToast('❌ Error adding franchise.'));
+});
+
+
   // ...existing code...
 
   function toggleStaffModal() {

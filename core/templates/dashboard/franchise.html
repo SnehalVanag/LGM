@@ -8,7 +8,7 @@
   }
   .modal-content .table thead {
     background: #10B981;
-    color: #181F2F;
+    color: ;
     font-weight: 700;
   }
   .modal-content .table tbody tr {
@@ -206,7 +206,7 @@
     transition: color 0.3s, background 0.3s;
   }
   .sidebar a:hover, .sidebar .nav-link:hover {
-    color: #10B981 !important;
+    color: #111111ff !important;
     background: ;
     border-radius: 0.7rem;
   }
@@ -387,20 +387,89 @@ margin-bottom: 2.2rem;
     <div class="kpi-label">Staff Members</div>
   </div>
 </div>
+<!-- <div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel" aria-hidden="true" >
+  <div class="modal-dialog modal-dialog-centered modal-lg" >
+    <div class="modal-content" style="background: ; border-radius: 1.2rem; box-shadow: 0 2px 16px 0 rgba(1, 1, 1, 0.97); border: 1.5px solid rgba(13, 13, 13, 0.98); padding: 2rem 1.5rem; margin-bottom: 2.5rem;">
+      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+        <h5 class="modal-title" id="franchiseListModalLabel" style="color: #FFD700; font-weight: 700;" >
+          <i class="fa fa-store"></i> Franchise List
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
 
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-borderless table-dark table-hover align-middle mb-0" style="
+            --bs-table-bg: transparent;
+            border-radius: 1.2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(6, 6, 6, 0.85);
+          ">
+            <thead>
+              <tr style="color: rgb(62, 57, 26); font-weight: 700;">
+                <th>#</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for franchise in franchises %}
+              <tr>
+                <td style="color: var(--gold); font-weight: 600;">{{ forloop.counter }}</td>
+                <td style="color: #d1fae5;">{{ franchise.name }}</td>
+                <td style="color: #d1fae5;">{{ franchise.address }}</td>
+                <td style="color: #d1fae5;">{{ franchise.contact_email }}</td>
+                <td style="color: #d1fae5;">{{ franchise.phone_number }}</td>
+                <td>
+                  
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">No franchises found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
 <!-- Franchise List Modal -->
 <div class="modal fade" id="franchiseListModal" tabindex="-1" aria-labelledby="franchiseListModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+    <div class="modal-content"  style="
+      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%),
+                  url('https://www.transparenttextures.com/patterns/marble.png');
+      background-blend-mode: overlay;
+      border-radius: 1.2rem;
+      color: #fff;
+    ">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
         <h5 class="modal-title" id="franchiseListModalLabel" style="color: #FFD700; font-weight: 700;">
           <i class="fa fa-store"></i> Franchise List
         </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"  style="
+      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%),
+                  url('https://www.transparenttextures.com/patterns/marble.png');
+      background-blend-mode: overlay;
+      border-radius: 1.2rem;
+      color: #fff;
+    ">
         <div class="table-responsive">
-          <table class="table table-dark table-hover align-middle mb-0" style="border-radius: 0.7rem; overflow: hidden;">
+          <table class="table table-dark table-hover align-middle mb-0"  style="
+      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%),
+                  url('https://www.transparenttextures.com/patterns/marble.png');
+      background-blend-mode: overlay;
+      border-radius: 1.2rem;
+      color: #fff;
+    ">
             <thead style="background: #10B981;">
               <tr>
                 <th>#</th>
@@ -475,47 +544,32 @@ margin-bottom: 2.2rem;
 </div>
 
 <!-- Staff List Modal -->
-<div class="modal fade" id="staffListModal" tabindex="-1" aria-labelledby="staffListModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+<div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="
+      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), 
+                  url('https://www.transparenttextures.com/patterns/marble.png');
+      background-blend-mode: overlay;
+      border-radius: 1.2rem;
+      color: #fff;
+    ">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
-        <h5 class="modal-title" id="staffListModalLabel" style="color:#FFD700;">Staff List</h5>
+        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+          <i class="fa fa-plus"></i> Add Staff
+        </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-    
       <div class="modal-body">
-        <div class="table-responsive">
-          <table class="table table-dark table-striped">
-            <thead style="background: #10B981;">
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Joined At</th>
-              </tr>
-            </thead>
-            <tbody>
-               {% for staff in staff_list %}
-              <tr>
-                <td>{{ staff.id }}</td>
-                <td>{{ staff.name }}</td>
-                <td>{{ staff.email }}</td>
-                <td>{{ staff.phone }}</td>
-                <td>{{ staff.joined_at|date:'Y-m-d' }}</td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="5" class="text-center text-muted">No staff found.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+        <form method="POST" action="{% url 'add_franchise' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-success">Add Franchise</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
+
 
 <div class="modal fade" id="staffListModal" tabindex="-1" aria-labelledby="staffListModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -606,10 +660,10 @@ margin-bottom: 2.2rem;
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{% url 'franchise_dashboard' %}">
+        <form method="POST" action="{% url 'add_franchise' %}">
           {% csrf_token %}
           {{ form.as_p }}
-          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Staff</button>
+          <button type="submit">Add Franchise</button>
         </form>
       </div>
     </div>

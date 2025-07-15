@@ -1,11 +1,132 @@
 {% extends 'dashboard/dashboard_base.html' %}
-{% load widget_tweaks %}
-{% block title %}Add Franchise{% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 {% block content %}
+<!-- Admin Dashboard Content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1 class="h3 mb-4 text-white">Admin Dashboard</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card bg-dark text-white rounded-3">
+        <div class="card-header" style="background: #10B981; border-top-left-radius: 1.2rem; border-top-right-radius: 1.2rem;">
+          <h5 class="mb-0" style="font-weight: 700;">
+            <i class="fa fa-tachometer-alt"></i> Dashboard Overview
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="bg-primary rounded-3 p-3 text-center">
+                <h2 class="mb-0" style="font-weight: 700;">{{ franchises.count }}</h2>
+                <p class="mb-0">Total Franchises</p>
+              </div>
+            </div>
+            <!-- Add more stats cards here -->
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered text-white">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Franchise Name</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Contact Email</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for franchise in franchises %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ franchise.name }}</td>
+                  <td>{{ franchise.address }}</td>
+                  <td>{{ franchise.contact_email }}</td>
+                  <td>
+                    <!-- Action buttons (Edit, Delete) -->
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFranchiseModal{{ franchise.id }}">
+                      <i class="fa fa-edit">Edit</i> 
+                    </button>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFranchiseModal{{ franchise.id }}">
+                      <i class="fa fa-trash">Delete</i>
+                    </button>
+                  </td>
+                </tr>
+                <!-- Edit Franchise Modal -->
+                <div class="modal fade" id="editFranchiseModal{{ franchise.id }}" tabindex="-1" aria-labelledby="editFranchiseModalLabel{{ franchise.id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="background:; border-radius: 1.2rem; color: #fff;">
+                      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+                        <h5 class="modal-title" id="editFranchiseModalLabel{{ franchise.id }}" style="color: #FFD700; font-weight: 700;">
+                          <i class="fa fa-store">Edit Franchise</i>
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form id="editFranchiseForm{{ franchise.id }}" method="post" autocomplete="off">
+                          {% csrf_token %}
+                          <input type="hidden" name="id" value="{{ franchise.id }}">
+                          <div class="mb-3">
+                            <label class="form-label" for="id_name">Franchise Name</label>
+                            <input type="text" name="name" class="form-control" value="{{ franchise.name }}" required>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="id_address">Address</label>
+                            <input type="text" name="address" class="form-control" value="{{ franchise.address }}">
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label" for="id_contact_email">Contact Email</label>
+                            <input type="email" name="contact_email" class="form-control" value="{{ franchise.contact_email }}">
+                          </div>
+                          <button type="submit" class="btn btn-warning w-100">
+                            <i class="fa fa-save"></i> Save Changes
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Delete Franchise Modal -->
+                <div class="modal fade" id="deleteFranchiseModal{{ franchise.id }}" tabindex="-1" aria-labelledby="deleteFranchiseModalLabel{{ franchise.id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="background:; border-radius: 1.2rem; color:;">
+                      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+                        <h5 class="modal-title" id="deleteFranchiseModalLabel{{ franchise.id }}" style="color: #FFD700; font-weight: 700;">
+                          <i class="fa fa-trash"></i> Delete Franchise
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Are you sure you want to delete the franchise "<strong>{{ franchise.name }}</strong>"?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <form method="post" action="{% url 'delete_franchise' franchise.id %}">
+                          {% csrf_token %}
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-trash">Delete Franchise</i>
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Add Franchise Modal -->
 <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+    <div class="modal-content" style="background: ; border-radius: 1.2rem; color:;">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
         <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
           <i class="fa fa-store"></i> Add Franchise
@@ -13,7 +134,7 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="addFranchiseForm" method="post" autocomplete="off">
+        <form id="addFranchiseForm" method="post" action="{% url 'add_franchise' %}" autocomplete="off">
           {% csrf_token %}
           <div class="mb-3">
             <label class="form-label" for="id_name">Franchise Name</label>
@@ -28,10 +149,11 @@
             <input type="email" name="contact_email" class="form-control">
           </div>
           <button type="submit" class="btn btn-success w-100">
-            <i class="fa fa-plus"></i> Add Franchise
+            <i class="fa fa-plus">Add Franchise</i>
           </button>
         </form>
       </div>
     </div>
   </div>
 </div>
+{% endblock %}

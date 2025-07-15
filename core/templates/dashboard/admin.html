@@ -37,7 +37,7 @@
 <div class="modal fade" id="marketingListModal" tabindex="-1" aria-labelledby="marketingListModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content" style="background:; border-radius: 1.2rem; color:;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+      <div class="modal-header" style="border-bottom: 1px ;">
         <h5 class="modal-title" id="marketingListModalLabel" style=" font-weight: 700;">
           <i class="fa fa-users"></i> Marketing Team Members
         </h5>
@@ -46,7 +46,7 @@
       <div class="modal-body">
         <div class="table-responsive">
           <table class="table table-dark table-hover align-middle mb-0" style="border-radius: 0.7rem; overflow: hidden;">
-            <thead style="background: #10B981;">
+            <thead style="background:;">
               <tr>
                 <th>#</th>
                 <th>Name</th>
@@ -117,7 +117,8 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="addFranchiseForm">
+        <form id="addFranchiseForm" method="post" action="{% url 'add_franchise' %}" autocomplete="off">
+          {% csrf_token %}
           <div class="mb-3">
             <label class="form-label" for="franchiseName">Name</label>
             <input type="text" class="form-control" id="franchiseName" name="name" required>
@@ -134,7 +135,9 @@
             <label class="form-label" for="id_phone_number">Phone Number</label>
             <input type="text" name="phone_number" class="form-control" required>
           </div>
-          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Franchise</button>
+          <button type="submit" class="btn btn-success w-100">
+            <i class="fa fa-plus"></i> Add Franchise
+          </button>
         </form>
       </div>
     </div>
@@ -262,7 +265,7 @@
     overflow: hidden;
   }
   .modal-content .table thead {
-    background: #10B981;
+    background:;
     color: #181F2F;
     font-weight: 700;
   }
@@ -287,7 +290,9 @@
 <div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
 ">
 <div class="dashboard-chart" style="background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%); border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); padding: 1.5rem;">
-  <canvas id="marketingFranchiseChart"></canvas>
+  <!-- <canvas id="marketingFranchiseChart"></canvas> -->
+   <canvas id="adminChart" width="600" height="400"></canvas>
+
 </div>
 </div>
 {% endblock %}
@@ -379,17 +384,43 @@ function editFranchise(id) {
   modal.show();
 }
 
+// function deleteFranchise(id) {
+//   console.log('deleteFranchise called with id:', id);
+//   if (confirm('Are you sure you want to delete this franchise?')) {
+//     fetch(`/delete-franchise/${id}/`, {
+//       method: 'POST',
+//       headers: {
+//         'X-CSRFToken': '{{ csrf_token }}'
+//       }
+//     })
+//     .then(res => res.json())
+//     .then data => {
+//       if (data.success) {
+//         showCouponToast('✅ Franchise deleted successfully!');
+//         setTimeout(() => location.reload(), 1000);
+//       } else {
+//         showCouponToast('❌ Failed to delete franchise.');
+//       }
+//     })
+//     .catch((err) => {
+//       console.error('Error deleting franchise:', err);
+//       showCouponToast('❌ Error deleting franchise.');
+//     });
+//   }
+// }
+
+// Handle Edit Franchise form submit
 function deleteFranchise(id) {
   console.log('deleteFranchise called with id:', id);
   if (confirm('Are you sure you want to delete this franchise?')) {
     fetch(`/delete-franchise/${id}/`, {
       method: 'POST',
       headers: {
-        'X-CSRFToken': '{{ csrf_token }}'
+        'X-CSRFToken': 'FjrWkNdh4geOCGoqp5aNsADQeqOW16nfD9YaPl6FeUQen8axavDLaD2WiwJAMzsx'
       }
     })
     .then(res => res.json())
-    .then(data => {
+    .then((data) => {
       if (data.success) {
         showCouponToast('✅ Franchise deleted successfully!');
         setTimeout(() => location.reload(), 1000);
@@ -404,7 +435,6 @@ function deleteFranchise(id) {
   }
 }
 
-// Handle Edit Franchise form submit
 const editFranchiseForm = document.getElementById('editFranchiseForm');
 if (editFranchiseForm) {
 editFranchiseForm.addEventListener('submit', function(e) {
@@ -488,6 +518,7 @@ addCouponForm.addEventListener('submit', function(e) {
   })
   .catch(() => showCouponToast('❌ Error adding coupon.'));
 });
+
 
 
 const addProductForm = document.getElementById('addProductForm');
@@ -578,7 +609,7 @@ addMarketingMemberForm.addEventListener('submit', function(e) {
   })
   .catch(() => showCouponToast('❌ Error adding member.'));
 });
-const ctxA = document.getElementById('adminChart').getContext('2d');
+const ctxA = document.getElementById('adminChart');
 new Chart(ctxA, {
   type: 'line',
   data: {
@@ -676,7 +707,7 @@ new Chart(ctxA, {
     z-index: 0;
 }
 .kpi-card:hover::before {
-    opacity: 0.18;
+    opacity: 0.18;pi
 }
 .kpi-card:hover {
     background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
@@ -739,17 +770,18 @@ new Chart(ctxA, {
     letter-spacing: 0.5px;
   }
   .sidebar {
-    box-shadow:;
+    box-shadow:0 4px 24px 0 rgba(234, 253, 88, 0.94);
     border-right: 2px solid #10B981;
   }
   .sidebar a, .sidebar .nav-link {
-    color:rgb(254, 253, 250) !important;
+    color:rgba(252, 247, 247, 1) !important;
     font-size: 0.98rem;
     transition: color 0.3s, background 0.3s;
   }
   .sidebar a:hover, .sidebar .nav-link:hover {
-    color: #10B981 !important;
-    background: rgba(16,185,129,0.08);
+    color: #000000ff !important;
+    background: rgba(3, 255, 171, 0.69) , rgba(215, 220, 62, 0.98) !important;
+    
     border-radius: 0.7rem;
   }
   .dashboard-header {
