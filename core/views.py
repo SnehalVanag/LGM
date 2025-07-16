@@ -706,7 +706,6 @@ def marketing_dashboard(request):
         'leads': leads,
         'leads_count': leads.count(),
     })
-
 def franchise_dashboard(request):
     staff_list = Staff.objects.all()
     franchises = Franchise.objects.all()  # Get all franchises
@@ -730,6 +729,35 @@ def franchise_dashboard(request):
         'franchises_count': franchises_count,
         'leads_count': leads_count,
     })
+
+
+
+
+# def franchise_dashboard(request):
+#     staff_list = Staff.objects.all()
+#     franchises = Franchise.objects.all()  # Get all franchises
+#     franchises_count = Franchise.objects.count()
+#     # Import the Lead model first
+#     from .models import Lead
+#     # Then use it
+#     leads_count = Lead.objects.count()
+    
+#     if request.method == 'POST':
+#         form = StaffForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('franchise_dashboard')
+#     else:
+#         form = StaffForm()
+#     return render(request, 'dashboard/franchise.html', {
+#         'staff_list': staff_list,
+#         'form': form,
+#         'franchises': franchises,  # Pass franchises to template
+#         'franchises_count': franchises_count,
+#         'leads_count': leads_count,
+#     })
+
+
 # def franchise_dashboard(request):
 #     staff_list = Staff.objects.all()
 #     franchises_count = Franchise.objects.count()
