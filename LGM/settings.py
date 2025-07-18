@@ -59,9 +59,22 @@ TEMPLATES = [
 WSGI_APPLICATION = 'LGM.wsgi.application'
 
 import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-}
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'test_depl',
+            'USER': 'MnM',
+            'PASSWORD': 'MnM',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
 # AUTH_USER_MODEL = 'core.CustomUser'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
