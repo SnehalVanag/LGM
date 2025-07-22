@@ -1,14 +1,43 @@
 from pathlib import Path
 import os
+import dj_database_url
+from dotenv import load_dotenv
+import pymysql
+pymysql.install_as_MySQLdb()
+import socket
 
+
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ON_PYTHONANYWHERE = socket.gethostname().endswith(".pythonanywhere.com")
+
+if ON_PYTHONANYWHERE:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='mysql://peakprosys:Snehal@123@peakprosys.mysql.pythonanywhere-services.com:3306/peakprosys$dblgm'
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+
+
+#  DATABASES = {
+#     'default': dj_database_url.config(
+#         default='mysql://peakprosys:Snehal@123@peakprosys.mysql.pythonanywhere-services.com:3306/peakprosys$dblgm'
+#     )
+# }
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR/".eVar",".env"))
 
 SECRET_KEY = '15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i'
-
 DEBUG = True
-
-# ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
@@ -57,16 +86,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LGM.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'LGM',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default':dj_database_url.config(
+#         default = "mysql://root:root@localhost:3306/LGM"+os.path.join(BASE_DIR,"db.sqllite")
+#     )
+# }
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='mysql://peakprosys:Snehal@123@peakprosys.mysql.pythonanywhere-services.com:3306/peakprosys$dblgm'
+#     )
+# }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'LGM',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 # AUTH_USER_MODEL = 'core.CustomUser'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
