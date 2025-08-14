@@ -1,3 +1,4 @@
+<!-- {% load static %} -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -369,8 +370,40 @@
         padding: 1.2rem 0.5rem;
       }
     }
-
-    .product-item, .category-card {
+.product-item {
+  background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 18px 0 rgba(16,185,129,0.10);
+  border: 1px solid rgb(219, 110, 59);
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 18px 10px 14px 10px;
+}
+.card-img-top {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 18px auto 12px auto;
+  display: block;
+  background: #f8f8f8;
+  box-shadow: 0 2px 8px rgba(16,185,129,0.10);
+}
+/* 
+.card-img-top {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: block;
+  box-shadow: none;
+} */
+    /* .product-item, .category-card {
         background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
         background-blend-mode: lighten;
         background-size: cover, 340px 340px;
@@ -380,7 +413,7 @@
         position: relative;
         overflow: hidden;
         transition: box-shadow 0.2s, transform 0.2s;
-      }
+      } */
       .product-item:hover, .category-card:hover {
         box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.13), 0 2px 8px 0 rgba(16,185,129,0.10);
         border-color:rgb(230, 110, 190);
@@ -1150,6 +1183,22 @@
           <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none;">
         </div> -->
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+  <!-- <li class="nav-item"><a class="nav-link" href="#">Insights</a></li> -->
+<li class="nav-item"><a class="nav-link" href="#" id="industriesNavBtn">Industries</a></li>
+<a class="nav-link" href="#" id="servicesNavBtn">Services</a> 
+ <!-- <li class="nav-item"><a class="nav-link" href="#">Careers</a></li> -->
+  <!-- <li class="nav-item"><a class="nav-link" href="#">News</a></li> -->
+  <li class="nav-item"><a class="nav-link" href="#" id="aboutUsBtn">About us</a></li>
+  <li class="nav-item"><a class="nav-link" href="{% url 'user_login' %}">Login</a></li>
+  <!-- <div class="cart-icon ms-3">
+    <button class="btn btn-outline-dark position-relative" onclick="showCart()">
+      <i class="fa fa-shopping-cart"></i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        id="cart-count">0</span>
+    </button>
+  </div> -->
+</ul>
+        <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item dropdown">
 
               <li><a class="dropdown-item " href="{% url 'user_login' %}">Login</a></li>
@@ -1169,10 +1218,35 @@
           </div>
 
 
-        </ul>
+        </ul> -->
       </div>
     </div>
   </nav>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  var industriesBtn = document.getElementById('industriesNavBtn');
+  var industriesSection = document.getElementById('industriesSection');
+  if (industriesBtn && industriesSection) {
+    industriesBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      industriesSection.style.display = 'block';
+      industriesSection.scrollIntoView({behavior: 'smooth'});
+    });
+  }
+});
+document.addEventListener('DOMContentLoaded', function() {
+  var servicesBtn = document.getElementById('servicesNavBtn');
+  var servicesSection = document.getElementById('servicesSection');
+  if (servicesBtn && servicesSection) {
+    servicesBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      servicesSection.style.display = 'block';
+      servicesSection.scrollIntoView({behavior: 'smooth'});
+    });
+  }
+});
+</script>
   <div class="homepage-hero">
     <canvas id="particles-bg"></canvas>
     <div class="hero-content">
@@ -1308,6 +1382,7 @@
 // Show About Us section on button click
 document.addEventListener('DOMContentLoaded', function() {
   var aboutBtn = document.getElementById('aboutUsBtn');
+  var aboutBtn = document.getElementById('aboutUsBtn');
   var aboutSection = document.getElementById('aboutUsSection');
   if (aboutBtn && aboutSection) {
     aboutBtn.addEventListener('click', function(e) {
@@ -1318,12 +1393,148 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+<!-- Explore Service  -->
+ <section class="services-section py-5" id="servicesSection" style="background: linear-gradient(180deg,#f7f7fa 0%,#fff 100%);">
+  <div class="container">
+        <h2 style="font-size:2rem; font-weight:700; color:#181848;; text-align:center; margin-bottom: 2.2rem;">Explore our services</h2>
+
+    <!-- <h2 class="mb-4" style="font-size:2rem; font-weight:700; color:#181848;">Explore our services</h2> -->
+    <div class="row justify-content-center">
+      <div class="col-md-4 mb-4">
+        <div class="service-card position-relative">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" alt="Cloud" class="img-fluid service-img">
+          <div class="service-overlay">
+            Franchise Management
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="service-card position-relative">
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80" alt="Customer first" class="img-fluid service-img">
+          <div class="service-overlay">
+            Marketing Business
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="service-card position-relative">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Cybersecurity" class="img-fluid service-img">
+          <div class="service-overlay">
+            Lead Generation
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.service-card {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(16,185,129,0.10);
+  background: #fff;
+  transition: box-shadow 0.2s;
+}
+.service-card:hover {
+  box-shadow: 0 8px 32px rgba(59,130,246,0.13);
+}
+.service-img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+}
+.service-overlay {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.97);
+  color: #181848;
+  font-size: 1.35rem;
+  font-weight: 600;
+  padding: 28px 0 28px 0;
+  width: 80%;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  letter-spacing: 0.5px;
+}
+@media (max-width: 768px) {
+  .service-img { height: 160px; }
+  .service-overlay { font-size: 1.1rem; padding: 18px 0; }
+}
+</style>
+ <!--  -->
+<!-- Industiral -->
+ <section id="industriesSection" style="display:none; background: #f7f7fa; padding: 40px 0;">
+  <div class="container">
+    <h2 style="font-size:2rem; font-weight:700; color:#181848; text-align:center; margin-bottom: 2.2rem;">Industries We Serve</h2>
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-4 mb-4">
+        <div class="industry-card card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="industry-title card-title" style="color:#181848;">Retail</h5>
+            <p class="industry-desc card-text">Solutions for shops, supermarkets, and local stores to manage inventory and sales.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="industry-card card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="industry-title card-title" style="color:#181848;">Franchise</h5>
+            <p class="industry-desc card-text">Tools for franchise owners to manage branches, staff, and offers efficiently.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="industry-card card h-100 shadow-sm">
+          <div class="card-body text-center">
+            <h5 class="industry-title card-title" style="color:#181848;">Services</h5>
+            <p class="industry-desc card-text">Support for service businesses like salons, repair shops, and consultancies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.industry-card {
+  background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 18px 0 rgba(16,185,129,0.10);
+  border: 1px solid rgb(219, 110, 59);
+  transition: box-shadow 0.2s, border-color 0.2s, background 0.3s, transform 0.2s;
+}
+.industry-card:hover {
+  background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
+  border-color: #ffd700;
+  box-shadow: 0 8px 32px 0 rgba(255, 215, 0, 0.13), 0 2px 8px 0 rgba(16,185,129,0.10);
+  transform: translateY(-6px) scale(1.04);
+}
+.industry-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #10B981;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+.industry-desc {
+  font-size: 1.08rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .industry-title { font-size: 1.1rem; }
+  .industry-desc { font-size: 0.98rem; }
+}
+</style>
 
   <!-- Zigzag Lead Generation Features Section -->
 <section class="leadgen-zigzag-section" style="margin: 48px auto; max-width: 1100px;">
   <div class="row align-items-center mb-5">
     <div class="col-md-6">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Lead Tracking" class="img-fluid rounded shadow zigzag-img animate-slide-left">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Lead Tracking" class="zigzag-img">
     </div>
     <div class="col-md-6">
       <h3 class="zigzag-title">Track Every Lead</h3>
@@ -1332,7 +1543,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <div class="row align-items-center flex-md-row-reverse mb-5">
     <div class="col-md-6">
-      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80" alt="Offer Management" class="img-fluid rounded shadow zigzag-img animate-slide-right">
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80" alt="Offer Management" class="zigzag-img">
     </div>
     <div class="col-md-6">
       <h3 class="zigzag-title">Manage Offers & Campaigns</h3>
@@ -1341,7 +1552,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <div class="row align-items-center mb-5">
     <div class="col-md-6">
-      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" alt="Analytics" class="img-fluid rounded shadow zigzag-img animate-slide-left">
+      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80" alt="Analytics" class="zigzag-img">
     </div>
     <div class="col-md-6">
       <h3 class="zigzag-title">Insights & Analytics</h3>
@@ -1350,21 +1561,27 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 <style>
-  /* Zigzag image hover animation */
+/* Zigzag image hover animation - improved for Bootstrap */
 .leadgen-zigzag-section .zigzag-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 1.2rem !important;
+  box-shadow: 0 4px 18px rgba(16,185,129,0.10);
   transition: transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.3s;
   will-change: transform;
+  object-fit: cover;
 }
 .leadgen-zigzag-section .zigzag-img:hover {
-  transform: scale(1.13) rotate(-2deg);
-  box-shadow: 0 8px 32px 0 rgba(59,130,246,0.18);
+  transform: scale(1.15) rotate(-2deg);
+  box-shadow: 0 12px 36px 0 rgba(59,130,246,0.18);
+  z-index: 2;
 }
-  /* ...existing code... */
 .animate-slide-left {
-  animation: slideLeftIn 6.6s cubic-bezier(.4,0,.2,1) both;
+  animation: slideLeftIn 1.2s cubic-bezier(.4,0,.2,1) both;
 }
 .animate-slide-right {
-  animation: slideRightIn 5.5s cubic-bezier(.4,0,.2,1) both;
+  animation: slideRightIn 1.2s cubic-bezier(.4,0,.2,1) both;
 }
 @keyframes slideLeftIn {
   0% { opacity: 0; transform: translateX(-80px) scale(0.95); }
@@ -1376,87 +1593,28 @@ document.addEventListener('DOMContentLoaded', function() {
   80% { opacity: 1; transform: translateX(-8px) scale(1.04);}
   100% { opacity: 1; transform: translateX(0) scale(1);}
 }
+.leadgen-zigzag-section .zigzag-title {
+  color: #10B981;
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.leadgen-zigzag-section .zigzag-desc {
+  font-size: 1.08rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .leadgen-zigzag-section .row {
+    flex-direction: column !important;
+  }
   .leadgen-zigzag-section .zigzag-img {
-    max-height: 260px;
-    object-fit: cover;
-    border-radius: 1.2rem;
-    box-shadow: 0 4px 18px rgba(16,185,129,0.10);
+    margin-bottom: 18px;
+    height: 180px;
   }
-  .leadgen-zigzag-section .zigzag-title {
-    color: #10B981;
-    font-size: 1.7rem;
-    font-weight: 700;
-    margin-bottom: 0.7rem;
-  }
-  .leadgen-zigzag-section .zigzag-desc {
-    font-size: 1.08rem;
-    color: #374151;
-    margin-bottom: 0.5rem;
-  }
-  @media (max-width: 768px) {
-    .leadgen-zigzag-section .row {
-      flex-direction: column !important;
-    }
-    .leadgen-zigzag-section .zigzag-img {
-      max-width: 100%;
-      margin-bottom: 18px;
-    }
-  }
+}
 </style>
-  <!--  -->
-    <!-- <section class="category-section" style="border-radius:18px; margin:32px auto 24px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgb(16, 1, 1);">
-      <h2 style="color:#4b5563; font-weight:700; font-size:2rem; margin-bottom:18px; text-align:center;">Categories</h2>
-      <div class="row" id="category-list">
-      </div>
-    </section>
 
-    <section class="product-section" id="product-section" style="display:none;">
-      <button class="btn btn-link mb-3" onclick="showCategories()"><i class="fa fa-arrow-left"></i> Back to Categories</button>
-      <h2 class="product-title" id="product-title">Products</h2>
-      <div class="product-grid" id="product-list">
-      </div>
-    </section> -->
-
-    <!-- Product Section (static, styled like upper grid) -->
-    <!-- <section class="product-section" style="margin-top:1; border-radius:18px; margin:32px auto 24px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgb(16, 1, 1);">
-      <h2 class="product-title">Business Shop & Product</h2>
-      <div class="product-grid">
-        <div class="product-item" onclick="showProducts(1)" style="cursor:pointer;">
-          <img class="product-img" src="https://cbx-prod.b-cdn.net/COLOURBOX61134506.jpg?width=800&height=800&quality=70" alt="GYM-Equipment">
-          <div class="product-label fw-bold">GYM-Equipment</div>
-        </div>
-        <div class="product-item" onclick="showProducts(2)" style="cursor:pointer;">
-          <img class="product-img" src="https://cms-artifacts.artlist.io/content/motion_array/1402220/Coffee_Shop_Interior_Illustration_high_resolution_preview_1402220.jpg?Expires=2037528702451&Key-Pair-Id=K2ZDLYDZI2R1DF&Signature=1Zt-yBgus9aK7SZUc9V4nQuLfpFABokmtt7ASelkS-lCdHtHnEaREAysCY9sbHuboD6uzNwK3JKQiQvaK9TGrRIohGG0Hi3Wo~ITbFmQ6oMhZH9NkJFDvBajQhn00MeL8sG2Omhl03FMdNbOe69Mdp3GBYheaoumE3uX5lDwyVGn6DeflHQ2CiD0e3OS5Jsj7dfjMRdotC75zSqcNgrDSVram~YD2j7XXJNwoRbPr51jXyyPIJLcu049wT-yI4gvt5GAxnFjo1Z6g7npFlY~SCLKtzGJW~GaJpjBz2J3UXPOlueFKypjXAeuM8eUmYBqeU8U3lkpXjRQbgWkXvOq6g__" alt="Coffee-Shop">
-          <div class="product-label fw-bold">Coffee-Shop</div>
-        </div>
-        <div class="product-item" onclick="showProducts(3)" style="cursor:pointer;">
-          <img class="product-img" src="https://cdn2.thebridalbox.com/wp-content/uploads/2012/05/5-Simple-Summer-Face-Packs-For-Oily-Skin-360x405.jpg" alt="Home-Made">
-          <div class="product-label fw-bold">Home-Made</div>
-        </div>
-        <div class="product-item" onclick="showProducts(4)" style="cursor:pointer;">
-          <img class="product-img" src="https://images.indianexpress.com/2018/03/oragnic-food.jpg" alt="Oraganic-food">
-          <div class="product-label fw-bold">Oraganic-Food</div>
-        </div>
-        <div class="product-item" onclick="showProducts(4)" style="cursor:pointer;">
-          <img class="product-img" src="https://thumbs.dreamstime.com/b/chef-presenting-cupcakes-to-customer-bakery-shop-cartoon-illustration-dessert-food-sweet-treat-happy-people-387673506.jpg" alt="Bakery-Shop">
-          <div class="product-label fw-bold">Bakery-Shop</div>
-        </div>
-        <div class="product-item" onclick="showProducts(4)" style="cursor:pointer;">
-          <img class="product-img" src="https://img.freepik.com/premium-photo/cartoon-woman-doing-yoga-room-with-plants-flowers_1217673-162556.jpg" alt="Yoga-Class">
-          <div class="product-label fw-bold">Yoga-Class</div>
-        </div>
-        <div class="product-item" onclick="showProducts(4)" style="cursor:pointer;">
-          <img class="product-img" src="https://img.freepik.com/premium-vector/music-store-with-various-musical-instruments-audio-recording-flat-style-template-illustration_2175-8832.jpg" alt="Music-store">
-          <div class="product-label fw-bold">Music-store</div>
-        </div>
-        <div class="product-item" onclick="showProducts(4)" style="cursor:pointer;">
-          <img class="product-img" src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/pet-care-logo%2Cpet-shop-logo%2Ctrainer-pet-logo%2C-design-template-219856f4ac077226494f5d2650aa6200_screen.jpg?ts=1693236706" alt="Pet-Shop">
-          <div class="product-label fw-bold">Pet-Shop</div>
-        </div>
-      </div>
-
-    </section>
-     -->
     <!-- Display Added product -->
     <section class="product-section" style="margin-top:1; border-radius:18px; margin:32px auto 24px auto; padding:32px 24px; max-width:1100px; box-shadow:0 4px 24px 0 rgb(16, 1, 1);">
         <h2>Products</h2>
@@ -1467,7 +1625,7 @@ document.addEventListener('DOMContentLoaded', function() {
     {% for product in products %}
     <div class="col">
       <div class="card h-100 shadow-sm product-item">
-        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height:180px; object-fit:contain; background:#f8f8f8;">
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height:180px;">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">{{ product.name }}</h5>
           <p class="card-text" style="flex:1;">{{ product.description|truncatechars:80 }}</p>
@@ -1475,12 +1633,16 @@ document.addEventListener('DOMContentLoaded', function() {
            
               <span class="badge bg-primary">{{ cat.name }}</span>
           
-          </div>
+          </div>      
           <div class="d-flex justify-content-between align-items-center mt-2">
             <span class="badge bg-success">{{ product.discount }}% OFF</span>
           </div>
         </div>
-      </div>
+        </div>
+            <!-- <div class="d-flex justify-content-between align-items-center mt-2">
+          <button class="btn btn-success mt-3" onclick="addToCart('{{ product.id }}')">
+            <i class="fa fa-cart-plus"></i> Add to Cart
+          </button>          </div> -->
     </div>
     {% empty %}
     <div class="col-12 text-center">
@@ -1679,7 +1841,7 @@ updateCartCount();
 
 
   <!-- About Us Section -->
-<section id="aboutUsSection" class="about-us-section" style="display:none; margin: 3rem 0; border-radius: 1.5rem; box-shadow: 0 4px 24px rgba(18, 18, 18, 0.96); padding: 2.5rem 1.5rem; color: black;">
+    <section id="aboutUsSection" class="about-us-section" >
     <h2 style="color: #08a78c; font-weight: 700; margin-bottom: 1.2rem; text-align: center;">About Us</h2>
     <p style="font-size: 1.1rem; line-height: 1.7; text-align: center; max-width: 800px; margin: 0 auto 1.5rem auto;">
       <strong>LGTM</strong> is dedicated to empowering India's middle-class business owners with a modern, easy-to-use, and affordable digital platform. Our website helps you manage products, franchises, staff, and marketing all in one place—no technical skills required. We believe every business, big or small, deserves access to powerful tools without high costs or complexity.
@@ -1702,7 +1864,25 @@ updateCartCount();
     <div class="about-usage" style="margin-top: 2.2rem; text-align: center;">
       <h4 style="color:#08a78c; font-weight: 600; margin-bottom: 0.7rem;">How LGTM Helps You</h4>
       <ul style="list-style: none; padding: 0; margin: 0 auto; max-width: 600px;">
-        <li style="margin-bottom: 0.7rem; font-size: 1.05rem;"><i class="
+        <li style="margin-bottom: 0.7rem; font-size: 1.05rem;"><i class="fa fa-check-circle" style="color:#08a78c;"></i> Manage products, staff, and franchises from your phone or computer</li>
+        <li style="margin-bottom: 0.7rem; font-size: 1.05rem;"><i class="fa fa-check-circle" style="color:#08a78c;"></i> Track sales, coupons, and marketing in one dashboard</li>
+        <li style="margin-bottom: 0.7rem; font-size: 1.05rem;"><i class="fa fa-check-circle" style="color:#08a78c;"></i> No technical skills needed—just sign up and start using</li>
+        <li style="margin-bottom: 0.7rem; font-size: 1.05rem;"><i class="fa fa-check-circle" style="color:#08a78c;"></i> Designed for India’s middle-class business owners</li>
+      </ul>
+    </div>
+
+  </section>
+
+   <!-- Attractive Footer Section -->
+    <footer style="background: linear-gradient(90deg,rgb(12, 12, 12) 0%,rgb(16, 16, 16) 100%); color: #fff; padding: 38px 0 18px 0; border-radius: 18px 18px 0 0; margin: 0 auto; max-width: 1600px; box-shadow: 0 4px 24px 0 rgba(16,185,129,0.13); display:block !important;">
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-md-4 mb-3 mb-md-0 text-center text-md-start">
+            <span class="footer-lgtm-animated">LGTM</span>
+            <div style="font-size: 1.08rem; color: #f3f4f6;">Empowering Businesses, Enriching Lives</div>
+          </div>
+          <div class="col-md-4 mb-3 mb-md-0 text-center">
+            <a href="#" style="color:#fff; margin:0 10px; font-size:1.7rem; transition:color 0.2s; display:inline-block;" title="Facebook" target="_blank"><i class="fab fa-facebook-f social-icon"></i></a>
             <a href="#" style="color:#fff; margin:0 10px; font-size:1.7rem; transition:color 0.2s; display:inline-block;" title="Instagram" target="_blank"><i class="fab fa-instagram social-icon"></i></a>
             <a href="#" style="color:#fff; margin:0 10px; font-size:1.7rem; transition:color 0.2s; display:inline-block;" title="Twitter" target="_blank"><i class="fab fa-twitter social-icon"></i></a>
             <a href="#" style="color:#fff; margin:0 10px; font-size:1.7rem; transition:color 0.2s; display:inline-block;" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in social-icon"></i></a>
@@ -1757,7 +1937,6 @@ updateCartCount();
         }
       </style>
     </footer>
-  </section>
   </div>
 </div>
 </body>
