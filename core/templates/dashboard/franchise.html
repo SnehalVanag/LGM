@@ -1,8 +1,9 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% block title %}Franchise Dashboard | Products | Admin Dashboard{% endblock %}
 {% block content %}
+
 <style>
-  .modal-content .table {
+    .modal-content .table {
     border-radius: 0.7rem;
     overflow: hidden;
   }
@@ -17,39 +18,35 @@
   .modal-content .table tbody tr:hover {
     background: #134e4a !important;
   }
-  
-  
 
-</style>
-<style>
-.franchise-kpi-cards {
+ .franchise-kpi-cards {
     display: flex;
-    flex-wrap: nowrap;         /* Prevent wrapping to next line */
     gap: 1.5rem;
-    overflow-x: auto;          /* Allow horizontal scroll if needed */
+    flex-wrap: wrap;
     margin-bottom: 2.2rem;
     border-radius: 1.5rem;
     padding: 2rem 1.5rem;
-    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
-}
-.franchise-kpi-card {
-   min-width: 220px;          /* Ensures cards don't shrink too much */
-    flex: 0 0 220px; 
-    background:linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png') ;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    flex: 1 1 calc(33.333% - 1rem);
-    transition: background 0.7s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: pointer;
+    box-shadow:0 4px 24px 0 rgb(16, 1, 1);
+  }
+  .franchise-kpi-card {
+    background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+
+    border: 2.5px solid rgba(10,10,10, 0.08 );
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 24px rgba(10, 10, 10, 0.08);
+    padding: 2.2rem 2.1rem 1.2rem 2.1rem;
     min-width: 200px;
     min-height: 70px;
     max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.7s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    cursor: pointer;
     position: relative;
     margin-bottom: 0.5rem;
-    overflow: hidden;
-    border: ;
-    color:rgb(3, 3, 3); /* New card font color (dark slate) */
-}
+  }
 .franchise-kpi-card .kpi-value {
     color:rgb(4, 4, 4); /* New color for value (deep blue) */
 }
@@ -191,11 +188,11 @@
     letter-spacing: 0.05rem;
 }
   /* Sidebar and General Text Colors */
-  .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
+  /* .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
     font-size: 0.98rem;
     letter-spacing: 0.5px;
-  }
+  } */
   .sidebar {
     box-shadow:;
     border-right: 2px solid #10B981;
@@ -211,7 +208,7 @@
     border-radius: 0.7rem;
   }
   .dashboard-header {
-    color: #FFD700;
+    color: #18142b;
     font-size: 2.1rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -264,8 +261,8 @@ margin-bottom: 2.2rem;
 ;
   }
   .quick-action-btn:hover {
-    background:rgb(243, 153, 153);
-    color: #00897b;
+       background:rgb(6, 219, 209);
+    color:rgb(17, 18, 18);
     box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
   }
   .modal-content {
@@ -280,7 +277,7 @@ margin-bottom: 2.2rem;
     background: transparent;
   }
   .modal-title {
-    color: #FFD700;
+    color: #18142b;
     font-weight: 700;
   }
   .close-btn {
@@ -361,12 +358,13 @@ margin-bottom: 2.2rem;
   /* ...existing code... */
 </style>
 
-<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
+<!-- <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
   <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning" style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
     <i class="fa fa-sign-out-alt"></i> Logout
   </a>
-</div>
-<div class="dashboard-header" style="color:rgb(245, 240, 212); font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Franchise Dashboard</div>
+</div> -->
+<div class="dashboard-header"  style="font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Franchise Dashboard</div>
+
 
 <div class="franchise-kpi-cards">
   <div class="franchise-kpi-card" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#franchiseListModal">
@@ -374,9 +372,9 @@ margin-bottom: 2.2rem;
     <div class="kpi-label">Franchises</div>
   </div>
   <div class="franchise-kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
-    <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
+    <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#0e0d0c;"></i></div>
     <div class="kpi-label">Coupons</div>
-    <div style="font-size:12px;color:#FFD700;">View Coupons</div>
+    <div style="font-size:12px;color:#00897b;">View Coupons</div>
   </div>
   <div class="franchise-kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'products' %}'">
     <div class="kpi-value">{{ products|length }}</div>
@@ -705,25 +703,28 @@ margin-bottom: 2.2rem;
  </div>
 </div>
 
-<div class="quick-actions">
+<div class="quick-actions" style="background: #f6f6f8;">
     <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
   <i class="fa fa-plus"></i> Add Staff
 </button>
-<!-- Add Franchise Modal -->
+<!-- Add Stall Modal -->
 <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: #181F2F; border-radius: 1.2rem; color: #fff;">
+    <div class="modal-content" style="background: #f6f6f8;">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
-        <h5 class="modal-title" id="addFranchiseModalLabel" style="color: #FFD700; font-weight: 700;">
+        <h5 class="modal-title" id="addFranchiseModalLabel" >
           <i class="fa fa-plus"></i> Add Staff
         </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form method="POST" action="{% url 'franchise_dashboard' %}">
           {% csrf_token %}
+          <div class="modal-body">
           {{ form.as_p }}
-          <button type="submit" class="btn btn-success w-100" style="border-radius: 2rem; font-weight: 700;">Add Staff</button>
+          </div>
+          
+          <button type="submit" class="btn btn-success w-100">Add Staff</button>
         </form>
       </div>
     </div>
@@ -748,11 +749,11 @@ margin-bottom: 2.2rem;
     </form>
   </div>
 </div>
-<div class="activity-feed">
-  <div class="activity-title">Admin Details</div>
-  <ul class="activity-list">
+<div class="activity-feed" style="background: #f6f6f8;">
+  <div class="activity-title" style="background: #f6f6f8; color: #18142b;">Admin Details</div>
+  <ul class="activity-list" style="background: #f6f6f8;">
       {% if request.session.is_core_admin %}
-  <span style="color: #FFD700; font-weight: 600;">
+  <span >
     <i class="fa fa-user-circle"></i>
     {{ request.session.admin_name }}
   </span>
@@ -761,7 +762,7 @@ margin-bottom: 2.2rem;
   </ul>
 </div>
 
-<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);">
+<div class="dashboard-chart" style="background: #f6f6f8;">
 
 <!-- Add this below your KPI cards -->
 <div class="dashboard-chart" style="background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%); border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); padding: 1.5rem;">

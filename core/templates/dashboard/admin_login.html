@@ -23,7 +23,7 @@
 
     html,
     body {
-     background: linear-gradient(120deg, #ffe082 0%, #b6e2d3 60%, #e0c3fc 100%);
+     background: linear-gradient(120deg, #ecabcf 0%, #6ae7bd 60%, #9645e2 100%);
 
       color: var(--white);
       font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -35,7 +35,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+        background: url('https://www.transparenttextures.com/patterns/paper-fibers.png'), #f7e9df;
+      /* background: white; */
     }
 
     .login-card {
@@ -110,8 +111,8 @@
       box-shadow: 0 4px 16px 0 rgba(16,185,129,0.13);
     }
 
-    .login-btn {
-      background: linear-gradient(90deg, var(--emerald), var(--gold));
+     .login-btn {
+      background: linear-gradient(90deg, rgb(37, 230, 172), rgb(3, 105, 92));
       color: var(--charcoal);
       border: none;
       border-radius: 2rem;
@@ -121,9 +122,8 @@
       box-shadow: 0 2px 12px 0 rgba(16,185,129,0.10);
       transition: background var(--transition), color var(--transition), transform 0.2s;
     }
-
     .login-btn:hover {
-      background: linear-gradient(90deg, var(--gold), var(--emerald));
+      background: linear-gradient(90deg, rgb(3, 105, 92),  rgb(37, 230, 172));
       color: var(--navy);
       transform: scale(1.04);
     }
@@ -148,18 +148,18 @@
 
     .navbar .navbar-brand,
     .navbar .nav-link {
-      color: #111 !important;
+      color: #f7f4f4 !important;
       font-weight: 700;
       letter-spacing: 1px;
     }
 
     .navbar .nav-link .fa {
-      color: #111 !important;
+      color: #f5f2f2 !important;
     }
 
     .navbar .nav-link:hover, .navbar .nav-link:focus {
       color:rgb(7, 7, 7) !important;
-      background: rgb(238, 93, 93);
+      background: rgb(231, 228, 228);
       font-weight: 700;
       letter-spacing: 1px;
       font-size: 1em;
@@ -171,7 +171,7 @@
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark"
-    style="background:rgb(251, 158, 29); box-shadow: 0 2px 12px 0 rgba(16,185,129,0.04); border-bottom: 1.5px solid rgba(255,255,255,0.04);">
+    style="background:#08a78c; box-shadow: 0 2px 12px 0 rgba(16,185,129,0.04); border-bottom: 1.5px solid rgba(255,255,255,0.04);">
     <div class="container-fluid">
       <!-- <a class="navbar-brand" href="{% url 'home' %}" style="color: var(--emerald); font-weight: 700; letter-spacing: 1px; font-size: 1.4rem;">LGTM</a> -->
       <a class="navbar-brand" href="{% url 'home' %}"
@@ -196,7 +196,7 @@
   </nav>
   <div class="login-container">
     <div class="login-card">
-      <div class="login-title"><i class="fa-solid fa-user-shield"></i> Admin Login</div>
+      <div class="login-title" style="color:#181848;"><i class="fa-solid fa-user-shield" style="color:#181848;"></i> Admin Login</div>
       {% if error %}
       <div class="login-error">{{ error }}</div>
       {% endif %}

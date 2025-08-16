@@ -1,14 +1,15 @@
 {% extends 'dashboard/dashboard_base.html' %}
 {% block title %}Marketing Dashboard{% endblock %}
 {% block content %}
-<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
+<!-- <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
   <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning"
     style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
     <i class="fa fa-sign-out-alt"></i> Logout
   </a>
-</div>
-<div class="dashboard-header" style="color:rgb(245, 240, 212); font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Marketing Dashboard</div>
-<div class="kpi-cards">
+</div> -->
+<div class="dashboard-header"  style="font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Marketing Dashboard</div>
+
+<div class="kpi-cards" style="background: #f6f6f8;">
   <!-- Lead KPI Card -->
 
    <!-- <div class="kpi-card">
@@ -72,10 +73,10 @@
   </a>
 
   <div class="kpi-card" style="cursor:pointer;" onclick="window.location.href='{% url 'coupon_list' %}'">
-    <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#FFD700;"></i></div>
+    <div class="kpi-value"><i class="fa fa-ticket-alt" style="color:#080808;"></i></div>
      <div class="kpi-value">{{ coupons_count }}</div>
     <div class="kpi-label">Coupons</div>
-    <div style="font-size:12px;color:#FFD700;">View Coupons</div>
+    <div style="font-size:12px;color:#00897b;">View Coupons</div>
   </div>
 
   <!-- Franchise List Modal -->
@@ -205,7 +206,7 @@
 </div>
 </div>
 
-<div class="quick-actions">
+<div class="quick-actions" style="background: #f6f6f8;">
     <!-- <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addLeadModal">
   <i class="fa fa-plus"></i> Add Leads
 </button> -->
@@ -215,18 +216,12 @@
 <!-- Add Lead Modal -->
 <div class="modal fade" id="addLeadModal" tabindex="-1" aria-labelledby="addLeadModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="
-      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%),
-                  url('https://www.transparenttextures.com/patterns/marble.png');
-      background-blend-mode: overlay;
-      border-radius: 1.2rem;
-      color: #fff;
-    ">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
-        <h5 class="modal-title" id="addLeadModalLabel" style="color: #FFD700; font-weight: 700;">
+    <div class="modal-content" style="background: #f6f6f8;">
+      <div class="modal-header" style="#f6f6f8">
+        <h5 class="modal-title" id="addLeadModalLabel" >
           <i class="fa fa-plus"></i> Add Leads
         </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" action="{% url 'add_lead' %}">
         {% csrf_token %}
@@ -234,8 +229,8 @@
           {{ form.as_p }}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Add Lead</button>
+          <!-- <button type="button" class="quick-action-btn" data-bs-dismiss="modal">Close</button> -->
+          <button type="submit" class="btn btn-success w-100">Add Lead</button>
         </div>
       </form>
     </div>
@@ -294,12 +289,12 @@
 <!-- Add Franchise Modal -->
 <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: ; border-radius: 1.2rem; color: ;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+    <div class="modal-content" style="background: #f6f6f8;">
+      <div class="modal-header" style="background: #f6f6f8;">
         <h5 class="modal-title" id="addFranchiseModalLabel" style="color: ; font-weight: 700;">
           <i class="fa fa-plus"></i> Add Franchise
         </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="addFranchiseForm" method="post" action="{% url 'add_franchise' %}" autocomplete="off">
@@ -331,12 +326,12 @@
 
 </div>
 
-<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);">
+<!-- <div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);"> -->
 <!-- Add this below your KPI cards or wherever you want the chart -->
-<div class="dashboard-chart" style="background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%); border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); padding: 1.5rem;">
+<div class="dashboard-chart" style="background: #f6f6f8;">
   <canvas id="leadsFranchiseChart"></canvas>
 </div>
-</div>
+<!-- </div> -->
 
 {% endblock %}
 {% block extra_js %}
@@ -478,12 +473,12 @@
     letter-spacing: 0.05rem;
 }
   /* Sidebar and General Text Colors */
-  .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
+  /* .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
 
     font-size: 0.98rem;
     letter-spacing: 0.5px;
-  }
+  } */
   .sidebar {
     box-shadow:;
     border-right: 2px solid #10B981;
@@ -499,7 +494,7 @@
     border-radius: 0.7rem;
   }
   .dashboard-header {
-    color: #FFD700;
+    color: #18142b;
     font-size: 2.1rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -552,7 +547,7 @@ margin-bottom: 2.2rem;
 ;
   }
   .quick-action-btn:hover {
-       background:rgb(243, 153, 153);
+       background:rgb(6, 219, 209);
     color:rgb(17, 18, 18);
     box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
   }
@@ -568,7 +563,7 @@ margin-bottom: 2.2rem;
     background: transparent;
   }
   .modal-title {
-    color: #FFD700;
+    color: #18142b;
     font-weight: 700;
   }
   .close-btn {

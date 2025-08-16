@@ -2,14 +2,14 @@
 {% block title %}Admin Dashboard{% endblock %}
 {% block content %}
 
-<div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
+<!-- <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.2rem;">
   <a href="{% url 'admin_logout' %}" class="btn btn-outline-warning"
-    style="background: none; color: #FFD700; border: 1.5px solid #FFD700; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
+    style="background: none; color: #181848; border: 1.5px solid #181848; border-radius: 2rem; font-weight: 600; padding: 0.4rem 1.3rem; transition: background 0.18s, color 0.18s;">
     <i class="fa fa-sign-out-alt"></i> Logout
   </a>
-</div>
-<div class="dashboard-header" style="color:rgb(245, 240, 212); font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Admin Dashboard</div>
-<div class="kpi-cards">
+</div> -->
+<div class="dashboard-header"  style="font-weight: 1000; font-size: 2.1rem; margin-bottom: 1.5rem; letter-spacing: 1.2px; text-shadow: 1px 2px 8px rgba(76, 215, 162, 0.96);">Admin Dashboard</div>
+<div class="kpi-cards" >
   <a class="kpi-card" href="{% url 'products' %}" style="text-decoration:none; cursor:pointer;">
     <div class="kpi-value">{{ products_count }}</div>
     <div class="kpi-label">Products</div>
@@ -22,8 +22,6 @@
   <div class="kpi-value">{{ franchises_count }}</div>
   <div class="kpi-label">Franchises</div>
 </a>
-
-
   <a href="{% url 'coupons' %}" class="kpi-card" style="text-decoration:none; cursor:pointer;">
     <div class="kpi-value">{{ coupons_count }}</div>
     <div class="kpi-label">Coupons</div>
@@ -75,7 +73,7 @@
   </div>
 </div>
 </div>
-<div class="quick-actions">
+<div class="quick-actions" style="background: #f6f6f8;">
   <button class="quick-action-btn" data-bs-toggle="modal" data-bs-target="#addFranchiseModal">
   <i class="fa fa-plus"></i> Add Franchise
 </button>
@@ -92,7 +90,7 @@
     <div class="modal-content" style="background:; border-radius: 1.2rem; color: #fff;">
       <div class="modal-header" style="border-bottom: 1px solid #10B981;">
         <h5 class="modal-title" id="addCouponModalLabel" style="color: ; font-weight: 700;"><i class="fa fa-ticket-alt"></i> Add Coupon</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="addCouponForm">
@@ -111,12 +109,12 @@
 <!-- Add Franchise Modal -->
 <div class="modal fade" id="addFranchiseModal" tabindex="-1" aria-labelledby="addFranchiseModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: ; border-radius: 1.2rem; color: ;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+    <div class="modal-content" style="background: #f6f6f8;">
+      <div class="modal-header" style="background: #f6f6f8;" >
         <h5 class="modal-title" id="addFranchiseModalLabel" style="color: ; font-weight: 700;">
           <i class="fa fa-plus"></i> Add Franchise
         </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="addFranchiseForm" method="post" action="{% url 'add_franchise' %}" autocomplete="off">
@@ -148,12 +146,12 @@
 <!-- Add Marketing Team Member Modal -->
 <div class="modal fade" id="addMarketingMemberModal" tabindex="-1" aria-labelledby="addMarketingMemberModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background:; border-radius: 1.2rem; color:;">
-      <div class="modal-header" style="border-bottom: 1px solid #10B981;">
+    <div class="modal-content"  style="background: #f6f6f8;">
+      <div class="modal-header" style="background: #f6f6f8;">
         <h5 class="modal-title" id="addMarketingMemberModalLabel" style="color:; font-weight: 700;">
           <i class="fa fa-users"></i> Add Marketing Team Member
         </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="addMarketingMemberForm">
@@ -183,7 +181,7 @@
         <h5 class="modal-title" id="franchiseListModalLabel" style="color:; font-weight: 700;">
           <i class="fa fa-store"></i> Franchise List
         </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="table-responsive">
@@ -262,6 +260,13 @@
 
 <!-- Optional: Custom CSS for rounded table -->
 <style>
+  body {
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   .modal-content .table {
     border-radius: 0.7rem;
     overflow: hidden;
@@ -289,13 +294,12 @@
 ">
   <canvas id="adminChart"></canvas>
 </div> -->
-<div class="dashboard-chart" style="background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%); padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
-">
+<!-- <div class="dashboard-chart" style="background: #f6f6f8; padding: 1.5rem; border-radius: 1.2rem; margin-top: 2rem;    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);"> -->
 <div class="dashboard-chart" style="background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%); border-radius: 1.2rem; margin-top: 2rem; box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18); padding: 1.5rem;">
 <canvas id="marketingFranchiseChart" width="600" height="400"></canvas>
    <!-- <canvas id="adminChart" width="600" height="400"></canvas> -->
 </div>
-</div>
+<!-- </div> -->
 {% endblock %}
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -384,31 +388,6 @@ function editFranchise(id) {
   const modal = new bootstrap.Modal(document.getElementById('editFranchiseModal'));
   modal.show();
 }
-
-// function deleteFranchise(id) {
-//   console.log('deleteFranchise called with id:', id);
-//   if (confirm('Are you sure you want to delete this franchise?')) {
-//     fetch(`/delete-franchise/${id}/`, {
-//       method: 'POST',
-//       headers: {
-//         'X-CSRFToken': '{{ csrf_token }}'
-//       }
-//     })
-//     .then(res => res.json())
-//     .then data => {
-//       if (data.success) {
-//         showCouponToast('✅ Franchise deleted successfully!');
-//         setTimeout(() => location.reload(), 1000);
-//       } else {
-//         showCouponToast('❌ Failed to delete franchise.');
-//       }
-//     })
-//     .catch((err) => {
-//       console.error('Error deleting franchise:', err);
-//       showCouponToast('❌ Error deleting franchise.');
-//     });
-//   }
-// }
 
 // Handle Edit Franchise form submit
 function deleteFranchise(id) {
@@ -665,18 +644,21 @@ new Chart(ctxA, {
 });
 </script>
 <style>
-.kpi-cards {
+ .kpi-cards {
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
     margin-bottom: 2.2rem;
     border-radius: 1.5rem;
     padding: 2rem 1.5rem;
-    box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
-}
-.kpi-card {
+    box-shadow:0 4px 24px 0 rgb(16, 1, 1);
+  }
+  .kpi-card {
     background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-    border-radius: 1rem;
+
+    border: 2.5px solid rgba(10,10,10, 0.08 );
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 24px rgba(10, 10, 10, 0.08);
     padding: 2.2rem 2.1rem 1.2rem 2.1rem;
     min-width: 200px;
     min-height: 70px;
@@ -689,9 +671,7 @@ new Chart(ctxA, {
     cursor: pointer;
     position: relative;
     margin-bottom: 0.5rem;
-    overflow: hidden;
-    color: #2d3748;
-}
+  }
 .kpi-card .kpi-value {
     color:rgb(6, 6, 6);
 }
@@ -732,43 +712,49 @@ new Chart(ctxA, {
     text-transform: uppercase;
     letter-spacing: 0.05rem;
 }
-.quick-actions {
-  background: linear-gradient(135deg, #f7fafc 0%, #e0c3fc 50%, #8ec5fc 100%), url('https://www.transparenttextures.com/patterns/marble.png');
-  border-radius: 1rem;
-  padding: 1.2rem 1.5rem;
-  margin: 2rem 0 1.5rem 0;
-  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(142,197,252,0.18);
-  display: flex;
-  gap: 1.2rem;
+  .quick-actions {
+     background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
+    display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.2rem;
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 24px 0 rgb(16, 1, 1), 0 8px 32px 0 rgba(6, 6, 6, 0.18); /* Added extra box shadow for more depth */
   align-items: center;
   justify-content: flex-start;
-}
-.quick-action-btn {
-  background: #fff;
-  color: #0d47a1;
-  border: 1.5px solid rgb(242, 127, 127);
-  border-radius: 2rem;
-  font-weight: 600;
-  padding: 0.5rem 1.5rem;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-  box-shadow: 0 2px 8px 0 rgba(142,197,252,0.08);
-}
-.quick-action-btn:hover {
-  background:rgb(243, 143, 143);
-  color: #00897b;
-  box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
-}
+  }
+  .quick-action-btn {
+     background: #fff;
+    color: #0d47a1;
+    border: 1.5px solid #e0c3fc;
+    border-radius: 2rem;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      box-shadow:0 4px 24px 0 rgb(16, 1, 1)
+;
+  }
+  .quick-action-btn:hover {
+       background:rgb(6, 219, 209);
+    color:rgb(17, 18, 18);
+    box-shadow: 0 4px 16px 0 rgba(142,197,252,0.18);
+  }
  /* Sidebar and General Text Colors */
   /* .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
     background:rgb(243, 143, 143), url('https://www.transparenttextures.com/patterns/marble.png');
     font-size: 0.98rem;
     letter-spacing: 0.5px;
   } */
-    .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
+    /* .sidebar, .activity-title, .activity-list, .quick-actions, .modal-content, .staff-list th, .staff-list td, .btn, .modal-header, .modal-title, .close-btn {
      background: linear-gradient(135deg, rgb(194, 224, 128) 0%, rgb(230, 128, 112) 30%, rgb(164, 117, 173) 60%, rgb(155, 228, 161) 100%), url('https://www.transparenttextures.com/patterns/marble.png');
 
     font-size: 0.98rem;
     letter-spacing: 0.5px;
+  } */
+     .modal-title {
+    color: #18142b;
+    font-weight: 700;
   }
   .sidebar {
     box-shadow:0 4px 24px 0 rgba(234, 253, 88, 0.94);
