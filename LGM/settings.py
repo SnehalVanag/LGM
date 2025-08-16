@@ -1,15 +1,19 @@
 from pathlib import Path
 import os
+import dj_database_url
+from dotenv import load_dotenv
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR,"eVar",".env"))
 
-SECRET_KEY = '15s%-i*vvg4l*dwbk@rm((5spl@eo=2ze1=7p+!b2$7k+j=#(i'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = True
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS +=os.environ.get("ALLOWED_HOSTS").split()
 
 
 MEDIA_URL = '/media/'
